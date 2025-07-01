@@ -1,0 +1,943 @@
+.my-form {
+	--background-darkgray: rgb(209 213 219);
+	--background-gray: rgb(237, 241, 245);
+	--background-lightgray: rgb(243, 246, 248);
+	--background-white: rgb(255 255 255);
+	--background-indigo: rgb(199 210 254);
+	--background-lightindigo: rgb(238 242 255);
+	--background-red: rgb(255, 235, 235);
+	--background-darkred: rgb(245, 197, 197);
+
+	--border-black: rgb(0 0 0);
+	--border-gray: rgb(107 114 128);
+	--border-white: rgb(209 213 219);
+	--border-invalid: rgb(255 0 0);
+
+	--text-black: rgb(0 0 0);
+	--text-gray: rgb(180 180 180);
+	--text-red: rgb(239 68 68);
+
+	.my-form-label {
+		&:not(:has(.required-label)) {
+			padding-right: 8px;
+		}
+
+		.required-label {
+			color: var(--text-red);
+			font-weight: bold;
+			user-select: none;
+		}
+	}
+
+	.my-form-input {
+		position: relative;
+		display: inline-flex;
+		align-items: baseline;
+		padding: 2px 8px;
+
+		&.my-form-border {
+			border: solid 2px var(--border-white);
+			border-radius: 6px;
+			transition: border-color cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+
+			&:hover {
+				border-color: var(--border-gray);
+			}
+
+			&:has(:is(input, textarea, select):focus) {
+				border-color: var(--border-gray);
+			}
+		}
+
+		&.my-form-background {
+			&:not(.disabled) {
+				background-color: var(--background-white);
+
+				&:has(:is(input, textarea, select):focus) {
+					background-color: var(--background-white);
+				}
+			}
+
+			&.disabled {
+				background-color: var(--background-lightgray);
+
+				select {
+					background-color: var(--background-lightgray);
+				}
+			}
+		}
+
+		.prefix {
+			padding-right: 4px;
+
+			&:has(+ :is(input[type='range'], input[type='radio'], input[type='checkbox'])) {
+				align-self: center;
+			}
+		}
+
+		.suffix {
+			padding-left: 4px;
+		}
+
+		:is(input[type='range'], input[type='radio'], input[type='checkbox']) + .suffix {
+			align-self: center;
+		}
+
+		input {
+			flex-grow: 1;
+			padding: 8px 4px 0 4px;
+			border: none;
+			border-bottom: solid 2px var(--border-white);
+			min-height: 20px;
+
+			&[type='range'] {
+				padding: 2px 0 0;
+			}
+
+			&[type='radio'] {
+				margin-top: 0;
+				cursor: pointer;
+			}
+
+			&[type='checkbox'] {
+				cursor: pointer;
+			}
+
+			&[type='color'] {
+				min-height: 30px;
+			}
+
+			&[type='number']::-webkit-inner-spin-button {
+				display: none;
+			}
+
+			&:focus {
+				outline: none;
+			}
+
+			&:disabled {
+				background-color: transparent;
+				cursor: not-allowed;
+			}
+		}
+
+		input:has(+ .toggle-password) {
+			padding-right: 24px;
+		}
+
+		.toggle-password {
+			position: absolute;
+			right: 8px;
+			bottom: 4px;
+			height: 20px;
+			padding: 0;
+			background: transparent;
+			border: none;
+			outline: none;
+			cursor: pointer;
+
+			img {
+				height: 100%;
+			}
+		}
+
+		textarea {
+			flex-grow: 1;
+			padding: 8px 4px 0 4px;
+			border: none;
+			border-bottom: solid 2px var(--border-white);
+			min-height: 20px;
+			line-height: 1.5;
+
+			&:focus {
+				outline: none;
+			}
+
+			&:disabled {
+				background-color: transparent;
+				cursor: not-allowed;
+			}
+		}
+
+		&.fill-right textarea {
+			flex-grow: 1;
+			resize: vertical;
+		}
+
+		&.non-resizeable textarea {
+			resize: none;
+		}
+
+		&.show-grid textarea {
+			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+			background-size: 100% 20px;
+			background-position: 0 5px;
+			background-repeat: repeat-y;
+			background-attachment: local;
+		}
+
+		select {
+			flex-grow: 1;
+			padding: 6px 4px 0 4px;
+			border: none;
+			border-bottom: solid 2px var(--border-white);
+			min-height: 20px;
+
+			&:focus {
+				outline: none;
+			}
+
+			&:disabled {
+				background-color: transparent;
+				cursor: not-allowed;
+			}
+
+			&.placeholder-shown {
+				color: var(--text-gray);
+			}
+
+			option {
+				color: black;
+
+				&:first-child {
+					color: var(--text-gray);
+				}
+			}
+		}
+
+		.combobox-input {
+			position: relative;
+
+			input {
+				padding-right: 44px;
+			}
+
+			.combobox-options {
+				position: absolute;
+				overflow: auto;
+				background-color: var(--background-white);
+				border: solid 2px var(--border-white);
+				min-width: calc(100% - 4px);
+				max-width: calc(100% - 4px);
+				max-height: 70vh;
+				z-index: 1;
+
+				.combobox-option {
+					display: block;
+					padding: 4px 8px;
+					border: none;
+					background-color: transparent;
+					text-align: left;
+					text-wrap: nowrap;
+					min-width: 100%;
+					max-width: 100%;
+					overflow-x: auto;
+					cursor: pointer;
+
+					&:hover,
+					&.active {
+						background-color: var(--background-gray);
+					}
+
+					&:active {
+						background-color: var(--background-darkgray);
+					}
+				}
+
+				table {
+					border-collapse: collapse;
+
+					.combobox-row {
+						background-color: transparent;
+						cursor: pointer;
+
+						&:hover,
+						&.active {
+							background-color: var(--background-gray);
+						}
+
+						&:active {
+							background-color: var(--background-darkgray);
+						}
+
+						td {
+							padding: 4px 8px;
+
+							&:not(:last-child) {
+								border-right: solid 2px var(--border-white);
+							}
+						}
+					}
+				}
+			}
+
+			.combobox-table.nowrap .combobox-row td {
+				text-wrap: nowrap;
+			}
+
+			.input-button-container {
+				position: absolute;
+				right: 4px;
+				height: 100%;
+				display: inline-flex;
+				align-items: baseline;
+
+				button {
+					height: 16px;
+					padding: 0;
+					padding-left: 4px;
+					align-self: center;
+					background: transparent;
+					border: none;
+					outline: none;
+					cursor: pointer;
+					user-select: none;
+
+					img {
+						height: 100%;
+					}
+				}
+			}
+		}
+
+		.multicombobox {
+			.multicombobox-selected {
+				display: flex;
+				flex-direction: column;
+				gap: 2px;
+				align-items: start;
+
+				div {
+					display: flex;
+					gap: 0;
+					padding: 0 4px;
+					border: solid 1px var(--border-gray);
+					border-radius: 4px;
+
+					span {
+						padding: 2px 4px;
+					}
+
+					button {
+						height: 16px;
+						padding: 0;
+						align-self: center;
+						background: transparent;
+						border: none;
+						outline: none;
+						cursor: pointer;
+						user-select: none;
+
+						img {
+							height: 100%;
+						}
+					}
+				}
+			}
+
+			.multicombobox-input {
+				position: relative;
+				display: flex;
+				justify-content: stretch;
+
+				input {
+					padding-right: 44px;
+				}
+
+				.input-button-container {
+					position: absolute;
+					right: 4px;
+					height: 100%;
+					display: inline-flex;
+					align-items: baseline;
+
+					button {
+						height: 16px;
+						padding: 0;
+						padding-left: 4px;
+						align-self: center;
+						background: transparent;
+						border: none;
+						outline: none;
+						cursor: pointer;
+						user-select: none;
+
+						img {
+							height: 100%;
+						}
+					}
+				}
+			}
+
+			.combobox-options {
+				position: absolute;
+				overflow: auto;
+				background-color: var(--background-white);
+				border: solid 2px var(--border-white);
+				min-width: calc(100% - 20px);
+				max-width: calc(100% - 20px);
+				max-height: 70vh;
+				z-index: 1;
+
+				.combobox-option {
+					display: block;
+					padding: 4px 8px;
+					border: none;
+					background-color: transparent;
+					text-align: left;
+					text-wrap: nowrap;
+					min-width: 100%;
+					max-width: 100%;
+					overflow-x: auto;
+					cursor: pointer;
+
+					&:hover,
+					&.active {
+						background-color: var(--background-gray);
+					}
+
+					&:active {
+						background-color: var(--background-darkgray);
+					}
+				}
+
+				table {
+					border-collapse: collapse;
+
+					.combobox-row {
+						background-color: transparent;
+						cursor: pointer;
+
+						&:hover,
+						&.active {
+							background-color: var(--background-gray);
+						}
+
+						&:active {
+							background-color: var(--background-darkgray);
+						}
+
+						td {
+							padding: 4px 8px;
+
+							&:not(:last-child) {
+								border-right: solid 2px var(--border-white);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.date-range-input-container {
+			position: relative;
+
+			.date-range-input {
+				flex-grow: 1;
+				display: inline-flex;
+				align-items: baseline;
+				padding: 0 4px 0 4px;
+				border: none;
+				border-bottom: solid 2px var(--border-white);
+				min-height: 20px;
+				background-color: transparent;
+				cursor: pointer;
+
+				&:disabled {
+					cursor: not-allowed;
+				}
+
+				&:enabled {
+					&:hover,
+					&.active {
+						background-color: var(--background-gray);
+					}
+
+					&:active {
+						background-color: var(--background-darkgray);
+					}
+				}
+
+				> input {
+					background-color: transparent;
+					border-bottom: none;
+					pointer-events: none;
+					text-align: right;
+				}
+
+				> span {
+					padding: 0 4px;
+				}
+			}
+
+			.date-calendar {
+				position: absolute;
+				display: grid;
+				justify-content: space-around;
+				row-gap: 4px;
+				padding: 4px;
+				background-color: var(--background-white);
+				border: solid 2px var(--border-white);
+				z-index: 1;
+
+				.date-calendar-year {
+					display: flex;
+					justify-self: center;
+					justify-content: center;
+					gap: 6px;
+					width: 150px;
+					height: 23px;
+					overflow: hidden;
+
+					button {
+						padding: 4px 8px;
+						border: none;
+						border-radius: 4px;
+						outline: none;
+						background-color: var(--background-white);
+						cursor: pointer;
+						user-select: none;
+
+						&:hover,
+						&.active {
+							background-color: var(--background-gray);
+						}
+
+						&:active {
+							background-color: var(--background-darkgray);
+						}
+
+						&:disabled {
+							visibility: hidden;
+						}
+					}
+
+					&.scroll-prev-year {
+						animation: scroll-from-prev-year 0.5s ease-in-out 0s;
+
+						.year {
+							animation: grayout-current-year 0.5s ease-in-out 0s reverse;
+						}
+
+						.next-year {
+							animation: grayout-current-year 0.5s ease-in-out 0s;
+						}
+
+						.next-2-year {
+							animation: show-hidden-year 0.5s ease-in-out 0s reverse forwards;
+						}
+
+						.last-year {
+							animation: show-hidden-year 0.5s ease-in-out 0s;
+						}
+
+						.last-2-year {
+							visibility: hidden;
+						}
+					}
+
+					&.scroll-next-year {
+						animation: scroll-from-next-year 0.5s ease-in-out 0s;
+
+						.year {
+							animation: grayout-current-year 0.5s ease-in-out 0s reverse;
+						}
+
+						.last-year {
+							animation: grayout-current-year 0.5s ease-in-out 0s;
+						}
+
+						.last-2-year {
+							animation: show-hidden-year 0.5s ease-in-out 0s reverse forwards;
+						}
+
+						.next-year {
+							animation: show-hidden-year 0.5s ease-in-out 0s;
+						}
+
+						.next-2-year {
+							visibility: hidden;
+						}
+					}
+
+					.last-year,
+					.next-year {
+						font-size: x-small;
+						color: var(--text-gray);
+					}
+
+					.last-2-year,
+					.next-2-year {
+						font-size: x-small;
+						color: var(--text-gray);
+					}
+
+					@keyframes scroll-from-next-year {
+						0% {
+							transform: translateX(42px);
+							width: 210px;
+						}
+						100% {
+							transform: translateX(0px);
+							width: 150px;
+						}
+					}
+
+					@keyframes scroll-from-prev-year {
+						0% {
+							transform: translateX(-42px);
+							width: 210px;
+						}
+						100% {
+							transform: translateX(0px);
+							width: 150px;
+						}
+					}
+
+					@keyframes grayout-current-year {
+						0% {
+							font-size: small;
+							color: var(--text-black);
+						}
+						100% {
+							font-size: x-small;
+							color: var(--text-gray);
+						}
+					}
+
+					@keyframes show-hidden-year {
+						0% {
+							opacity: 0;
+						}
+						100% {
+							opacity: 1;
+						}
+					}
+				}
+
+				.date-calendar-month {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					.month {
+						flex-grow: 1;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+
+						button {
+							text-align: center;
+							text-transform: capitalize;
+							padding: 4px 8px;
+							border: none;
+							border-radius: 4px;
+							outline: none;
+							background-color: var(--background-white);
+							height: 25px;
+							cursor: pointer;
+							user-select: none;
+
+							&:hover,
+							&.active {
+								background-color: var(--background-gray);
+							}
+
+							&:active {
+								background-color: var(--background-darkgray);
+							}
+						}
+
+						.last-1-month,
+						.next-1-month {
+							width: 0;
+							opacity: 0;
+						}
+					}
+
+					.prev-month,
+					.next-month {
+						height: 16px;
+						padding: 0;
+						align-self: center;
+						background: transparent;
+						border: none;
+						outline: none;
+						cursor: pointer;
+						user-select: none;
+
+						&:disabled {
+							opacity: 0.2;
+							cursor: not-allowed;
+						}
+
+						img {
+							height: 100%;
+						}
+					}
+
+					&.scroll-prev-month {
+						.cur-month {
+							animation: scroll-from-prev-month 0.5s ease-in-out 0s;
+						}
+					}
+
+					&.scroll-next-month {
+						.cur-month {
+							animation: scroll-from-next-month 0.5s ease-in-out 0s;
+						}
+					}
+
+					@keyframes scroll-from-next-month {
+						0% {
+							transform: translateX(20px);
+						}
+						100% {
+							transform: translateX(0px);
+						}
+					}
+
+					@keyframes scroll-from-prev-month {
+						0% {
+							transform: translateX(-20px);
+						}
+						100% {
+							transform: translateX(0px);
+						}
+					}
+				}
+
+				.date-calendar-table {
+					width: 210px;
+				}
+
+				.date-calendar-months {
+					display: grid;
+					grid-template-columns: repeat(3, 70px);
+
+					button {
+						height: 30px;
+						background-color: var(--background-white);
+						border: none;
+						outline: none;
+						cursor: pointer;
+						user-select: none;
+
+						&:hover {
+							background-color: var(--background-gray);
+						}
+
+						&:active {
+							background-color: var(--background-darkgray);
+						}
+
+						&.active {
+							background-color: var(--background-lightindigo);
+						}
+
+						&.selected {
+							background-color: var(--background-indigo);
+						}
+
+						&:disabled {
+							visibility: hidden;
+						}
+					}
+				}
+
+				.date-calendar-dates {
+					display: grid;
+					grid-template-columns: repeat(7, 30px);
+
+					span {
+						height: 20px;
+						text-align: center;
+						border-bottom: solid 2px var(--background-darkgray);
+						user-select: none;
+						pointer-events: none;
+					}
+
+					button {
+						height: 30px;
+						background-color: var(--background-white);
+						border: none;
+						outline: none;
+						cursor: pointer;
+						user-select: none;
+
+						&.cur-month-date {
+							color: var(--text-black);
+						}
+						&:not(.cur-month-date) {
+							color: var(--text-gray);
+						}
+
+						&:hover {
+							background-color: var(--background-gray);
+						}
+
+						&:active {
+							background-color: var(--background-darkgray);
+						}
+
+						&.active {
+							background-color: var(--background-lightindigo);
+						}
+
+						&.selected {
+							background-color: var(--background-indigo);
+						}
+
+						&:disabled {
+							visibility: hidden;
+						}
+					}
+				}
+
+				.calendar-buttons {
+					display: flex;
+					justify-content: space-between;
+
+					button {
+						padding: 4px 8px;
+						border: none;
+						border-radius: 4px;
+						outline: none;
+						background-color: var(--background-white);
+						cursor: pointer;
+						user-select: none;
+
+						&:hover,
+						&.active {
+							background-color: var(--background-gray);
+						}
+
+						&:active {
+							background-color: var(--background-darkgray);
+						}
+
+						&.calendar-today {
+							border: solid 1px var(--border-black);
+						}
+
+						&.calendar-reset {
+							color: var(--text-gray);
+						}
+
+						&.calendar-clear {
+							border: solid 1px var(--text-red);
+							color: var(--text-red);
+
+							&:hover,
+							&.active {
+								background-color: var(--background-red);
+							}
+
+							&:active {
+								background-color: var(--background-darkred);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.clear-select {
+			height: 16px;
+			padding: 0;
+			padding-left: 4px;
+			align-self: center;
+			background: transparent;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			user-select: none;
+
+			img {
+				height: 100%;
+			}
+		}
+
+		&.invalid {
+			animation: my-form-shake 0.15s ease-in-out 0s 2;
+			box-shadow: 0 0 0.5em var(--border-invalid);
+		}
+	}
+
+	.my-form-pivot {
+		border-collapse: collapse;
+
+		th,
+		td {
+			border: solid 1px black;
+			padding: 4px 8px;
+		}
+
+		.first-cell {
+			position: relative;
+
+			.col-row-slash {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				user-select: none;
+				pointer-events: none;
+
+				svg {
+					width: 100%;
+					height: 100%;
+				}
+			}
+
+			.column-label {
+				text-align: right;
+				margin-bottom: 8px;
+			}
+
+			.row-label {
+				text-align: left;
+			}
+		}
+
+		th {
+			font-weight: bold;
+		}
+	}
+
+	.small-scrollbar {
+		scrollbar-width: thin;
+		scrollbar-color: gray;
+
+		&::-webkit-scrollbar {
+			width: 5px;
+			height: 5px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: gray;
+			border-radius: 10px;
+			border: none;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: #888;
+		}
+	}
+
+	@keyframes my-form-shake {
+		0% {
+			transform: translateX(0px);
+		}
+		25% {
+			transform: translateX(4px);
+		}
+		75% {
+			transform: translateX(-4px);
+		}
+		100% {
+			transform: translateX(0px);
+		}
+	}
+}
