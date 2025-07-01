@@ -53,16 +53,40 @@
 			&:not(.disabled) {
 				background-color: var(--background-white);
 
+				input,
+				label,
+				select {
+					color: var(--text-black);
+				}
+
 				&:has(:is(input, textarea, select):focus) {
 					background-color: var(--background-white);
+
+					input,
+					label,
+					select {
+						color: var(--text-black);
+					}
 				}
 			}
 
 			&.disabled {
 				background-color: var(--background-lightgray);
 
+				input,
+				label,
+				select {
+					color: var(--text-gray);
+				}
+
 				select {
 					background-color: var(--background-lightgray);
+
+					input,
+					label,
+					select {
+						color: var(--text-gray);
+					}
 				}
 			}
 		}
@@ -89,6 +113,7 @@
 			border: none;
 			border-bottom: solid 2px var(--border-white);
 			min-height: 20px;
+			background-color: transparent;
 
 			&[type='range'] {
 				padding: 2px 0 0;
@@ -146,6 +171,7 @@
 			padding: 8px 4px 0 4px;
 			border: none;
 			border-bottom: solid 2px var(--border-white);
+			background-color: transparent;
 			min-height: 20px;
 			line-height: 1.5;
 
@@ -154,7 +180,6 @@
 			}
 
 			&:disabled {
-				background-color: transparent;
 				cursor: not-allowed;
 			}
 		}
@@ -181,6 +206,7 @@
 			padding: 6px 4px 0 4px;
 			border: none;
 			border-bottom: solid 2px var(--border-white);
+			background-color: transparent;
 			min-height: 20px;
 
 			&:focus {
@@ -227,6 +253,9 @@
 					padding: 4px 8px;
 					border: none;
 					background-color: transparent;
+					color: var(--text-black);
+					font-size: 13px;
+					font-weight: 400;
 					text-align: left;
 					text-wrap: nowrap;
 					min-width: 100%;
@@ -384,6 +413,9 @@
 					padding: 4px 8px;
 					border: none;
 					background-color: transparent;
+					color: var(--text-black);
+					font-weight: 400;
+					font-size: 13px;
 					text-align: left;
 					text-wrap: nowrap;
 					min-width: 100%;
@@ -479,6 +511,15 @@
 				background-color: var(--background-white);
 				border: solid 2px var(--border-white);
 				z-index: 1;
+
+				button,
+				span {
+					border-radius: 0;
+					padding: 0;
+					font-weight: 400;
+					color: var(--text-black);
+					font-size: 12px;
+				}
 
 				.date-calendar-year {
 					display: flex;
