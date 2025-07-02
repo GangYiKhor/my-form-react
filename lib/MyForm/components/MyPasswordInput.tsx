@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import EyeClose from '../assets/eye-close.svg';
-import EyeOpen from '../assets/eye-open.svg';
+import EyeCloseIcon from '../assets/EyeCloseIcon';
+import EyeOpenIcon from '../assets/EyeOpenIcon';
 import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import useGeneralInput from './hooks/useGeneralInput';
 
@@ -83,10 +83,10 @@ export default function MyPasswordInput({
 					e.stopPropagation();
 					setShowPass(!showPass);
 				}}
-				className="toggle-password"
+				className="toggle-password my-form-button"
 				title={showPass ? 'Hide password' : 'Show password'}
 			>
-				<img src={showPass ? EyeOpen : EyeClose} alt={showPass ? 'Hide password' : 'Show password'} />
+				{showPass ? <EyeOpenIcon /> : <EyeCloseIcon />}
 			</button>
 		</MyGeneralInputContainer>
 	);

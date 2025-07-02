@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import './MyForm.scss';
 import type { DataType, FieldType, FormFieldType, FormPropertiesType, PropertiesType } from './MyFormContext';
 import { Form } from './MyFormContext';
+import { FormTheme } from './MyFormTheme';
 
 function dataToFormData(data: DataType): FieldType {
 	return Object.fromEntries(Object.entries(data ?? {}).map(([key, value]) => [key, { value, valid: true }]));
@@ -13,7 +14,12 @@ function formDataValidity(data: FieldType): { [key: string]: boolean } {
 	return Object.fromEntries(Object.entries(data ?? {}).map(([key, value]) => [key, value.valid]));
 }
 
-export default function MyFormProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+type PropType = {
+	darkMode?: 'browser' | 'class' | 'disabled';
+	children: React.ReactNode;
+};
+
+export default function MyFormProvider({ darkMode = 'disabled', children }: PropType) {
 	const [formData, setFormData] = useState<FormFieldType>({});
 	const formProperties = useRef<FormPropertiesType>({});
 	const subForms = useRef<{ [key: string]: string[] }>({});
@@ -349,5 +355,9 @@ export default function MyFormProvider({ children }: Readonly<{ children: React.
 		]
 	);
 
-	return <Form.Provider value={value}>{children}</Form.Provider>;
+	return (
+		<Form.Provider value={value}>
+			<FormTheme.Provider value={darkMode}>{children}</FormTheme.Provider>
+		</Form.Provider>
+	);
 }

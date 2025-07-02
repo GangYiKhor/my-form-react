@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import CloseIcon from '../assets/close.svg';
+import CloseIcon from '../assets/CloseIcon';
 import { useFormComponent } from '../MyFormComponentContext';
 import { useSubForm } from '../MySubFormContext';
 import { clsx, isEqual } from '../utils';
@@ -182,8 +182,8 @@ export default function MySelectInput<T = any>({
 				))}
 			</select>
 
-			<button type="button" onClick={clearSelect} className="clear-select" title="Clear selection">
-				<img src={CloseIcon} alt="Clear select" />
+			<button type="button" onClick={clearSelect} className="my-form-button" title="Clear selection">
+				<CloseIcon />
 			</button>
 
 			<Suffix id={id} suffix={suffix} />

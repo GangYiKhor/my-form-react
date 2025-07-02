@@ -1,4 +1,5 @@
 import { useFormComponent } from '../../MyFormComponentContext';
+import { useFormTheme } from '../../MyFormTheme';
 import { useSubForm } from '../../MySubFormContext';
 import { clsx } from '../../utils';
 
@@ -21,6 +22,7 @@ export default function MyGeneralInputContainer({
 	disabled = false,
 	children,
 }: PropType) {
+	const darkMode = useFormTheme();
 	const subFormId = useSubForm();
 	let name = _name;
 	if (subFormId) name = `${subFormId}_${name}`;
@@ -38,6 +40,7 @@ export default function MyGeneralInputContainer({
 				noBackground || 'my-form-background',
 				_fieldValid || 'invalid',
 				disabled && 'disabled',
+				`dark-${darkMode}`,
 				className,
 				containerClassName
 			)}

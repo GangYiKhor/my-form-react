@@ -1,952 +1,840 @@
-.my-form {
-	--background-darkgray: rgb(209 213 219);
-	--background-gray: rgb(237, 241, 245);
-	--background-lightgray: rgb(243, 246, 248);
-	--background-white: rgb(255 255 255);
-	--background-indigo: rgb(199 210 254);
-	--background-lightindigo: rgb(238 242 255);
-	--background-red: rgb(255, 235, 235);
-	--background-darkred: rgb(245, 197, 197);
+$light-background-darkgray: rgb(209, 213, 219);
+$light-background-gray: rgb(237, 241, 245);
+$light-background-lightgray: rgb(243, 246, 248);
+$light-background-white: rgb(255, 255, 255);
+$light-background-indigo: rgb(199, 210, 254);
+$light-background-lightindigo: rgb(238, 242, 255);
+$light-background-red: rgb(255, 235, 235);
+$light-background-darkred: rgb(245, 197, 197);
+$light-border-black: rgb(0, 0, 0);
+$light-border-gray: rgb(107, 114, 128);
+$light-border-white: rgb(209, 213, 219);
+$light-border-invalid: rgb(255, 0, 0);
+$light-text-black: rgb(0, 0, 0);
+$light-text-gray: rgb(75, 85, 99);
+$light-text-red: rgb(239, 68, 68);
+$light-grid-black: rgba(0, 0, 0, 0.2);
 
-	--border-black: rgb(0 0 0);
-	--border-gray: rgb(107 114 128);
-	--border-white: rgb(209 213 219);
-	--border-invalid: rgb(255 0 0);
+$dark-background-darkgray: rgb(107, 114, 128);
+$dark-background-gray: rgb(79, 86, 102);
+$dark-background-lightgray: rgb(73, 81, 99);
+$dark-background-white: rgb(0, 0, 0);
+$dark-background-indigo: rgb(55, 42, 172);
+$dark-background-lightindigo: rgb(30, 26, 77);
+$dark-background-red: rgb(159, 7, 18);
+$dark-background-darkred: rgb(193, 0, 7);
+$dark-border-black: rgb(255, 255, 255);
+$dark-border-gray: rgb(107, 114, 128);
+$dark-border-white: rgb(46, 54, 66);
+$dark-border-invalid: rgb(255, 0, 0);
+$dark-text-black: rgb(255, 255, 255);
+$dark-text-gray: rgb(209, 213, 219);
+$dark-text-red: rgb(239, 68, 68);
+$dark-grid-black: rgba(255, 255, 255, 0.2);
 
-	--text-black: rgb(0 0 0);
-	--text-gray: rgb(180 180 180);
-	--text-red: rgb(239 68 68);
+// Label
+.my-form-label .required-label {
+	color: $light-text-red;
+	font-weight: bold;
+	user-select: none;
+	pointer-events: none;
+	&:not(.required) {
+		visibility: hidden;
+	}
+}
 
-	.my-form-label {
-		&:not(:has(.required-label)) {
-			padding-right: 8px;
-		}
+// My Form Input
+.my-form-input {
+	position: relative;
+	display: inline-flex;
+	align-items: baseline;
+	padding: 2px 8px;
+	transition: border-color cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+}
 
-		.required-label {
-			color: var(--text-red);
-			font-weight: bold;
-			user-select: none;
+// Prefix and Suffix
+.my-form-input {
+	.prefix {
+		padding-right: 4px;
+		&:has(+ :is(input[type='range'], input[type='radio'], input[type='checkbox'])) {
+			align-self: center;
 		}
 	}
 
-	.my-form-input {
-		position: relative;
+	.suffix {
+		padding-left: 4px;
+	}
+
+	:is(input[type='range'], input[type='radio'], input[type='checkbox']) + .suffix {
+		align-self: center;
+	}
+}
+
+// Buttons
+.my-form-input {
+	.my-form-button {
+		height: 20px;
+		width: 20px;
+		padding: 0;
+		align-self: center;
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		outline: none;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.my-form-small-button {
+		height: 16px;
+		width: 16px;
+		padding: 0;
+		align-self: center;
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		outline: none;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	svg {
+		height: 100%;
+		width: 100%;
+	}
+
+	.input-button-container {
+		position: absolute;
+		right: 4px;
+		height: 100%;
 		display: inline-flex;
 		align-items: baseline;
-		padding: 2px 8px;
 
-		&.my-form-border {
-			border: solid 2px var(--border-white);
-			border-radius: 6px;
-			transition: border-color cubic-bezier(0.4, 0, 0.2, 1) 150ms;
-
-			&:hover {
-				border-color: var(--border-gray);
-			}
-
-			&:has(:is(input, textarea, select):focus) {
-				border-color: var(--border-gray);
-			}
-		}
-
-		&.my-form-background {
-			&:not(.disabled) {
-				background-color: var(--background-white);
-
-				input,
-				label,
-				select {
-					color: var(--text-black);
-				}
-
-				&:has(:is(input, textarea, select):focus) {
-					background-color: var(--background-white);
-
-					input,
-					label,
-					select {
-						color: var(--text-black);
-					}
-				}
-			}
-
-			&.disabled {
-				background-color: var(--background-lightgray);
-
-				input,
-				label,
-				select {
-					color: var(--text-gray);
-				}
-
-				select {
-					background-color: var(--background-lightgray);
-
-					input,
-					label,
-					select {
-						color: var(--text-gray);
-					}
-				}
-			}
-		}
-
-		.prefix {
-			padding-right: 4px;
-
-			&:has(+ :is(input[type='range'], input[type='radio'], input[type='checkbox'])) {
-				align-self: center;
-			}
-		}
-
-		.suffix {
+		button {
 			padding-left: 4px;
 		}
+	}
+}
 
-		:is(input[type='range'], input[type='radio'], input[type='checkbox']) + .suffix {
-			align-self: center;
+// Common Input Styles
+.my-form-input {
+	input,
+	select {
+		flex-grow: 1;
+	}
+
+	input,
+	select,
+	textarea {
+		padding: 8px 4px 0 4px;
+		min-height: 20px;
+		border: none;
+		border-bottom: solid 2px $light-border-white;
+		outline: none;
+		background-color: transparent;
+		line-height: 1;
+		font-weight: 400;
+
+		&:disabled {
+			cursor: not-allowed;
 		}
+	}
+
+	input {
+		&[type='range'] {
+			padding: 2px 0 0;
+		}
+
+		&[type='radio'] {
+			margin-top: 0;
+			cursor: pointer;
+		}
+
+		&[type='checkbox'] {
+			cursor: pointer;
+		}
+
+		&[type='color'] {
+			min-height: 30px;
+		}
+
+		&[type='number']::-webkit-inner-spin-button {
+			display: none;
+		}
+	}
+}
+
+// Password Input
+.my-form-button {
+	input:has(+ .toggle-password) {
+		padding-right: 24px;
+	}
+
+	.toggle-password {
+		position: absolute;
+		right: 8px;
+		bottom: 4px;
+	}
+}
+
+// Text Area
+.my-form-input {
+	textarea {
+		line-height: 1.5;
+		font-size: 16px;
+	}
+
+	&.fill-right textarea {
+		flex-grow: 1;
+		resize: vertical;
+	}
+
+	&.non-resizeable textarea {
+		resize: none;
+	}
+
+	&.show-grid textarea {
+		background-size: 100% 24px;
+		background-position: 0 5px;
+		background-repeat: repeat-y;
+		background-attachment: local;
+	}
+}
+
+// Select
+.my-form-input {
+	select {
+		padding-top: 6px;
+	}
+}
+
+// ComboBox
+.my-form-input {
+	.combobox-input,
+	.multicombobox-input {
+		position: relative;
 
 		input {
-			flex-grow: 1;
-			padding: 8px 4px 0 4px;
-			border: none;
-			border-bottom: solid 2px var(--border-white);
-			min-height: 20px;
-			background-color: transparent;
-
-			&[type='range'] {
-				padding: 2px 0 0;
-			}
-
-			&[type='radio'] {
-				margin-top: 0;
-				cursor: pointer;
-			}
-
-			&[type='checkbox'] {
-				cursor: pointer;
-			}
-
-			&[type='color'] {
-				min-height: 30px;
-			}
-
-			&[type='number']::-webkit-inner-spin-button {
-				display: none;
-			}
-
-			&:focus {
-				outline: none;
-			}
-
-			&:disabled {
-				background-color: transparent;
-				cursor: not-allowed;
-			}
+			padding-right: 44px;
 		}
+	}
 
-		input:has(+ .toggle-password) {
-			padding-right: 24px;
-		}
+	.combobox-options {
+		position: absolute;
+		overflow: auto;
+		min-width: calc(100% - 4px);
+		max-width: calc(100% - 4px);
+		max-height: 70vh;
+		z-index: 1;
+	}
 
-		.toggle-password {
-			position: absolute;
-			right: 8px;
-			bottom: 4px;
-			height: 20px;
-			padding: 0;
-			background: transparent;
-			border: none;
-			outline: none;
+	.multicombobox .combobox-options {
+		min-width: calc(100% - 20px);
+		max-width: calc(100% - 20px);
+	}
+
+	.combobox-option {
+		display: block;
+		padding: 4px 8px;
+		border: none;
+		border-radius: 0;
+		font-size: 16px;
+		font-weight: 400;
+		text-align: left;
+		text-wrap: nowrap;
+		min-width: 100%;
+		max-width: 100%;
+		overflow-x: auto;
+		cursor: pointer;
+	}
+
+	.combobox-options table {
+		border-collapse: collapse;
+
+		.combobox-row {
 			cursor: pointer;
 
-			img {
-				height: 100%;
+			td {
+				padding: 4px 8px;
 			}
 		}
+	}
 
-		textarea {
-			flex-grow: 1;
-			padding: 8px 4px 0 4px;
-			border: none;
-			border-bottom: solid 2px var(--border-white);
-			background-color: transparent;
-			min-height: 20px;
-			line-height: 1.5;
+	.combobox-table.nowrap .combobox-row td {
+		text-wrap: nowrap;
+	}
 
-			&:focus {
-				outline: none;
+	.multicombobox-input {
+		display: flex;
+		justify-content: stretch;
+	}
+
+	.multicombobox-selected {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		align-items: start;
+
+		div {
+			display: flex;
+			gap: 0;
+			padding: 0 4px;
+			border-radius: 4px;
+
+			span {
+				padding: 2px 4px;
 			}
 
-			&:disabled {
-				cursor: not-allowed;
-			}
-		}
-
-		&.fill-right textarea {
-			flex-grow: 1;
-			resize: vertical;
-		}
-
-		&.non-resizeable textarea {
-			resize: none;
-		}
-
-		&.show-grid textarea {
-			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-			background-size: 100% 20px;
-			background-position: 0 5px;
-			background-repeat: repeat-y;
-			background-attachment: local;
-		}
-
-		select {
-			flex-grow: 1;
-			padding: 6px 4px 0 4px;
-			border: none;
-			border-bottom: solid 2px var(--border-white);
-			background-color: transparent;
-			min-height: 20px;
-
-			&:focus {
-				outline: none;
-			}
-
-			&:disabled {
-				background-color: transparent;
-				cursor: not-allowed;
-			}
-
-			&.placeholder-shown {
-				color: var(--text-gray);
-			}
-
-			option {
-				color: black;
-
-				&:first-child {
-					color: var(--text-gray);
-				}
-			}
-		}
-
-		.combobox-input {
-			position: relative;
-
-			input {
-				padding-right: 44px;
-			}
-
-			.combobox-options {
-				position: absolute;
-				overflow: auto;
-				background-color: var(--background-white);
-				border: solid 2px var(--border-white);
-				min-width: calc(100% - 4px);
-				max-width: calc(100% - 4px);
-				max-height: 70vh;
-				z-index: 1;
-
-				.combobox-option {
-					display: block;
-					padding: 4px 8px;
-					border: none;
-					background-color: transparent;
-					color: var(--text-black);
-					font-size: 13px;
-					font-weight: 400;
-					text-align: left;
-					text-wrap: nowrap;
-					min-width: 100%;
-					max-width: 100%;
-					overflow-x: auto;
-					cursor: pointer;
-
-					&:hover,
-					&.active {
-						background-color: var(--background-gray);
-					}
-
-					&:active {
-						background-color: var(--background-darkgray);
-					}
-				}
-
-				table {
-					border-collapse: collapse;
-
-					.combobox-row {
-						background-color: transparent;
-						cursor: pointer;
-
-						&:hover,
-						&.active {
-							background-color: var(--background-gray);
-						}
-
-						&:active {
-							background-color: var(--background-darkgray);
-						}
-
-						td {
-							padding: 4px 8px;
-
-							&:not(:last-child) {
-								border-right: solid 2px var(--border-white);
-							}
-						}
-					}
-				}
-			}
-
-			.combobox-table.nowrap .combobox-row td {
-				text-wrap: nowrap;
-			}
-
-			.input-button-container {
-				position: absolute;
-				right: 4px;
-				height: 100%;
-				display: inline-flex;
-				align-items: baseline;
-
-				button {
-					height: 16px;
-					padding: 0;
-					padding-left: 4px;
-					align-self: center;
-					background: transparent;
-					border: none;
-					outline: none;
-					cursor: pointer;
-					user-select: none;
-
-					img {
-						height: 100%;
-					}
-				}
-			}
-		}
-
-		.multicombobox {
-			.multicombobox-selected {
+			button {
 				display: flex;
-				flex-direction: column;
-				gap: 2px;
-				align-items: start;
-
-				div {
-					display: flex;
-					gap: 0;
-					padding: 0 4px;
-					border: solid 1px var(--border-gray);
-					border-radius: 4px;
-
-					span {
-						padding: 2px 4px;
-					}
-
-					button {
-						height: 16px;
-						padding: 0;
-						align-self: center;
-						background: transparent;
-						border: none;
-						outline: none;
-						cursor: pointer;
-						user-select: none;
-
-						img {
-							height: 100%;
-						}
-					}
-				}
-			}
-
-			.multicombobox-input {
-				position: relative;
-				display: flex;
-				justify-content: stretch;
-
-				input {
-					padding-right: 44px;
-				}
-
-				.input-button-container {
-					position: absolute;
-					right: 4px;
-					height: 100%;
-					display: inline-flex;
-					align-items: baseline;
-
-					button {
-						height: 16px;
-						padding: 0;
-						padding-left: 4px;
-						align-self: center;
-						background: transparent;
-						border: none;
-						outline: none;
-						cursor: pointer;
-						user-select: none;
-
-						img {
-							height: 100%;
-						}
-					}
-				}
-			}
-
-			.combobox-options {
-				position: absolute;
-				overflow: auto;
-				background-color: var(--background-white);
-				border: solid 2px var(--border-white);
-				min-width: calc(100% - 20px);
-				max-width: calc(100% - 20px);
-				max-height: 70vh;
-				z-index: 1;
-
-				.combobox-option {
-					display: block;
-					padding: 4px 8px;
-					border: none;
-					background-color: transparent;
-					color: var(--text-black);
-					font-weight: 400;
-					font-size: 13px;
-					text-align: left;
-					text-wrap: nowrap;
-					min-width: 100%;
-					max-width: 100%;
-					overflow-x: auto;
-					cursor: pointer;
-
-					&:hover,
-					&.active {
-						background-color: var(--background-gray);
-					}
-
-					&:active {
-						background-color: var(--background-darkgray);
-					}
-				}
-
-				table {
-					border-collapse: collapse;
-
-					.combobox-row {
-						background-color: transparent;
-						cursor: pointer;
-
-						&:hover,
-						&.active {
-							background-color: var(--background-gray);
-						}
-
-						&:active {
-							background-color: var(--background-darkgray);
-						}
-
-						td {
-							padding: 4px 8px;
-
-							&:not(:last-child) {
-								border-right: solid 2px var(--border-white);
-							}
-						}
-					}
-				}
 			}
 		}
-
-		.date-range-input-container {
-			position: relative;
-
-			.date-range-input {
-				flex-grow: 1;
-				display: inline-flex;
-				align-items: baseline;
-				padding: 0 4px 0 4px;
-				border: none;
-				border-bottom: solid 2px var(--border-white);
-				min-height: 20px;
-				background-color: transparent;
-				cursor: pointer;
-
-				&:disabled {
-					cursor: not-allowed;
-				}
-
-				&:enabled {
-					&:hover,
-					&.active {
-						background-color: var(--background-gray);
-					}
-
-					&:active {
-						background-color: var(--background-darkgray);
-					}
-				}
-
-				> input {
-					background-color: transparent;
-					border-bottom: none;
-					pointer-events: none;
-					text-align: right;
-				}
-
-				> span {
-					padding: 0 4px;
-				}
-			}
-
-			.date-calendar {
-				position: absolute;
-				display: grid;
-				justify-content: space-around;
-				row-gap: 4px;
-				padding: 4px;
-				background-color: var(--background-white);
-				border: solid 2px var(--border-white);
-				z-index: 1;
-
-				button,
-				span {
-					border-radius: 0;
-					padding: 0;
-					font-weight: 400;
-					color: var(--text-black);
-					font-size: 12px;
-				}
-
-				.date-calendar-year {
-					display: flex;
-					justify-self: center;
-					justify-content: center;
-					gap: 6px;
-					width: 150px;
-					height: 23px;
-					overflow: hidden;
-
-					button {
-						padding: 4px 8px;
-						border: none;
-						border-radius: 4px;
-						outline: none;
-						background-color: var(--background-white);
-						cursor: pointer;
-						user-select: none;
-
-						&:hover,
-						&.active {
-							background-color: var(--background-gray);
-						}
-
-						&:active {
-							background-color: var(--background-darkgray);
-						}
-
-						&:disabled {
-							visibility: hidden;
-						}
-					}
-
-					&.scroll-prev-year {
-						animation: scroll-from-prev-year 0.5s ease-in-out 0s;
-
-						.year {
-							animation: grayout-current-year 0.5s ease-in-out 0s reverse;
-						}
-
-						.next-year {
-							animation: grayout-current-year 0.5s ease-in-out 0s;
-						}
-
-						.next-2-year {
-							animation: show-hidden-year 0.5s ease-in-out 0s reverse forwards;
-						}
-
-						.last-year {
-							animation: show-hidden-year 0.5s ease-in-out 0s;
-						}
-
-						.last-2-year {
-							visibility: hidden;
-						}
-					}
-
-					&.scroll-next-year {
-						animation: scroll-from-next-year 0.5s ease-in-out 0s;
-
-						.year {
-							animation: grayout-current-year 0.5s ease-in-out 0s reverse;
-						}
-
-						.last-year {
-							animation: grayout-current-year 0.5s ease-in-out 0s;
-						}
-
-						.last-2-year {
-							animation: show-hidden-year 0.5s ease-in-out 0s reverse forwards;
-						}
-
-						.next-year {
-							animation: show-hidden-year 0.5s ease-in-out 0s;
-						}
-
-						.next-2-year {
-							visibility: hidden;
-						}
-					}
-
-					.last-year,
-					.next-year {
-						font-size: x-small;
-						color: var(--text-gray);
-					}
-
-					.last-2-year,
-					.next-2-year {
-						font-size: x-small;
-						color: var(--text-gray);
-					}
-
-					@keyframes scroll-from-next-year {
-						0% {
-							transform: translateX(42px);
-							width: 210px;
-						}
-						100% {
-							transform: translateX(0px);
-							width: 150px;
-						}
-					}
-
-					@keyframes scroll-from-prev-year {
-						0% {
-							transform: translateX(-42px);
-							width: 210px;
-						}
-						100% {
-							transform: translateX(0px);
-							width: 150px;
-						}
-					}
-
-					@keyframes grayout-current-year {
-						0% {
-							font-size: small;
-							color: var(--text-black);
-						}
-						100% {
-							font-size: x-small;
-							color: var(--text-gray);
-						}
-					}
-
-					@keyframes show-hidden-year {
-						0% {
-							opacity: 0;
-						}
-						100% {
-							opacity: 1;
-						}
-					}
-				}
-
-				.date-calendar-month {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-
-					.month {
-						flex-grow: 1;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-
-						button {
-							text-align: center;
-							text-transform: capitalize;
-							padding: 4px 8px;
-							border: none;
-							border-radius: 4px;
-							outline: none;
-							background-color: var(--background-white);
-							height: 25px;
-							cursor: pointer;
-							user-select: none;
-
-							&:hover,
-							&.active {
-								background-color: var(--background-gray);
-							}
-
-							&:active {
-								background-color: var(--background-darkgray);
-							}
-						}
-
-						.last-1-month,
-						.next-1-month {
-							width: 0;
-							opacity: 0;
-						}
-					}
-
-					.prev-month,
-					.next-month {
-						height: 16px;
-						padding: 0;
-						align-self: center;
-						background: transparent;
-						border: none;
-						outline: none;
-						cursor: pointer;
-						user-select: none;
-
-						&:disabled {
-							opacity: 0.2;
-							cursor: not-allowed;
-						}
-
-						img {
-							height: 100%;
-						}
-					}
-
-					&.scroll-prev-month {
-						.cur-month {
-							animation: scroll-from-prev-month 0.5s ease-in-out 0s;
-						}
-					}
-
-					&.scroll-next-month {
-						.cur-month {
-							animation: scroll-from-next-month 0.5s ease-in-out 0s;
-						}
-					}
-
-					@keyframes scroll-from-next-month {
-						0% {
-							transform: translateX(20px);
-						}
-						100% {
-							transform: translateX(0px);
-						}
-					}
-
-					@keyframes scroll-from-prev-month {
-						0% {
-							transform: translateX(-20px);
-						}
-						100% {
-							transform: translateX(0px);
-						}
-					}
-				}
-
-				.date-calendar-table {
-					width: 210px;
-				}
-
-				.date-calendar-months {
-					display: grid;
-					grid-template-columns: repeat(3, 70px);
-
-					button {
-						height: 30px;
-						background-color: var(--background-white);
-						border: none;
-						outline: none;
-						cursor: pointer;
-						user-select: none;
-
-						&:hover {
-							background-color: var(--background-gray);
-						}
-
-						&:active {
-							background-color: var(--background-darkgray);
-						}
-
-						&.active {
-							background-color: var(--background-lightindigo);
-						}
-
-						&.selected {
-							background-color: var(--background-indigo);
-						}
-
-						&:disabled {
-							visibility: hidden;
-						}
-					}
-				}
-
-				.date-calendar-dates {
-					display: grid;
-					grid-template-columns: repeat(7, 30px);
-
-					span {
-						height: 20px;
-						text-align: center;
-						border-bottom: solid 2px var(--background-darkgray);
-						user-select: none;
-						pointer-events: none;
-					}
-
-					button {
-						height: 30px;
-						background-color: var(--background-white);
-						border: none;
-						outline: none;
-						cursor: pointer;
-						user-select: none;
-
-						&.cur-month-date {
-							color: var(--text-black);
-						}
-						&:not(.cur-month-date) {
-							color: var(--text-gray);
-						}
-
-						&:hover {
-							background-color: var(--background-gray);
-						}
-
-						&:active {
-							background-color: var(--background-darkgray);
-						}
-
-						&.active {
-							background-color: var(--background-lightindigo);
-						}
-
-						&.selected {
-							background-color: var(--background-indigo);
-						}
-
-						&:disabled {
-							visibility: hidden;
-						}
-					}
-				}
-
-				.calendar-buttons {
-					display: flex;
-					justify-content: space-between;
-
-					button {
-						padding: 4px 8px;
-						border: none;
-						border-radius: 4px;
-						outline: none;
-						background-color: var(--background-white);
-						cursor: pointer;
-						user-select: none;
-
-						&:hover,
-						&.active {
-							background-color: var(--background-gray);
-						}
-
-						&:active {
-							background-color: var(--background-darkgray);
-						}
-
-						&.calendar-today {
-							border: solid 1px var(--border-black);
-						}
-
-						&.calendar-reset {
-							color: var(--text-gray);
-						}
-
-						&.calendar-clear {
-							border: solid 1px var(--text-red);
-							color: var(--text-red);
-
-							&:hover,
-							&.active {
-								background-color: var(--background-red);
-							}
-
-							&:active {
-								background-color: var(--background-darkred);
-							}
-						}
-					}
-				}
-			}
+	}
+}
+
+// Date Range
+.my-form-input {
+	.date-range-input-container {
+		position: relative;
+	}
+
+	.date-range-input {
+		flex-grow: 1;
+		display: inline-flex;
+		align-items: baseline;
+		padding: 0 4px 0 4px;
+		border: none;
+		border-radius: 0;
+		min-height: 20px;
+		cursor: pointer;
+
+		&:disabled {
+			cursor: not-allowed;
 		}
 
-		.clear-select {
-			height: 16px;
+		> input {
+			border: none;
+			pointer-events: none;
+			text-align: right;
+		}
+
+		> span {
+			padding: 0 4px;
+		}
+	}
+
+	.date-calendar {
+		position: absolute;
+		display: grid;
+		justify-content: space-around;
+		row-gap: 4px;
+		padding: 4px;
+		font-weight: 400;
+		z-index: 1;
+	}
+
+	.date-calendar {
+		button,
+		span {
+			border-radius: 0;
 			padding: 0;
-			padding-left: 4px;
-			align-self: center;
-			background: transparent;
+			font-size: 12px;
+		}
+	}
+
+	.date-calendar-year {
+		display: flex;
+		justify-self: center;
+		justify-content: center;
+		gap: 6px;
+		width: 150px;
+		height: 23px;
+		overflow: hidden;
+
+		button {
+			padding: 4px 8px;
+			border: none;
+			border-radius: 4px;
+			outline: none;
+			cursor: pointer;
+			user-select: none;
+
+			&:disabled {
+				visibility: hidden;
+			}
+		}
+	}
+
+	.date-calendar-month {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.month {
+			flex-grow: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			button {
+				text-align: center;
+				text-transform: capitalize;
+				padding: 4px 8px;
+				border: none;
+				border-radius: 4px;
+				outline: none;
+				height: 25px;
+				cursor: pointer;
+				user-select: none;
+			}
+
+			.last-1-month,
+			.next-1-month {
+				width: 0;
+				opacity: 0;
+			}
+		}
+
+		.prev-month,
+		.next-month {
+			&:disabled {
+				opacity: 0.2;
+				cursor: not-allowed;
+			}
+		}
+	}
+
+	.date-calendar-table {
+		width: 210px;
+	}
+
+	.date-calendar-months {
+		display: grid;
+		grid-template-columns: repeat(3, 70px);
+
+		button {
+			height: 30px;
 			border: none;
 			outline: none;
 			cursor: pointer;
 			user-select: none;
 
-			img {
-				height: 100%;
+			&:disabled {
+				visibility: hidden;
 			}
-		}
-
-		&.invalid {
-			animation: my-form-shake 0.15s ease-in-out 0s 2;
-			box-shadow: 0 0 0.5em var(--border-invalid);
 		}
 	}
 
-	.my-form-pivot {
-		border-collapse: collapse;
+	.date-calendar-dates {
+		display: grid;
+		grid-template-columns: repeat(7, 30px);
 
-		th,
-		td {
-			border: solid 1px black;
+		span {
+			height: 20px;
+			text-align: center;
+			user-select: none;
+			pointer-events: none;
+		}
+
+		button {
+			height: 30px;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			user-select: none;
+
+			&:disabled {
+				visibility: hidden;
+			}
+		}
+	}
+
+	.calendar-buttons {
+		display: flex;
+		justify-content: space-between;
+
+		button {
 			padding: 4px 8px;
+			border: none;
+			border-radius: 4px;
+			outline: none;
+			cursor: pointer;
+			user-select: none;
+		}
+	}
+}
+
+// Date Range Animations
+.my-form-input {
+	.date-range-input {
+		border-bottom: solid 2px $light-border-white;
+	}
+
+	.date-calendar-year {
+		&.scroll-prev-year {
+			animation: scroll-from-prev-year 0.5s ease-in-out 0s;
+
+			.year {
+				animation: grayout-current-year 0.5s ease-in-out 0s reverse;
+			}
+
+			.next-year {
+				animation: grayout-current-year 0.5s ease-in-out 0s;
+			}
+
+			.next-2-year {
+				animation: show-hidden-year 0.5s ease-in-out 0s reverse forwards;
+			}
+
+			.last-year {
+				animation: show-hidden-year 0.5s ease-in-out 0s;
+			}
+
+			.last-2-year {
+				visibility: hidden;
+			}
 		}
 
-		.first-cell {
-			position: relative;
+		&.scroll-next-year {
+			animation: scroll-from-next-year 0.5s ease-in-out 0s;
 
-			.col-row-slash {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				user-select: none;
-				pointer-events: none;
-
-				svg {
-					width: 100%;
-					height: 100%;
-				}
+			.year {
+				animation: grayout-current-year 0.5s ease-in-out 0s reverse;
 			}
 
-			.column-label {
-				text-align: right;
-				margin-bottom: 8px;
+			.last-year {
+				animation: grayout-current-year 0.5s ease-in-out 0s;
 			}
 
-			.row-label {
-				text-align: left;
+			.last-2-year {
+				animation: show-hidden-year 0.5s ease-in-out 0s reverse forwards;
+			}
+
+			.next-year {
+				animation: show-hidden-year 0.5s ease-in-out 0s;
+			}
+
+			.next-2-year {
+				visibility: hidden;
 			}
 		}
 
-		th {
-			font-weight: bold;
+		.last-year,
+		.next-year {
+			font-size: x-small;
+			color: $light-text-gray;
+		}
+
+		.last-2-year,
+		.next-2-year {
+			font-size: x-small;
+			color: $light-text-gray;
+		}
+
+		@keyframes scroll-from-next-year {
+			0% {
+				transform: translateX(42px);
+				width: 210px;
+			}
+			100% {
+				transform: translateX(0px);
+				width: 150px;
+			}
+		}
+
+		@keyframes scroll-from-prev-year {
+			0% {
+				transform: translateX(-42px);
+				width: 210px;
+			}
+			100% {
+				transform: translateX(0px);
+				width: 150px;
+			}
+		}
+
+		@keyframes grayout-current-year {
+			0% {
+				font-size: small;
+				color: $light-text-black;
+			}
+			100% {
+				font-size: x-small;
+				color: $light-text-gray;
+			}
+		}
+
+		@keyframes show-hidden-year {
+			0% {
+				opacity: 0;
+			}
+			100% {
+				opacity: 1;
+			}
 		}
 	}
 
+	.date-calendar-month {
+		&.scroll-prev-month {
+			.cur-month {
+				animation: scroll-from-prev-month 0.5s ease-in-out 0s;
+			}
+		}
+
+		&.scroll-next-month {
+			.cur-month {
+				animation: scroll-from-next-month 0.5s ease-in-out 0s;
+			}
+		}
+
+		@keyframes scroll-from-next-month {
+			0% {
+				transform: translateX(20px);
+			}
+			100% {
+				transform: translateX(0px);
+			}
+		}
+
+		@keyframes scroll-from-prev-month {
+			0% {
+				transform: translateX(-20px);
+			}
+			100% {
+				transform: translateX(0px);
+			}
+		}
+	}
+}
+
+// My Form Colours
+.my-form-label {
+	color: $light-text-black;
+}
+
+// My Form Colours
+.my-form-input {
+	&.my-form-border {
+		border: solid 2px $light-border-white;
+		border-radius: 6px;
+		&:hover {
+			border-color: $light-border-gray;
+		}
+		&:has(:is(input, textarea, select):focus) {
+			border-color: $light-border-gray;
+		}
+	}
+
+	&.my-form-background {
+		background-color: $light-background-white;
+		input,
+		label,
+		select,
+		button,
+		textarea {
+			color: $light-text-black;
+		}
+
+		&.disabled {
+			background-color: $light-background-lightgray;
+			input,
+			label,
+			select,
+			button,
+			textarea {
+				color: $light-text-gray;
+			}
+		}
+	}
+
+	&.show-grid textarea {
+		background-image: linear-gradient(to bottom, $light-grid-black 1px, transparent 1px);
+	}
+
+	select {
+		&.placeholder-shown {
+			color: $light-text-gray;
+		}
+
+		option {
+			background-color: $light-background-white;
+			color: $light-text-black;
+
+			&:first-child {
+				color: $light-text-gray;
+			}
+		}
+	}
+
+	.combobox-options {
+		background-color: $light-background-white;
+		border: solid 2px $light-border-white;
+	}
+
+	.combobox-option,
+	.combobox-row {
+		background-color: transparent;
+		color: $light-text-black;
+
+		&:hover,
+		&.active {
+			background-color: $light-background-gray;
+		}
+
+		&:active {
+			background-color: $light-background-darkgray;
+		}
+
+		td:not(:last-child) {
+			border-right: solid 2px $light-border-white;
+		}
+	}
+
+	.multicombobox-selected div {
+		background-color: $light-background-lightgray;
+		color: $light-text-black;
+		border: solid 1px $light-border-gray;
+	}
+
+	.date-range-input {
+		background-color: transparent;
+
+		&:enabled {
+			&:hover,
+			&.active {
+				background-color: $light-background-gray;
+			}
+
+			&:active {
+				background-color: $light-background-darkgray;
+			}
+		}
+	}
+
+	.date-calendar {
+		background-color: $light-background-white;
+		color: $light-text-black;
+		border: solid 2px $light-border-white;
+	}
+
+	.date-calendar-year,
+	.date-calendar-month {
+		button {
+			color: $light-text-black;
+			background-color: $light-background-white;
+
+			&:hover,
+			&.active {
+				background-color: $light-background-gray;
+			}
+
+			&:active {
+				background-color: $light-background-darkgray;
+			}
+		}
+	}
+
+	.date-calendar-dates span {
+		border-bottom: solid 2px $light-background-darkgray;
+	}
+
+	.date-calendar-months,
+	.date-calendar-dates {
+		button {
+			background-color: $light-background-white;
+
+			&.cur-month-date {
+				color: $light-text-black;
+			}
+			&:not(.cur-month-date) {
+				color: $light-text-gray;
+			}
+
+			&:hover {
+				background-color: $light-background-gray;
+			}
+
+			&:active {
+				background-color: $light-background-darkgray;
+			}
+
+			&.active {
+				background-color: $light-background-lightindigo;
+			}
+
+			&.selected {
+				background-color: $light-background-indigo;
+			}
+		}
+	}
+
+	.calendar-buttons button {
+		background-color: $light-background-white;
+
+		&:hover,
+		&.active {
+			background-color: $light-background-gray;
+		}
+
+		&:active {
+			background-color: $light-background-darkgray;
+		}
+
+		&.calendar-today {
+			color: $light-text-black;
+			border: solid 1px $light-border-black;
+		}
+
+		&.calendar-reset {
+			color: $light-text-gray;
+		}
+
+		&.calendar-clear {
+			border: solid 1px $light-text-red;
+			color: $light-text-red;
+
+			&:hover,
+			&.active {
+				background-color: $light-background-red;
+			}
+
+			&:active {
+				background-color: $light-background-darkred;
+			}
+		}
+	}
+
+	.my-form-button,
+	.my-form-small-button {
+		svg {
+			stroke: $light-text-black;
+		}
+	}
+}
+
+// Invalid Shake
+.my-form-input.invalid {
+	animation: my-form-shake 0.15s ease-in-out 0s 2;
+	box-shadow: 0 0 0.5em $light-border-invalid;
+
+	@keyframes my-form-shake {
+		0% {
+			transform: translateX(0px);
+		}
+		25% {
+			transform: translateX(4px);
+		}
+		75% {
+			transform: translateX(-4px);
+		}
+		100% {
+			transform: translateX(0px);
+		}
+	}
+}
+
+// Scrollbar
+.my-form-input {
 	.small-scrollbar {
 		scrollbar-width: thin;
 		scrollbar-color: gray;
@@ -966,19 +854,413 @@
 			background-color: #888;
 		}
 	}
+}
 
-	@keyframes my-form-shake {
-		0% {
-			transform: translateX(0px);
+// Dark Theme Settings
+@media (prefers-color-scheme: dark) {
+	.my-form-label.dark-browser {
+		color: $dark-text-black;
+	}
+
+	.my-form-input.dark-browser {
+		&.my-form-border {
+			border: solid 2px $dark-border-white;
+			border-radius: 6px;
+			&:hover {
+				border-color: $dark-border-gray;
+			}
+			&:has(:is(input, textarea, select):focus) {
+				border-color: $dark-border-gray;
+			}
 		}
-		25% {
-			transform: translateX(4px);
+
+		&.my-form-background {
+			background-color: $dark-background-white;
+			input,
+			label,
+			select,
+			button,
+			textarea {
+				color: $dark-text-black;
+			}
+
+			&.disabled {
+				background-color: $dark-background-lightgray;
+				input,
+				label,
+				select,
+				button,
+				textarea {
+					color: $dark-text-gray;
+				}
+			}
 		}
-		75% {
-			transform: translateX(-4px);
+
+		&.show-grid textarea {
+			background-image: linear-gradient(to bottom, $dark-grid-black 1px, transparent 1px);
 		}
-		100% {
-			transform: translateX(0px);
+
+		select {
+			&.placeholder-shown {
+				color: $dark-text-gray;
+			}
+
+			option {
+				background-color: $dark-background-white;
+				color: $dark-text-black;
+
+				&:first-child {
+					color: $dark-text-gray;
+				}
+			}
+		}
+
+		.combobox-options {
+			background-color: $dark-background-white;
+			border: solid 2px $dark-border-white;
+		}
+
+		.combobox-option,
+		.combobox-row {
+			background-color: transparent;
+			color: $dark-text-black;
+
+			&:hover,
+			&.active {
+				background-color: $dark-background-gray;
+			}
+
+			&:active {
+				background-color: $dark-background-darkgray;
+			}
+
+			td:not(:last-child) {
+				border-right: solid 2px $dark-border-white;
+			}
+		}
+
+		.multicombobox-selected div {
+			background-color: $dark-background-lightgray;
+			color: $dark-text-black;
+			border: solid 1px $dark-border-gray;
+		}
+
+		.date-range-input {
+			background-color: transparent;
+
+			&:enabled {
+				&:hover,
+				&.active {
+					background-color: $dark-background-gray;
+				}
+
+				&:active {
+					background-color: $dark-background-darkgray;
+				}
+			}
+		}
+
+		.date-calendar {
+			background-color: $dark-background-white;
+			color: $dark-text-black;
+			border: solid 2px $dark-border-white;
+		}
+
+		.date-calendar-year,
+		.date-calendar-month {
+			button {
+				color: $dark-text-black;
+				background-color: $dark-background-white;
+
+				&:hover,
+				&.active {
+					background-color: $dark-background-gray;
+				}
+
+				&:active {
+					background-color: $dark-background-darkgray;
+				}
+			}
+		}
+
+		.date-calendar-dates span {
+			border-bottom: solid 2px $dark-background-darkgray;
+		}
+
+		.date-calendar-months,
+		.date-calendar-dates {
+			button {
+				background-color: $dark-background-white;
+
+				&.cur-month-date {
+					color: $dark-text-black;
+				}
+				&:not(.cur-month-date) {
+					color: $dark-text-gray;
+				}
+
+				&:hover {
+					background-color: $dark-background-gray;
+				}
+
+				&:active {
+					background-color: $dark-background-darkgray;
+				}
+
+				&.active {
+					background-color: $dark-background-lightindigo;
+				}
+
+				&.selected {
+					background-color: $dark-background-indigo;
+				}
+			}
+		}
+
+		.calendar-buttons button {
+			background-color: $dark-background-white;
+
+			&:hover,
+			&.active {
+				background-color: $dark-background-gray;
+			}
+
+			&:active {
+				background-color: $dark-background-darkgray;
+			}
+
+			&.calendar-today {
+				color: $dark-text-black;
+				border: solid 1px $dark-border-black;
+			}
+
+			&.calendar-reset {
+				color: $dark-text-gray;
+			}
+
+			&.calendar-clear {
+				border: solid 1px $dark-text-red;
+				color: $dark-text-red;
+
+				&:hover,
+				&.active {
+					background-color: $dark-background-red;
+				}
+
+				&:active {
+					background-color: $dark-background-darkred;
+				}
+			}
+		}
+
+		.my-form-button,
+		.my-form-small-button {
+			svg {
+				stroke: $dark-text-black;
+			}
+		}
+	}
+}
+
+.my-form-label.dark-class {
+	color: $dark-text-black;
+}
+
+.my-form-input.dark-class {
+	&.my-form-border {
+		border: solid 2px $dark-border-white;
+		border-radius: 6px;
+		&:hover {
+			border-color: $dark-border-gray;
+		}
+		&:has(:is(input, textarea, select):focus) {
+			border-color: $dark-border-gray;
+		}
+	}
+
+	&.my-form-background {
+		background-color: $dark-background-white;
+		input,
+		label,
+		select,
+		button,
+		textarea {
+			color: $dark-text-black;
+		}
+
+		&.disabled {
+			background-color: $dark-background-lightgray;
+			input,
+			label,
+			select,
+			button,
+			textarea {
+				color: $dark-text-gray;
+			}
+		}
+	}
+
+	&.show-grid textarea {
+		background-image: linear-gradient(to bottom, $dark-grid-black 1px, transparent 1px);
+	}
+
+	select {
+		&.placeholder-shown {
+			color: $dark-text-gray;
+		}
+
+		option {
+			background-color: $dark-background-white;
+			color: $dark-text-black;
+
+			&:first-child {
+				color: $dark-text-gray;
+			}
+		}
+	}
+
+	.combobox-options {
+		background-color: $dark-background-white;
+		border: solid 2px $dark-border-white;
+	}
+
+	.combobox-option,
+	.combobox-row {
+		background-color: transparent;
+		color: $dark-text-black;
+
+		&:hover,
+		&.active {
+			background-color: $dark-background-gray;
+		}
+
+		&:active {
+			background-color: $dark-background-darkgray;
+		}
+
+		td:not(:last-child) {
+			border-right: solid 2px $dark-border-white;
+		}
+	}
+
+	.multicombobox-selected div {
+		background-color: $dark-background-lightgray;
+		color: $dark-text-black;
+		border: solid 1px $dark-border-gray;
+	}
+
+	.date-range-input {
+		background-color: transparent;
+
+		&:enabled {
+			&:hover,
+			&.active {
+				background-color: $dark-background-gray;
+			}
+
+			&:active {
+				background-color: $dark-background-darkgray;
+			}
+		}
+	}
+
+	.date-calendar {
+		background-color: $dark-background-white;
+		color: $dark-text-black;
+		border: solid 2px $dark-border-white;
+	}
+
+	.date-calendar-year,
+	.date-calendar-month {
+		button {
+			color: $dark-text-black;
+			background-color: $dark-background-white;
+
+			&:hover,
+			&.active {
+				background-color: $dark-background-gray;
+			}
+
+			&:active {
+				background-color: $dark-background-darkgray;
+			}
+		}
+	}
+
+	.date-calendar-dates span {
+		border-bottom: solid 2px $dark-background-darkgray;
+	}
+
+	.date-calendar-months,
+	.date-calendar-dates {
+		button {
+			background-color: $dark-background-white;
+
+			&.cur-month-date {
+				color: $dark-text-black;
+			}
+			&:not(.cur-month-date) {
+				color: $dark-text-gray;
+			}
+
+			&:hover {
+				background-color: $dark-background-gray;
+			}
+
+			&:active {
+				background-color: $dark-background-darkgray;
+			}
+
+			&.active {
+				background-color: $dark-background-lightindigo;
+			}
+
+			&.selected {
+				background-color: $dark-background-indigo;
+			}
+		}
+	}
+
+	.calendar-buttons button {
+		background-color: $dark-background-white;
+
+		&:hover,
+		&.active {
+			background-color: $dark-background-gray;
+		}
+
+		&:active {
+			background-color: $dark-background-darkgray;
+		}
+
+		&.calendar-today {
+			color: $dark-text-black;
+			border: solid 1px $dark-border-black;
+		}
+
+		&.calendar-reset {
+			color: $dark-text-gray;
+		}
+
+		&.calendar-clear {
+			border: solid 1px $dark-text-red;
+			color: $dark-text-red;
+
+			&:hover,
+			&.active {
+				background-color: $dark-background-red;
+			}
+
+			&:active {
+				background-color: $dark-background-darkred;
+			}
+		}
+	}
+
+	.my-form-button,
+	.my-form-small-button {
+		svg {
+			stroke: $dark-text-black;
 		}
 	}
 }

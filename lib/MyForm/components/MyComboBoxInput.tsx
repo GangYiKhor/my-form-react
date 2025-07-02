@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import ChevronUp from '../assets/chevron-up.svg';
-import CloseIcon from '../assets/close.svg';
+import ChevronUpIcon from '../assets/ChevronUpIcon';
+import CloseIcon from '../assets/CloseIcon';
 import { useFormComponent } from '../MyFormComponentContext';
 import { useSubForm } from '../MySubFormContext';
 import { clsx, isEqual } from '../utils';
@@ -234,12 +234,12 @@ export default function MyComboBoxInput<T = any>({
 				/>
 
 				<div className="input-button-container">
-					<button type="button" onClick={toggleDropdown} onBlur={onBlur} className="dropdown-chevron">
-						<img src={ChevronUp} alt="Show options" style={{ rotate: showOptions ? '' : '180deg' }} />
+					<button type="button" onClick={toggleDropdown} onBlur={onBlur} className="my-form-button">
+						<ChevronUpIcon style={{ rotate: showOptions ? '' : '180deg' }} />
 					</button>
 
-					<button type="button" onClick={clearComboBox} className="clear-select" title="Clear selection">
-						<img src={CloseIcon} alt="Clear select" />
+					<button type="button" onClick={clearComboBox} className="my-form-button" title="Clear selection">
+						<CloseIcon />
 					</button>
 				</div>
 

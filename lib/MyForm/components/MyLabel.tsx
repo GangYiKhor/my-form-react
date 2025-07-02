@@ -1,3 +1,4 @@
+import { useFormTheme } from '../MyFormTheme';
 import { clsx } from '../utils';
 
 type PropType = {
@@ -9,16 +10,20 @@ type PropType = {
 type LabelProps = Omit<React.HTMLAttributes<HTMLLabelElement>, keyof PropType>;
 
 export default function MyLabel({ htmlFor, required, children, labelProps }: PropType & { labelProps?: LabelProps }) {
+	const darkMode = useFormTheme();
 	const { className: labelClassName, ..._labelProps } = labelProps ?? {};
 	return (
-		<label htmlFor={htmlFor} {..._labelProps} className={clsx('my-form-label', labelClassName)}>
+		<label htmlFor={htmlFor} {..._labelProps} className={clsx('my-form-label', `dark-${darkMode}`, labelClassName)}>
 			{children}
 
-			{required ? (
-				<span className="required-label" title="Required" aria-description="Required">
-					*
-				</span>
-			) : null}
+			<span
+				className={clsx('required-label', required && 'required')}
+				title="Required"
+				aria-description="Required"
+				aria-hidden={!required}
+			>
+				*
+			</span>
 		</label>
 	);
 }

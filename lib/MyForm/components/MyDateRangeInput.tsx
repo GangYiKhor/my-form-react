@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import ChevronUp from '../assets/chevron-up.svg';
-import CloseIcon from '../assets/close.svg';
+import ChevronUpIcon from '../assets/ChevronUpIcon';
+import CloseIcon from '../assets/CloseIcon';
 import { useFormComponent } from '../MyFormComponentContext';
 import { clsx, debounce } from '../utils';
 import MyGeneralInputContainer from './components/MyGeneralInputContainer';
@@ -528,11 +528,11 @@ export default function MyDateRangeInput({
 								onClick={showMonth ? prevYear : prevMonth}
 								onFocus={retainFocus}
 								onBlur={onBlur}
-								className="prev-month"
+								className="prev-month my-form-small-button"
 								title={showMonth ? 'Previous year' : 'Previous month'}
 								disabled={showMonth ? reachedMinYear : reachedMinMonth}
 							>
-								<img src={ChevronUp} style={{ rotate: '270deg' }} alt="Previous month" />
+								<ChevronUpIcon style={{ rotate: '270deg' }} />
 							</button>
 
 							<div className="month">
@@ -546,11 +546,11 @@ export default function MyDateRangeInput({
 								onClick={showMonth ? nextYear : nextMonth}
 								onFocus={retainFocus}
 								onBlur={onBlur}
-								className="next-month"
+								className="next-month my-form-small-button"
 								title={showMonth ? 'Next year' : 'Next month'}
 								disabled={showMonth ? reachedMaxYear : reachedMaxMonth}
 							>
-								<img src={ChevronUp} style={{ rotate: '90deg' }} alt="Next month" />
+								<ChevronUpIcon style={{ rotate: '90deg' }} />
 							</button>
 						</div>
 
@@ -646,8 +646,8 @@ export default function MyDateRangeInput({
 				) : null}
 			</div>
 
-			<button type="button" onClick={clearDate} className="clear-select" title="Clear dates">
-				<img src={CloseIcon} alt="Clear select" />
+			<button type="button" onClick={clearDate} className="my-form-button" title="Clear dates">
+				<CloseIcon />
 			</button>
 
 			<Suffix id={`${id}_start`} suffix={suffix} />
