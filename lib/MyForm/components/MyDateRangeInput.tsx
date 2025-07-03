@@ -14,6 +14,7 @@ import {
 	isSameDay,
 	isSameDayOrAfter,
 	isSameDayOrBefore,
+	type DateRangeType,
 } from './utils';
 
 const MONTH_NAME = [
@@ -50,7 +51,7 @@ type PropType = {
 	name: string;
 	prefix?: string | React.ReactNode;
 	suffix?: string | React.ReactNode;
-	defaultValue?: { start?: Date; end?: Date };
+	defaultValue?: DateRangeType;
 	min?: Date;
 	max?: Date;
 	onFocus?(): void;
@@ -85,9 +86,7 @@ export default function MyDateRangeInput({
 	disabled = false,
 	containerProps,
 }: PropType & HtmlProps) {
-	const { fieldData, updateField, deleteField, setFieldProperties } = useFormComponent<{ start?: Date; end?: Date }>(
-		name
-	);
+	const { fieldData, updateField, deleteField, setFieldProperties } = useFormComponent<DateRangeType>(name);
 	const inputButtonRef = useRef<HTMLButtonElement>(null);
 	const startInputRef = useRef<HTMLInputElement>(null);
 	const endInputRef = useRef<HTMLInputElement>(null);

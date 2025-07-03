@@ -33,13 +33,17 @@ $dark-text-red: rgb(239, 68, 68);
 $dark-grid-black: rgba(255, 255, 255, 0.2);
 
 // Label
-.my-form-label .required-label {
-	color: $light-text-red;
-	font-weight: bold;
-	user-select: none;
-	pointer-events: none;
-	&:not(.required) {
-		visibility: hidden;
+.my-form-label {
+	padding-right: 6px;
+
+	.required-label {
+		color: $light-text-red;
+		font-weight: bold;
+		user-select: none;
+		pointer-events: none;
+		&:not(.required) {
+			visibility: hidden;
+		}
 	}
 }
 
@@ -105,14 +109,12 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 
 	.input-button-container {
 		position: absolute;
-		right: 4px;
+		top: 0;
+		right: 0;
 		height: 100%;
 		display: inline-flex;
 		align-items: baseline;
-
-		button {
-			padding-left: 4px;
-		}
+		gap: 4px;
 	}
 }
 
@@ -164,6 +166,22 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	}
 }
 
+// Input Sizes
+.my-form-input {
+	input,
+	select {
+		font-size: 16px;
+	}
+
+	label {
+		font-size: 14px;
+	}
+}
+
+.my-form-label {
+	font-size: 18px;
+}
+
 // Password Input
 .my-form-button {
 	input:has(+ .toggle-password) {
@@ -213,10 +231,16 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	.combobox-input,
 	.multicombobox-input {
 		position: relative;
+		flex-grow: 1;
 
 		input {
+			width: calc(100% - 44px - 4px);
 			padding-right: 44px;
 		}
+	}
+
+	.multicombobox {
+		flex-grow: 1;
 	}
 
 	.combobox-options {
@@ -250,6 +274,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 
 	.combobox-options table {
 		border-collapse: collapse;
+		width: 100%;
 
 		.combobox-row {
 			cursor: pointer;
@@ -1062,11 +1087,11 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	}
 }
 
-.my-form-label.dark-class {
+.dark .my-form-label.dark-class {
 	color: $dark-text-black;
 }
 
-.my-form-input.dark-class {
+.dark .my-form-input.dark-class {
 	&.my-form-border {
 		border: solid 2px $dark-border-white;
 		border-radius: 6px;

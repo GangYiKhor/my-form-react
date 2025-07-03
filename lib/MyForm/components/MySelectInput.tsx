@@ -182,7 +182,7 @@ export default function MySelectInput<T = any>({
 				))}
 			</select>
 
-			<button type="button" onClick={clearSelect} className="my-form-button" title="Clear selection">
+			<button type="button" onClick={clearSelect} className="my-form-small-button" title="Clear selection">
 				<CloseIcon />
 			</button>
 

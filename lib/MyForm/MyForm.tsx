@@ -3,10 +3,10 @@ import { FormComponent } from './MyFormComponentContext';
 import { useMyForm } from './MyFormContext';
 import { clsx } from './utils';
 
-type PropType = {
+type PropType<T = { [key: string]: any }> = {
 	formId: string;
 	children: React.ReactNode;
-	onSubmit?(event: React.FormEvent<HTMLFormElement>, formData: { [key: string]: any }): void;
+	onSubmit?(event: React.FormEvent<HTMLFormElement>, formData: T): void;
 	action?: string;
 	method?: string;
 	disableNativeForm?: boolean;
@@ -14,7 +14,7 @@ type PropType = {
 };
 type FormProps = Omit<React.HTMLAttributes<HTMLFormElement>, keyof PropType>;
 
-export default function MyForm({
+export default function MyForm<T extends { [key: string]: any } = { [key: string]: any }>({
 	formId,
 	children,
 	onSubmit: _onSubmit,
@@ -23,7 +23,7 @@ export default function MyForm({
 	disableNativeForm = false,
 	submitButtonId,
 	formProps,
-}: PropType & { formProps?: FormProps }) {
+}: PropType<T> & { formProps?: FormProps }) {
 	const form = useMyForm(formId);
 	const value = useMemo(() => form, [form]);
 
@@ -37,13 +37,15 @@ export default function MyForm({
 		else if (submitButtonId instanceof Set) isSubmitter = submitButtonId.has(submitter.id);
 		else if (submitButtonId !== undefined) console.warn('Invalid submitButtonId! All button will be rejected!');
 
+		if (!action) e.preventDefault();
+
 		if (submitButtonId && !isSubmitter) {
 			e.preventDefault();
 		} else if (disableNativeForm) {
 			e.preventDefault();
-			if (_onSubmit && form.validateForm()) _onSubmit(e, form.getFormData());
+			if (_onSubmit && form.validateForm()) _onSubmit(e, form.getFormData() as T);
 		} else if (form.validateForm()) {
-			_onSubmit?.(e, form.getFormData());
+			_onSubmit?.(e, form.getFormData() as T);
 		} else {
 			e.preventDefault();
 		}

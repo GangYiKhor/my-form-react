@@ -1,0 +1,60 @@
+h1 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.wrapper {
+	display: grid;
+	row-gap: 8px;
+}
+
+.demo-container {
+	border: solid 2px black;
+	padding: 0 16px 24px;
+	border-radius: 16px;
+}
+
+.grid-inputs-2 {
+	display: grid;
+	grid-template-columns: max-content 1fr max-content 1fr;
+	row-gap: 4px;
+	align-items: center;
+}
+
+.grid-inputs-4 {
+	display: grid;
+	grid-template-columns: max-content 1fr max-content 1fr max-content 1fr max-content 1fr;
+	row-gap: 4px;
+	align-items: center;
+}
+
+:is(.grid-inputs-2, .grid-inputs-4) label {
+	text-align: right;
+	margin-left: 8px;
+}
+
+.margin-div {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.buttons {
+	margin-top: 8px;
+	display: flex;
+	gap: 4px;
+}
+
+.btn {
+	padding: 4px 8px;
+	cursor: pointer;
+}
+
+table.table-data {
+	margin-top: 8px;
+	border-collapse: collapse;
+}
+
+.table-data :is(th, td) {
+	padding: 4px 8px;
+	border: solid 1px black;
+}

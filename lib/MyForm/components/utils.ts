@@ -1,4 +1,7 @@
 export const EMPTY_VALUE = {};
+export type TimeType = { hour: number; minute: number };
+export type WeekType = { year: number; week: number };
+export type DateRangeType = { start?: Date; end?: Date };
 export type ColourType = `#${string}`;
 
 function padDate(num: number) {
@@ -22,6 +25,7 @@ function padDate(num: number) {
  * 'm' = 'Minute (15)'
  * 'ss' = 'Padded second (05)'
  * 's' = 'Second (15)'
+ * 'a' = 'AM/PM'
  */
 export function dateFormatter(value: Date | null | undefined, format = 'yyyy-MM-dd'): string {
 	if (!value || Number.isNaN(value.valueOf())) return '';

@@ -234,11 +234,11 @@ export default function MyColumnComboBoxInput<T = any>({
 				/>
 
 				<div className="input-button-container">
-					<button type="button" onClick={toggleDropdown} onBlur={onBlur} className="my-form-button">
+					<button type="button" onClick={toggleDropdown} onBlur={onBlur} className="my-form-small-button">
 						<ChevronUpIcon style={{ rotate: showOptions ? '' : '180deg' }} />
 					</button>
 
-					<button type="button" onClick={clearComboBox} className="my-form-button" title="Clear selection">
+					<button type="button" onClick={clearComboBox} className="my-form-small-button" title="Clear selection">
 						<CloseIcon />
 					</button>
 				</div>

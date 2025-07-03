@@ -158,6 +158,8 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 	const getFormData = useCallback(
 		(formId: string) => {
 			if (formId) {
+				if (!formData[formId]) return {};
+
 				let forms = Object.entries(formData[formId]);
 				const formObjs: DataType & { [key: string]: DataType } = {};
 				subForms.current[formId]?.forEach((subFormId) => {
