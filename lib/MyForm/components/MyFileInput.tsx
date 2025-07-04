@@ -6,18 +6,31 @@ import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
 
 type PropType = {
+	/** ID of input */
 	id: string;
+	/** Name of the field */
 	name: string;
+	/** Prefix label for the input */
 	prefix?: string | React.ReactNode;
+	/** Suffix label for the input */
 	suffix?: string | React.ReactNode;
+	/** onChange event with parsed input value as second parameter */
 	onChange?(event: React.ChangeEvent<HTMLInputElement>, input: File[] | null): void;
+	/** Default value for the field */
 	validator?(input: File[] | null): boolean | string;
+	/** Validator for the field for form validations */
 	validateImmediately?: boolean;
+	/** Validate the field immediately on type/change */
 	multiple?: boolean;
+	/** Set the field as required */
 	required?: boolean;
+	/** If `true` the field will not be deleted from `formData` when unmount */
 	persistOnUnmount?: boolean;
+	/** Remove the border for the input */
 	noBorder?: boolean;
+	/** Remove the background for the input */
 	noBackground?: boolean;
+	/** Disable the input */
 	disabled?: boolean;
 };
 
@@ -45,7 +58,7 @@ export default function MyFileInput({
 }: PropType & HtmlProps) {
 	const subFormId = useSubForm();
 	let name = _name;
-	if (subFormId) name = `${subFormId}_${name}`;
+	if (subFormId) name = `${subFormId}__${name}`;
 
 	const { fieldValid, updateField, deleteField, setFieldProperties } = useFormComponent<File[]>(name);
 

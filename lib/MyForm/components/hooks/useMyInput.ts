@@ -4,7 +4,7 @@ import { useSubForm } from '../../MySubFormContext';
 
 export default function useMyInput<T = any, HTML = HTMLInputElement>(name: string) {
 	const subFormId = useSubForm();
-	if (subFormId) name = `${subFormId}_${name}`;
+	if (subFormId) name = `${subFormId}__${name}`;
 	const field = useFormComponent<T>(name);
 	const inputRef = useRef<HTML>(null);
 

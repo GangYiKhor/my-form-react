@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useFormComponent } from '../MyFormComponentContext';
+import { useSubForm } from '../MySubFormContext';
 import { isEqual } from '../utils';
 import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
@@ -7,18 +8,31 @@ import Suffix from './components/MySuffix';
 import { EMPTY_VALUE } from './utils';
 
 type PropType<T1 = any, T2 = any> = {
+	/** ID of input */
 	id: string;
+	/** Name of the field */
 	name: string;
+	/** Value when checkbox is unchecked */
 	uncheckValue?: T1 | T2 | null;
+	/** Value when checkbox is checked */
 	checkedValue: T1;
+	/** Prefix label for the checkbox */
 	prefix?: string | React.ReactNode;
+	/** Suffix label for the checkbox */
 	suffix?: string | React.ReactNode;
+	/** Default value for the field */
 	defaultValue?: T1;
+	/** onChange event with parsed input (checked/unchecked) value as second parameter */
 	onChange?(event: React.ChangeEvent<HTMLInputElement>, input?: T1 | T2 | null): void;
+	/** Set the field as required */
 	required?: boolean;
+	/** If `true` the field will not be deleted from `formData` when unmount */
 	persistOnUnmount?: boolean;
+	/** Remove the border for the input */
 	noBorder?: boolean;
+	/** Remove the background for the input */
 	noBackground?: boolean;
+	/** Disable the input */
 	disabled?: boolean;
 };
 
@@ -29,7 +43,7 @@ type HtmlProps = {
 
 export default function MyCheckboxInput<CheckedValue = any, UncheckedValue = any>({
 	id,
-	name,
+	name: _name,
 	uncheckValue = null,
 	checkedValue,
 	prefix,
@@ -44,6 +58,10 @@ export default function MyCheckboxInput<CheckedValue = any, UncheckedValue = any
 	inputProps,
 	containerProps,
 }: PropType<CheckedValue, UncheckedValue> & HtmlProps) {
+	const subFormId = useSubForm();
+	let name = _name;
+	if (subFormId) name = `${subFormId}__${name}`;
+
 	const { fieldData, updateField, deleteField, setFieldProperties } = useFormComponent<CheckedValue | UncheckedValue>(
 		name
 	);

@@ -25,7 +25,7 @@ export default function MyGeneralInputContainer({
 	const darkMode = useFormTheme();
 	const subFormId = useSubForm();
 	let name = _name;
-	if (subFormId) name = `${subFormId}_${name}`;
+	if (subFormId) name = `${subFormId}__${name}`;
 
 	const { fieldValid, fieldInvalidReason } = useFormComponent(name);
 	const _fieldValid = fieldValid ?? true;

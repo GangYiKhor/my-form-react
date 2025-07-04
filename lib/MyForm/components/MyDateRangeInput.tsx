@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ChevronUpIcon from '../assets/ChevronUpIcon';
 import CloseIcon from '../assets/CloseIcon';
 import { useFormComponent } from '../MyFormComponentContext';
+import { useSubForm } from '../MySubFormContext';
 import { clsx, debounce } from '../utils';
 import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
@@ -47,20 +48,32 @@ const generateCalendar = (startYear: number, startMonth: number) => {
 };
 
 type PropType = {
+	/** ID of input */
 	id: string;
+	/** Name of the field */
 	name: string;
+	/** Prefix label for the input */
 	prefix?: string | React.ReactNode;
+	/** Suffix label for the input */
 	suffix?: string | React.ReactNode;
+	/** Default value for the field */
 	defaultValue?: MyDateRangeType;
+	/** Minimum for the date range selection, won't affect manual updates */
 	min?: Date;
+	/** Maximum for the date range selection, won't affect manual updates */
 	max?: Date;
 	onFocus?(): void;
 	onBlur?(): void;
 	onClear?(event: React.MouseEvent<HTMLButtonElement | HTMLButtonElement>): void;
+	/** Set the field as required */
 	required?: boolean;
+	/** If `true` the field will not be deleted from `formData` when unmount */
 	persistOnUnmount?: boolean;
+	/** Remove the border for the input */
 	noBorder?: boolean;
+	/** Remove the background for the input */
 	noBackground?: boolean;
+	/** Disable the input */
 	disabled?: boolean;
 };
 
@@ -70,7 +83,7 @@ type HtmlProps = {
 
 export default function MyDateRangeInput({
 	id,
-	name,
+	name: _name,
 	prefix,
 	suffix,
 	defaultValue,
@@ -86,6 +99,9 @@ export default function MyDateRangeInput({
 	disabled = false,
 	containerProps,
 }: PropType & HtmlProps) {
+	const subFormId = useSubForm();
+	let name = _name;
+	if (subFormId) name = `${subFormId}__${name}`;
 	const { fieldData, updateField, deleteField, setFieldProperties } = useFormComponent<MyDateRangeType>(name);
 	const inputButtonRef = useRef<HTMLButtonElement>(null);
 	const startInputRef = useRef<HTMLInputElement>(null);

@@ -14,24 +14,39 @@ import { EMPTY_VALUE } from './utils';
 const OPTION_HEIGHT = 23;
 
 type PropType<T = any> = {
+	/** ID of input */
 	id: string;
+	/** Name of the field */
 	name: string;
+	/** Prefix label for the input */
 	prefix?: string | React.ReactNode;
+	/** Suffix label for the input */
 	suffix?: string | React.ReactNode;
+	/** Option values for the combobox */
 	options: { label: string; value: T }[];
+	/** Number of rows to show in the dropdown, default to 5 */
 	optionRows?: number;
+	/** Width of the dropdown, default to the same as the input size */
 	optionWidth?: number | string;
+	/** Default value for the field */
 	defaultValue?: T;
+	/** If `true`, filter the dropdown options while typing, instead of scroll to the option */
 	filterOnType?: boolean;
 	onType?(event: React.ChangeEvent<HTMLInputElement>): void;
 	onFocus?(event: React.FocusEvent<HTMLInputElement>): void;
 	onBlur?(): void;
 	onClear?(event: React.MouseEvent<HTMLButtonElement | HTMLButtonElement>): void;
+	/** Set the field as required */
 	required?: boolean;
+	/** If `true` the field will not be deleted from `formData` when unmount */
 	persistOnUnmount?: boolean;
+	/** Remove the border for the input */
 	noBorder?: boolean;
+	/** Remove the background for the input */
 	noBackground?: boolean;
+	/** If `true`, when manually updated value is not found in options, it will be set to undefined */
 	setUndefinedIfManualUpdateIsInvalid?: boolean;
+	/** Disable the input */
 	disabled?: boolean;
 };
 
@@ -72,7 +87,7 @@ export default function MySimpleComboBoxInput<T = any>({
 }: PropType<T> & HtmlProps<T>) {
 	const subFormId = useSubForm();
 	let name = _name;
-	if (subFormId) name = `${subFormId}_${name}`;
+	if (subFormId) name = `${subFormId}__${name}`;
 
 	const { fieldData, updateField } = useFormComponent<T>(name);
 	const [internalOptions, setInternalOptions] = useState<{ label: string; value: T }[]>([]);

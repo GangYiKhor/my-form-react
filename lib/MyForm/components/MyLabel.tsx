@@ -2,7 +2,9 @@ import { useFormTheme } from '../MyFormTheme';
 import { clsx } from '../utils';
 
 type PropType = {
+	/** htmlFor */
 	for: string;
+	/** Show required icon */
 	required?: boolean;
 	children: string | React.ReactNode;
 };
@@ -16,14 +18,19 @@ export default function MyLabel({
 	labelProps,
 }: PropType & { labelProps?: LabelProps }) {
 	const darkMode = useFormTheme();
-	const { className: labelClassName, ..._labelProps } = labelProps ?? {};
+	const { className: labelClassName, title: labelTitle, ..._labelProps } = labelProps ?? {};
 	return (
-		<label htmlFor={htmlFor} {..._labelProps} className={clsx('my-form-label', `dark-${darkMode}`, labelClassName)}>
+		<label
+			htmlFor={htmlFor}
+			{..._labelProps}
+			title={required ? (labelTitle ? `${labelTitle} (Required)` : 'Required') : labelTitle}
+			className={clsx('my-form-label', `dark-${darkMode}`, labelClassName)}
+		>
 			{children}
 
 			<span
 				className={clsx('required-label', required && 'required')}
-				title="Required"
+				title={required ? 'Required' : ''}
 				aria-description="Required"
 				aria-hidden={!required}
 			>

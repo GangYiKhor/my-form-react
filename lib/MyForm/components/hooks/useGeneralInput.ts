@@ -45,7 +45,7 @@ export default function useGeneralInput<
 }: PropType<T, HTML>) {
 	const subFormId = useSubForm();
 	let name = _name;
-	if (subFormId) name = `${subFormId}_${name}`;
+	if (subFormId) name = `${subFormId}__${name}`;
 
 	const { fieldData, fieldValid, updateField, deleteField, setFieldProperties } = useFormComponent<T>(name);
 	const inputRef = useRef<HTML>(null);

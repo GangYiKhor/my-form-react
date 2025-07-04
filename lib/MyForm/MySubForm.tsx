@@ -5,6 +5,11 @@ import { SubForm, useSubForm } from './MySubFormContext';
 import { EMPTY_VALUE } from './components/utils';
 
 type PropType = {
+	/**
+	 * Subform fields are identified from the beginning of a field name
+	 *
+	 * A subform ID of `'customer'` will group all `'customer__XXX'` fields as children of `'customer'`
+	 */
 	subFormId: string;
 	children: React.ReactNode;
 };
