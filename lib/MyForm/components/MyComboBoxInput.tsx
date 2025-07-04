@@ -33,6 +33,7 @@ type PropType<T = any> = {
 	persistOnUnmount?: boolean;
 	noBorder?: boolean;
 	noBackground?: boolean;
+	setUndefinedIfManualUpdateIsInvalid?: boolean;
 	disabled?: boolean;
 };
 
@@ -65,6 +66,7 @@ export default function MyComboBoxInput<T = any>({
 	persistOnUnmount = false,
 	noBorder,
 	noBackground,
+	setUndefinedIfManualUpdateIsInvalid = false,
 	disabled = false,
 	inputProps,
 	containerProps,
@@ -142,8 +144,12 @@ export default function MyComboBoxInput<T = any>({
 			const found = internalOptions.find((value) => isEqual(value, newData));
 			if (!found) {
 				inputRef.current!.value = '';
-				internalRef.current = null;
-				updateField({ value: null, valid: true });
+				if (setUndefinedIfManualUpdateIsInvalid) {
+					internalRef.current = null;
+					updateField({ value: null, valid: true });
+				} else {
+					internalRef.current = newData;
+				}
 			} else {
 				inputRef.current!.value = optionKey(found);
 				internalRef.current = found;

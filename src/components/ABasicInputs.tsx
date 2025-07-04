@@ -3,6 +3,7 @@ import {
 	MyCheckboxInput,
 	MyColourInput,
 	MyDateInput,
+	MyDateRangeInput,
 	MyDateTimeInput,
 	MyFileInput,
 	MyForm,
@@ -17,9 +18,10 @@ import {
 	MyTimeInput,
 	MyWeekInput,
 	useMyForm,
-	type ColourType,
-	type TimeType,
-	type WeekType,
+	type MyColourType,
+	type MyDateRangeType,
+	type MyTimeType,
+	type MyWeekType,
 } from '../../lib/main';
 import { dateFormatter } from '../../lib/MyForm/components/utils';
 
@@ -27,9 +29,9 @@ type FormType = {
 	text: string;
 	email: string;
 	tel: string;
-	time: TimeType;
-	week: WeekType;
-	colour: ColourType;
+	time: MyTimeType;
+	week: MyWeekType;
+	colour: MyColourType;
 	date: Date;
 	datetime: Date;
 	month: Date;
@@ -40,6 +42,7 @@ type FormType = {
 	radio: number;
 	checkbox: number;
 	file: File[];
+	daterange: MyDateRangeType;
 };
 
 export default function ABasicInputs() {
@@ -58,52 +61,61 @@ export default function ABasicInputs() {
 
 	return (
 		<div className="demo-container">
-			<h2>Basic Inputs</h2>
+			<h2>Basic Inputs and Date Range</h2>
 			<MyForm<FormType> formId={form.formId} onSubmit={(_, data) => setData(data)}>
 				<div className="grid-inputs-4">
-					<MyLabel htmlFor="text-input" required>
+					<MyLabel for="text-input" required>
 						Text:
 					</MyLabel>
 					<MyTextInput id="text-input" name="text" type="text" required />
 
-					<MyLabel htmlFor="email-input">Email:</MyLabel>
+					<MyLabel for="email-input">Email:</MyLabel>
 					<MyTextInput id="email-input" name="email" type="email" />
 
-					<MyLabel htmlFor="tel-input">Tel:</MyLabel>
+					<MyLabel for="tel-input">Tel:</MyLabel>
 					<MyTextInput id="tel-input" name="tel" type="tel" pattern="(011-[0-9]{8}|01[02-9]-[0-9]{7})" />
 
-					<MyLabel htmlFor="time-input">Time:</MyLabel>
+					<MyLabel for="time-input">Time:</MyLabel>
 					<MyTimeInput id="time-input" name="time" />
 
-					<MyLabel htmlFor="week-input">Week:</MyLabel>
+					<MyLabel for="week-input">Week:</MyLabel>
 					<MyWeekInput id="week-input" name="week" />
 
-					<MyLabel htmlFor="colour-input">Colour:</MyLabel>
+					<MyLabel for="colour-input">Colour:</MyLabel>
 					<MyColourInput id="colour-input" name="colour" />
 
-					<MyLabel htmlFor="date-input">Date:</MyLabel>
+					<MyLabel for="date-input">Date:</MyLabel>
 					<MyDateInput id="date-input" name="date" />
 
-					<MyLabel htmlFor="datetime-input">Date Time:</MyLabel>
+					<MyLabel for="datetime-input">Date Time:</MyLabel>
 					<MyDateTimeInput id="datetime-input" name="datetime" />
 
-					<MyLabel htmlFor="month-input">Month:</MyLabel>
+					<MyLabel for="month-input">Month:</MyLabel>
 					<MyMonthInput id="month-input" name="month" />
 
-					<MyLabel htmlFor="range-input">Range:</MyLabel>
+					<MyLabel for="range-input">Range:</MyLabel>
 					<MyRangeInput id="range-input" name="range" />
 
-					<MyLabel htmlFor="number-input">Number:</MyLabel>
+					<MyLabel for="number-input">Number:</MyLabel>
 					<MyNumberInput id="number-input" name="number" />
 
-					<MyLabel htmlFor="positive-input">Positive:</MyLabel>
+					<MyLabel for="positive-input">Positive:</MyLabel>
 					<MyPositiveNumberInput id="positive-input" name="positive" />
 
-					<MyLabel htmlFor="password-input">Password:</MyLabel>
+					<MyLabel for="password-input">Password:</MyLabel>
 					<MyPasswordInput id="password-input" name="password" />
 
-					<MyLabel htmlFor="file-input">File:</MyLabel>
+					<MyLabel for="file-input">File:</MyLabel>
 					<MyFileInput id="file-input" name="file" multiple />
+
+					<MyLabel for="file-input">Date Range:</MyLabel>
+
+					<MyDateRangeInput
+						id="date-range-input"
+						name="daterange"
+						min={new Date('2015-05-15')}
+						max={new Date('2035-05-15')}
+					/>
 				</div>
 
 				<div className="margin-div">
@@ -112,7 +124,7 @@ export default function ABasicInputs() {
 					<MyRadioInput id="radio3" name="radio" value={3} prefix="3" />
 					<MyRadioInput id="radio4" name="radio" value={4} prefix="4" />
 
-					<MyLabel htmlFor="radio-synced">Radio value (Synced):</MyLabel>
+					<MyLabel for="radio-synced">Radio value (Synced):</MyLabel>
 					<MyNumberInput id="radio-synced" name="radio" />
 				</div>
 
@@ -122,7 +134,7 @@ export default function ABasicInputs() {
 					<MyCheckboxInput id="checkbox13" name="checkbox" checkedValue={13} prefix="13" />
 					<MyCheckboxInput id="checkbox14" name="checkbox" checkedValue={14} prefix="14" />
 
-					<MyLabel htmlFor="checkbox-synced">Checkbox value (Synced):</MyLabel>
+					<MyLabel for="checkbox-synced">Checkbox value (Synced):</MyLabel>
 					<MyNumberInput id="checkbox-synced" name="checkbox" />
 				</div>
 

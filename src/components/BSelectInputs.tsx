@@ -44,18 +44,28 @@ export default function BSelectInputs() {
 		return JSON.stringify(data);
 	}
 
+	function setInvalid() {
+		form.initialiseForm({
+			select: { value_a: 'Unknown', value_b: 'Value' },
+			simple_combobox: { value_a: 'Unknown', value_b: 'Value' },
+			combobox: { value_a: 'Unknown', value_b: 'Value' },
+			columncombobox: { value_a: 'Unknown', value_b: 'Value' },
+			multi_combobox: [{ value_a: 'Unknown', value_b: 'Value' }],
+		});
+	}
+
 	return (
 		<div className="demo-container">
 			<h2>Select Inputs and Combo Boxes</h2>
 			<MyForm<FormType> formId={form.formId} onSubmit={(_, data) => setData(data)}>
 				<div className="grid-inputs-2">
-					<MyLabel htmlFor="select-input">Select:</MyLabel>
+					<MyLabel for="select-input">Select:</MyLabel>
 					<MySelectInput id="select-input" name="select" options={SELECT_OPTIONS_LABELLED} />
 
-					<MyLabel htmlFor="simplecombobox-input">Simple Combo Box:</MyLabel>
+					<MyLabel for="simplecombobox-input">Simple Combo Box:</MyLabel>
 					<MySimpleComboBoxInput id="simplecombobox-input" name="simple_combobox" options={SELECT_OPTIONS_LABELLED} />
 
-					<MyLabel htmlFor="combobox-input">Combo Box:</MyLabel>
+					<MyLabel for="combobox-input">Combo Box:</MyLabel>
 					<MyComboBoxInput
 						id="combobox-input"
 						name="combobox"
@@ -64,9 +74,9 @@ export default function BSelectInputs() {
 						optionElement={(value) => <strong>{value.value_a}</strong>}
 					/>
 
-					<MyLabel htmlFor="combobox-input">Combo Box (Filter on Type):</MyLabel>
+					<MyLabel for="combobox-filter-input">Combo Box (Filter on Type):</MyLabel>
 					<MyComboBoxInput
-						id="combobox-input"
+						id="combobox-filter-input"
 						name="combobox"
 						options={SELECT_OPTIONS}
 						optionKey={(value) => value.value_a}
@@ -74,18 +84,18 @@ export default function BSelectInputs() {
 						filterOnType
 					/>
 
-					<MyLabel htmlFor="columncombobox-input">Combo Box with Columns:</MyLabel>
+					<MyLabel for="columncombobox-input">Combo Box with Columns:</MyLabel>
 					<MyColumnComboBoxInput
-						id="combobox-input"
+						id="columncombobox-input"
 						name="columncombobox"
 						options={SELECT_OPTIONS}
 						optionKey={(value) => value.value_a}
 						columns={['value_a', (value) => value.value_b]}
 					/>
 
-					<MyLabel htmlFor="columncombobox-input">Multiselect Combo Box:</MyLabel>
+					<MyLabel for="multicombobox-input">Multiselect Combo Box:</MyLabel>
 					<MyMultiComboBoxInput
-						id="combobox-input"
+						id="multicombobox-input"
 						name="multi_combobox"
 						options={SELECT_OPTIONS}
 						optionKey={(value) => value.value_a}
@@ -94,9 +104,14 @@ export default function BSelectInputs() {
 				</div>
 
 				<div className="buttons">
+					<button type="button" onClick={setInvalid} className="btn">
+						Set Invalid Values
+					</button>
+
 					<button type="submit" className="btn">
 						Submit
 					</button>
+
 					<button type="button" onClick={() => form.resetForm()} className="btn">
 						Clear
 					</button>

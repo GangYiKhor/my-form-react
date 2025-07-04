@@ -1,8 +1,8 @@
 export const EMPTY_VALUE = {};
-export type TimeType = { hour: number; minute: number };
-export type WeekType = { year: number; week: number };
-export type DateRangeType = { start?: Date; end?: Date };
-export type ColourType = `#${string}`;
+export type MyTimeType = { hour: number; minute: number };
+export type MyWeekType = { year: number; week: number };
+export type MyDateRangeType = { start?: Date; end?: Date };
+export type MyColourType = `#${string}`;
 
 function padDate(num: number) {
 	if (num < 10) return `0${num}`;

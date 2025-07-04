@@ -1,33 +1,25 @@
 import { useState } from 'react';
-import { MyDateRangeInput, MyForm, useMyForm } from '../../lib/main';
+import { MyForm, MyTextAreaInput, useMyForm } from '../../lib/main';
 
 type FormType = {
-	daterange: { value_a: string; value_b: string };
+	textarea: string;
 };
 
-export default function CDateRangeInput() {
-	const form = useMyForm<FormType>('date_range_input');
+export default function CTextAreaInput() {
+	const form = useMyForm<FormType>('text_area_input');
 	const [data, setData] = useState<Partial<FormType>>({});
 	const formData = form.getFormData();
 
 	function formatter(data: FormType[keyof FormType]) {
-		if (!data) return '';
-		if (typeof data === 'string') return data;
-		if (typeof data === 'number') return data;
-		return JSON.stringify(data);
+		return data;
 	}
 
 	return (
 		<div className="demo-container">
-			<h2>Date Range Input</h2>
+			<h2>Text Area</h2>
 			<MyForm<FormType> formId={form.formId} onSubmit={(_, data) => setData(data)}>
-				<div className="grid-inputs-2">
-					<MyDateRangeInput
-						id="date-range-input"
-						name="daterange"
-						min={new Date('2015-05-15')}
-						max={new Date('2035-05-15')}
-					/>
+				<div className="grid-inputs">
+					<MyTextAreaInput id="textarea-input" name="textarea" fillRight showGrid />
 				</div>
 
 				<div className="buttons">

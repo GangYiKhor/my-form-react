@@ -14,7 +14,7 @@ import {
 	isSameDay,
 	isSameDayOrAfter,
 	isSameDayOrBefore,
-	type DateRangeType,
+	type MyDateRangeType,
 } from './utils';
 
 const MONTH_NAME = [
@@ -51,7 +51,7 @@ type PropType = {
 	name: string;
 	prefix?: string | React.ReactNode;
 	suffix?: string | React.ReactNode;
-	defaultValue?: DateRangeType;
+	defaultValue?: MyDateRangeType;
 	min?: Date;
 	max?: Date;
 	onFocus?(): void;
@@ -86,7 +86,7 @@ export default function MyDateRangeInput({
 	disabled = false,
 	containerProps,
 }: PropType & HtmlProps) {
-	const { fieldData, updateField, deleteField, setFieldProperties } = useFormComponent<DateRangeType>(name);
+	const { fieldData, updateField, deleteField, setFieldProperties } = useFormComponent<MyDateRangeType>(name);
 	const inputButtonRef = useRef<HTMLButtonElement>(null);
 	const startInputRef = useRef<HTMLInputElement>(null);
 	const endInputRef = useRef<HTMLInputElement>(null);
@@ -450,11 +450,12 @@ export default function MyDateRangeInput({
 			noBackground={noBackground}
 			disabled={disabled}
 		>
-			<MyPrefix id={`${id}_start`} prefix={prefix} />
+			<MyPrefix id={id} prefix={prefix} />
 
 			<div className="date-range-input-container">
 				<button
 					ref={inputButtonRef}
+					id={id}
 					type="button"
 					className="date-range-input"
 					onClick={toggleDropdown}
@@ -470,7 +471,7 @@ export default function MyDateRangeInput({
 						className="_date-range-input_"
 						disabled
 					/>
-					<span aria-description="to">-</span>
+					<span aria-description="to">{'\u2013'}</span>
 					<input
 						type="date"
 						id={`${id}_end`}
@@ -649,7 +650,7 @@ export default function MyDateRangeInput({
 				<CloseIcon />
 			</button>
 
-			<Suffix id={`${id}_start`} suffix={suffix} />
+			<Suffix id={id} suffix={suffix} />
 		</MyGeneralInputContainer>
 	);
 }

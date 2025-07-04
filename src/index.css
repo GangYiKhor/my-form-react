@@ -3,6 +3,11 @@ h1 {
 	margin-bottom: 0;
 }
 
+.dark {
+	background-color: black;
+	color: white;
+}
+
 .wrapper {
 	display: grid;
 	row-gap: 8px;
@@ -12,6 +17,12 @@ h1 {
 	border: solid 2px black;
 	padding: 0 16px 24px;
 	border-radius: 16px;
+}
+
+.grid-inputs {
+	display: grid;
+	row-gap: 4px;
+	align-items: center;
 }
 
 .grid-inputs-2 {
@@ -57,4 +68,9 @@ table.table-data {
 .table-data :is(th, td) {
 	padding: 4px 8px;
 	border: solid 1px black;
+}
+
+.dark .table-data :is(th, td) {
+	padding: 4px 8px;
+	border-color: white;
 }

@@ -104,7 +104,7 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 		setFormData((state) => {
 			state = { ...state };
 			state[formId] = {};
-			for (const [name, { defaultValue }] of Object.entries(formProperties.current?.[formId])) {
+			for (const [name, { defaultValue }] of Object.entries(formProperties.current?.[formId] ?? {})) {
 				if (defaultValue == undefined) continue;
 				state[formId][name] = { value: defaultValue, valid: true };
 			}
@@ -255,12 +255,15 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 						if (result === false) {
 							validateField(formId, field, false);
 							valid = false;
+							continue;
 						} else if (typeof result === 'string') {
 							validateField(formId, field, false);
 							setInvalidReason(formId, field, result);
 							valid = false;
+							continue;
 						}
 					}
+					validateField(formId, field, true);
 				}
 
 				return valid;

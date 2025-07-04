@@ -2,17 +2,17 @@ import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
 import useGeneralInput from './hooks/useGeneralInput';
-import type { TimeType } from './utils';
+import type { MyTimeType } from './utils';
 
 type PropType = {
 	id: string;
 	name: string;
 	prefix?: string | React.ReactNode;
 	suffix?: string | React.ReactNode;
-	defaultValue?: TimeType;
+	defaultValue?: MyTimeType;
 	parseAsUtc?: boolean;
-	onChange?(event: React.ChangeEvent<HTMLInputElement>, input: TimeType | null): void;
-	validator?(input: TimeType | null): boolean | string;
+	onChange?(event: React.ChangeEvent<HTMLInputElement>, input: MyTimeType | null): void;
+	validator?(input: MyTimeType | null): boolean | string;
 	validateImmediately?: boolean;
 	required?: boolean;
 	persistOnUnmount?: boolean;
@@ -45,7 +45,7 @@ export default function MyTimeInput({
 	inputProps,
 	containerProps,
 }: PropType & HtmlProps) {
-	const { inputRef, onChange } = useGeneralInput<TimeType>({
+	const { inputRef, onChange } = useGeneralInput<MyTimeType>({
 		name,
 		defaultValue,
 		required,

@@ -11,6 +11,7 @@ $light-border-gray: rgb(107, 114, 128);
 $light-border-white: rgb(209, 213, 219);
 $light-border-invalid: rgb(255, 0, 0);
 $light-text-black: rgb(0, 0, 0);
+$light-text-darkgray: rgb(45, 52, 61);
 $light-text-gray: rgb(75, 85, 99);
 $light-text-red: rgb(239, 68, 68);
 $light-grid-black: rgba(0, 0, 0, 0.2);
@@ -28,6 +29,7 @@ $dark-border-gray: rgb(107, 114, 128);
 $dark-border-white: rgb(46, 54, 66);
 $dark-border-invalid: rgb(255, 0, 0);
 $dark-text-black: rgb(255, 255, 255);
+$dark-text-darkgray: rgb(223, 227, 231);
 $dark-text-gray: rgb(209, 213, 219);
 $dark-text-red: rgb(239, 68, 68);
 $dark-grid-black: rgba(255, 255, 255, 0.2);
@@ -136,10 +138,6 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 		background-color: transparent;
 		line-height: 1;
 		font-weight: 400;
-
-		&:disabled {
-			cursor: not-allowed;
-		}
 	}
 
 	input {
@@ -202,12 +200,24 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 		font-size: 16px;
 	}
 
+	&.resize-both textarea {
+		resize: both;
+	}
+
+	&.resize-vertical textarea {
+		resize: vertical;
+	}
+
+	&.resize-horizontal textarea {
+		resize: horizontal;
+	}
+
 	&.fill-right textarea {
 		flex-grow: 1;
 		resize: vertical;
 	}
 
-	&.non-resizeable textarea {
+	&.resize-none textarea {
 		resize: none;
 	}
 
@@ -223,6 +233,9 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 .my-form-input {
 	select {
 		padding-top: 6px;
+		&:enabled {
+			cursor: pointer;
+		}
 	}
 }
 
@@ -321,6 +334,8 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 .my-form-input {
 	.date-range-input-container {
 		position: relative;
+		flex-grow: 1;
+		display: block;
 	}
 
 	.date-range-input {
@@ -334,13 +349,14 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 		cursor: pointer;
 
 		&:disabled {
-			cursor: not-allowed;
+			pointer-events: none;
 		}
 
 		> input {
 			border: none;
 			pointer-events: none;
-			text-align: right;
+			text-align: center;
+			padding-left: 40px;
 		}
 
 		> span {
@@ -667,7 +683,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 			select,
 			button,
 			textarea {
-				color: $light-text-gray;
+				color: $light-text-darkgray;
 			}
 		}
 	}
@@ -916,7 +932,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 				select,
 				button,
 				textarea {
-					color: $dark-text-gray;
+					color: $dark-text-darkgray;
 				}
 			}
 		}
@@ -1120,7 +1136,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 			select,
 			button,
 			textarea {
-				color: $dark-text-gray;
+				color: $dark-text-darkgray;
 			}
 		}
 	}

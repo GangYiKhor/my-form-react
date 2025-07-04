@@ -2,16 +2,16 @@ import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
 import useGeneralInput from './hooks/useGeneralInput';
-import { type ColourType } from './utils';
+import { type MyColourType } from './utils';
 
 type PropType = {
 	id: string;
 	name: string;
 	prefix?: string | React.ReactNode;
 	suffix?: string | React.ReactNode;
-	defaultValue?: ColourType;
-	onChange?(event: React.ChangeEvent<HTMLInputElement>, input: ColourType): void;
-	validator?(input: ColourType): boolean | string;
+	defaultValue?: MyColourType;
+	onChange?(event: React.ChangeEvent<HTMLInputElement>, input: MyColourType): void;
+	validator?(input: MyColourType): boolean | string;
 	validateImmediately?: boolean;
 	required?: boolean;
 	persistOnUnmount?: boolean;
@@ -42,13 +42,13 @@ export default function MyColourInput({
 	inputProps,
 	containerProps,
 }: PropType & HtmlProps) {
-	const { inputRef, onChange } = useGeneralInput<ColourType>({
+	const { inputRef, onChange } = useGeneralInput<MyColourType>({
 		name,
 		emptyValue: '#000000',
 		defaultValue,
 		required,
 		persistOnUnmount,
-		parser: (v) => v as ColourType,
+		parser: (v) => v as MyColourType,
 		toString: (v) => v ?? '',
 		toInternal: (v) => v ?? '#000000',
 		comparisor: (data, value) => data === value,

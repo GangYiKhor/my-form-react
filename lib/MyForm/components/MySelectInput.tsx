@@ -23,6 +23,7 @@ type PropType<T = any> = {
 	persistOnUnmount?: boolean;
 	noBorder?: boolean;
 	noBackground?: boolean;
+	setUndefinedIfManualUpdateIsInvalid?: boolean;
 	disabled?: boolean;
 };
 
@@ -48,6 +49,7 @@ export default function MySelectInput<T = any>({
 	persistOnUnmount = false,
 	noBorder,
 	noBackground,
+	setUndefinedIfManualUpdateIsInvalid = false,
 	disabled = false,
 	selectProps,
 	placeholderOptionProps,
@@ -69,7 +71,7 @@ export default function MySelectInput<T = any>({
 	}, []);
 
 	useEffect(() => {
-		if (JSON.stringify(options) === JSON.stringify(options)) return;
+		if (JSON.stringify(options) === JSON.stringify(internalOptions)) return;
 		const existings = new Set<string>();
 		for (const option of options) {
 			if (existings.has(option.label)) {
@@ -115,11 +117,15 @@ export default function MySelectInput<T = any>({
 			const foundIndex = options.findIndex(({ value }) => isEqual(value, newData));
 			if (foundIndex === -1) {
 				inputRef.current!.value = '';
-				internalRef.current = null;
-				updateField({ value: null });
+				if (setUndefinedIfManualUpdateIsInvalid) {
+					internalRef.current = null;
+					updateField({ value: null, valid: true });
+				} else {
+					internalRef.current = newData;
+				}
 			} else {
 				inputRef.current!.value = `${foundIndex}`;
-				internalRef.current = internalOptions[foundIndex]?.value ?? null;
+				internalRef.current = newData;
 			}
 		}
 		rerender();

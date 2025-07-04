@@ -14,7 +14,7 @@ type PropType = {
 	persistOnUnmount?: boolean;
 	inputDelay?: number;
 	fillRight?: boolean;
-	nonResizeable?: boolean;
+	resize?: 'both' | 'vertical' | 'horizontal' | 'none';
 	showGrid?: boolean;
 	noBorder?: boolean;
 	noBackground?: boolean;
@@ -37,8 +37,8 @@ export default function MyTextAreaInput({
 	required = false,
 	persistOnUnmount = false,
 	inputDelay,
-	fillRight,
-	nonResizeable,
+	fillRight = false,
+	resize = 'both',
 	showGrid,
 	noBorder,
 	noBackground,
@@ -66,7 +66,7 @@ export default function MyTextAreaInput({
 		<MyGeneralInputContainer
 			name={name}
 			containerProps={containerProps}
-			className={clsx(fillRight && 'fill-right', nonResizeable && 'non-resizeable', showGrid && 'show-grid')}
+			className={clsx(fillRight && 'fill-right', showGrid && 'show-grid', `resize-${resize}`)}
 			noBorder={noBorder}
 			noBackground={noBackground}
 			disabled={disabled}

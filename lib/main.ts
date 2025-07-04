@@ -21,7 +21,7 @@ export { default as MyTextAreaInput } from './MyForm/components/MyTextAreaInput'
 export { default as MyTextInput } from './MyForm/components/MyTextInput';
 export { default as MyTimeInput } from './MyForm/components/MyTimeInput';
 export { default as MyWeekInput } from './MyForm/components/MyWeekInput';
-export type { ColourType, TimeType, WeekType } from './MyForm/components/utils';
+export type { MyColourType, MyDateRangeType, MyTimeType, MyWeekType } from './MyForm/components/utils';
 export { default as MyForm } from './MyForm/MyForm';
 export { useMyForm, useMyFullForm } from './MyForm/MyFormContext';
 export { default as MyFormProvider } from './MyForm/MyFormProvider';

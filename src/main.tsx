@@ -6,7 +6,7 @@ import App from './App.tsx';
 const root = createRoot(document.getElementById('root')!);
 root.render(
 	<StrictMode>
-		<MyFormProvider>
+		<MyFormProvider darkMode="class">
 			<App />
 		</MyFormProvider>
 	</StrictMode>

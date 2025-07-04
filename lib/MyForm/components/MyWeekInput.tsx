@@ -2,16 +2,16 @@ import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
 import useGeneralInput from './hooks/useGeneralInput';
-import type { WeekType } from './utils';
+import type { MyWeekType } from './utils';
 
 type PropType = {
 	id: string;
 	name: string;
 	prefix?: string | React.ReactNode;
 	suffix?: string | React.ReactNode;
-	defaultValue?: WeekType;
-	onChange?(event: React.ChangeEvent<HTMLInputElement>, input: WeekType): void;
-	validator?(input: WeekType): boolean | string;
+	defaultValue?: MyWeekType;
+	onChange?(event: React.ChangeEvent<HTMLInputElement>, input: MyWeekType): void;
+	validator?(input: MyWeekType): boolean | string;
 	validateImmediately?: boolean;
 	required?: boolean;
 	persistOnUnmount?: boolean;
@@ -42,7 +42,7 @@ export default function MyWeekInput({
 	inputProps,
 	containerProps,
 }: PropType & HtmlProps) {
-	const { inputRef, onChange } = useGeneralInput<WeekType>({
+	const { inputRef, onChange } = useGeneralInput<MyWeekType>({
 		name,
 		emptyValue: '',
 		defaultValue,

@@ -33,6 +33,7 @@ type PropType<T = any> = {
 	persistOnUnmount?: boolean;
 	noBorder?: boolean;
 	noBackground?: boolean;
+	removeIfManualUpdateIsInvalid?: boolean;
 	disabled?: boolean;
 };
 
@@ -65,6 +66,7 @@ export default function MyMultiComboBoxInput<T = any>({
 	persistOnUnmount = false,
 	noBorder,
 	noBackground,
+	removeIfManualUpdateIsInvalid = false,
 	disabled = false,
 	inputProps,
 	containerProps,
@@ -132,12 +134,15 @@ export default function MyMultiComboBoxInput<T = any>({
 		if (newData === null) {
 			if (internalRef.current.length === 0) return;
 			internalRef.current = [];
-		} else {
+		} else if (removeIfManualUpdateIsInvalid) {
 			const found = newData.map((newV) => internalRef.current.find((oldV) => isEqual(newV, oldV)));
 			if (found.every((v) => v !== undefined)) return;
 			const setData = found.map((v) => internalOptions.find((opV) => isEqual(v, opV))).filter((v) => v !== undefined);
 			internalRef.current = setData;
+		} else {
+			internalRef.current = newData;
 		}
+
 		rerender();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [_fieldData]);
