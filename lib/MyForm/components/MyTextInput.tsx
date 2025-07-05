@@ -12,6 +12,7 @@ type PropType = FieldBasicType &
 		type?: 'text' | 'email' | 'url' | 'tel' | 'search';
 		/** Pattern for tel input type */
 		pattern?: string;
+		placeholder?: string;
 		/** Default value for the field */
 		defaultValue?: string;
 		/** onChange event with parsed input value as second parameter */
@@ -34,6 +35,7 @@ export default function MyTextInput({
 	name,
 	type = 'text',
 	pattern,
+	placeholder,
 	prefix,
 	suffix,
 	defaultValue = '',
@@ -84,6 +86,7 @@ export default function MyTextInput({
 				pattern={pattern}
 				required={required}
 				disabled={disabled}
+				placeholder={placeholder}
 			/>
 			<Suffix id={id} suffix={suffix} />
 		</MyGeneralInputContainer>

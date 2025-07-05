@@ -16,6 +16,7 @@ const OPTION_HEIGHT = 23;
 type PropType<T = any> = FieldBasicType &
 	FieldPrefixType &
 	CommonComboBoxType & {
+		placeholder?: string;
 		/** Unique key of the option to identify if an option is selected */
 		optionKey: (value: T) => string;
 		/** Custom function to generate the element for dropdown option row */
@@ -52,6 +53,7 @@ export default function MyComboBoxInput<T = any>({
 	name: _name,
 	prefix,
 	suffix,
+	placeholder,
 	optionKey,
 	optionElement: _optionElement,
 	options,
@@ -238,6 +240,7 @@ export default function MyComboBoxInput<T = any>({
 					ref={inputRef}
 					required={required}
 					disabled={disabled}
+					placeholder={placeholder}
 				/>
 
 				<div className="input-button-container">

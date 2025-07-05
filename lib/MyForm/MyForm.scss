@@ -15,6 +15,7 @@ $light-text-darkgray: rgb(45, 52, 61);
 $light-text-gray: rgb(75, 85, 99);
 $light-text-red: rgb(239, 68, 68);
 $light-grid-black: rgba(0, 0, 0, 0.2);
+$light-shadow-black: rgba(0, 0, 0, 0.2);
 
 $dark-background-darkgray: rgb(107, 114, 128);
 $dark-background-gray: rgb(79, 86, 102);
@@ -32,11 +33,13 @@ $dark-text-black: rgb(255, 255, 255);
 $dark-text-darkgray: rgb(223, 227, 231);
 $dark-text-gray: rgb(209, 213, 219);
 $dark-text-red: rgb(239, 68, 68);
-$dark-grid-black: rgba(255, 255, 255, 0.2);
+$dark-grid-black: rgba(255, 255, 255, 0.3);
+$dark-shadow-black: rgba(255, 255, 255, 0.3);
 
 // Label
 .my-form-label {
-	padding-right: 6px;
+	margin: 0;
+	padding: 0 6px 0 0;
 
 	.required-label {
 		color: $light-text-red;
@@ -61,14 +64,18 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 // Prefix and Suffix
 .my-form-input {
 	.prefix {
-		padding-right: 4px;
+		margin: 0;
+		padding: 0 4px 0 0;
+		cursor: text;
 		&:has(+ :is(input[type='range'], input[type='radio'], input[type='checkbox'])) {
 			align-self: center;
 		}
 	}
 
 	.suffix {
-		padding-left: 4px;
+		margin: 0;
+		padding: 0 0 0 4px;
+		cursor: text;
 	}
 
 	:is(input[type='range'], input[type='radio'], input[type='checkbox']) + .suffix {
@@ -79,6 +86,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 // Buttons
 .my-form-input {
 	.my-form-button {
+		margin: 0;
 		height: 20px;
 		width: 20px;
 		padding: 0;
@@ -92,6 +100,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	}
 
 	.my-form-small-button {
+		margin: 0;
 		height: 16px;
 		width: 16px;
 		padding: 0;
@@ -105,12 +114,16 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	}
 
 	svg {
+		margin: 0;
+		padding: 0;
 		height: 100%;
 		width: 100%;
 	}
 
 	.input-button-container {
 		position: absolute;
+		margin: 0;
+		padding: 0;
 		top: 0;
 		right: 0;
 		height: 100%;
@@ -130,6 +143,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	input,
 	select,
 	textarea {
+		margin: 0;
 		padding: 8px 4px 0 4px;
 		min-height: 20px;
 		border: none;
@@ -167,15 +181,13 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 // Input Sizes
 .my-form-input {
 	input,
-	select {
-		font-size: 16px;
-	}
-
+	select,
 	label {
-		font-size: 14px;
+		font-size: 16px;
 	}
 }
 
+// Label Sizes
 .my-form-label {
 	font-size: 18px;
 }
@@ -183,7 +195,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 // Password Input
 .my-form-button {
 	input:has(+ .toggle-password) {
-		padding-right: 24px;
+		padding: 0 24px 0 0;
 	}
 
 	.toggle-password {
@@ -232,7 +244,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 // Select
 .my-form-input {
 	select {
-		padding-top: 6px;
+		padding: 6px 0 0 0;
 		&:enabled {
 			cursor: pointer;
 		}
@@ -248,16 +260,19 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 
 		input {
 			width: calc(100% - 44px - 4px);
-			padding-right: 44px;
+			padding: 8px 44px 0 4px;
 		}
 	}
 
 	.multicombobox {
 		flex-grow: 1;
+		overflow: auto;
 	}
 
 	.combobox-options {
 		position: absolute;
+		margin: 0;
+		padding: 0;
 		overflow: auto;
 		min-width: calc(100% - 4px);
 		max-width: calc(100% - 4px);
@@ -272,6 +287,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 
 	.combobox-option {
 		display: block;
+		margin: 0;
 		padding: 4px 8px;
 		border: none;
 		border-radius: 0;
@@ -309,11 +325,13 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 
 	.multicombobox-selected {
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
+		overflow: auto;
 		gap: 2px;
 		align-items: start;
 
 		div {
+			margin: 0;
 			display: flex;
 			gap: 0;
 			padding: 0 4px;
@@ -327,6 +345,10 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 				display: flex;
 			}
 		}
+
+		&.selected-nowrap span {
+			text-wrap: nowrap;
+		}
 	}
 }
 
@@ -336,12 +358,15 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 		position: relative;
 		flex-grow: 1;
 		display: block;
+		margin: 0;
+		padding: 0;
 	}
 
 	.date-range-input {
 		flex-grow: 1;
 		display: inline-flex;
 		align-items: baseline;
+		margin: 0;
 		padding: 0 4px 0 4px;
 		border: none;
 		border-radius: 0;
@@ -356,7 +381,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 			border: none;
 			pointer-events: none;
 			text-align: center;
-			padding-left: 40px;
+			padding: 8px 4px 0 40px;
 		}
 
 		> span {
@@ -710,6 +735,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	.combobox-options {
 		background-color: $light-background-white;
 		border: solid 2px $light-border-white;
+		box-shadow: 0 4px 12px $light-shadow-black;
 	}
 
 	.combobox-option,
@@ -756,6 +782,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 		background-color: $light-background-white;
 		color: $light-text-black;
 		border: solid 2px $light-border-white;
+		box-shadow: 0 4px 12px $light-shadow-black;
 	}
 
 	.date-calendar-year,
@@ -897,6 +924,29 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	}
 }
 
+// Layout
+.my-label-input-pair {
+	display: inline-flex;
+	&.arrange-horizontal {
+		flex-direction: row;
+		align-items: center;
+	}
+
+	&.arrange-vertical {
+		flex-direction: column;
+		align-items: start;
+		gap: 2px;
+		label {
+			width: 100%;
+		}
+	}
+
+	&.outer-border {
+		border: solid 2px $light-border-white;
+		padding: 4px;
+	}
+}
+
 // Dark Theme Settings
 @media (prefers-color-scheme: dark) {
 	.my-form-label.dark-browser {
@@ -959,6 +1009,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 		.combobox-options {
 			background-color: $dark-background-white;
 			border: solid 2px $dark-border-white;
+			box-shadow: 0 4px 12px $dark-shadow-black;
 		}
 
 		.combobox-option,
@@ -1005,6 +1056,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 			background-color: $dark-background-white;
 			color: $dark-text-black;
 			border: solid 2px $dark-border-white;
+			box-shadow: 0 4px 12px $dark-shadow-black;
 		}
 
 		.date-calendar-year,
@@ -1163,6 +1215,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 	.combobox-options {
 		background-color: $dark-background-white;
 		border: solid 2px $dark-border-white;
+		box-shadow: 0 4px 12px $dark-shadow-black;
 	}
 
 	.combobox-option,
@@ -1209,6 +1262,7 @@ $dark-grid-black: rgba(255, 255, 255, 0.2);
 		background-color: $dark-background-white;
 		color: $dark-text-black;
 		border: solid 2px $dark-border-white;
+		box-shadow: 0 4px 12px $dark-shadow-black;
 	}
 
 	.date-calendar-year,

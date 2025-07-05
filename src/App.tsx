@@ -7,6 +7,7 @@ import FValidators from './components/FValidators';
 import GDisplayOnlyField from './components/GDisplayOnlyField';
 import HFormTheme from './components/HFormTheme';
 import ICustomComponent from './components/ICustomComponent';
+import JBasicInputLayouts from './components/JBasicInputLayouts';
 import './index.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
 			<GDisplayOnlyField />
 			<HFormTheme />
 			<ICustomComponent />
+			<JBasicInputLayouts />
 		</div>
 	);
 }

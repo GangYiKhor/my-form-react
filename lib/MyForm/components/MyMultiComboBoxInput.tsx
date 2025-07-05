@@ -16,6 +16,11 @@ const OPTION_HEIGHT = 23;
 type PropType<T = any> = FieldBasicType &
 	FieldPrefixType &
 	CommonComboBoxType & {
+		placeholder?: string;
+		/** Height of selected section */
+		selectedHeight?: number | string;
+		/** Set selected item to text nowrap */
+		selectedNoWrap?: boolean;
 		/** Unique key of the option to identify if an option is selected */
 		optionKey: (value: T) => string;
 		/** Custom function to generate the element for dropdown option row */
@@ -50,6 +55,9 @@ export default function MyMultiComboBoxInput<T = any>({
 	name: _name,
 	prefix,
 	suffix,
+	placeholder,
+	selectedHeight,
+	selectedNoWrap = false,
 	optionKey,
 	optionElement: _optionElement,
 	options,
@@ -214,7 +222,10 @@ export default function MyMultiComboBoxInput<T = any>({
 			<MyPrefix id={id} prefix={prefix} />
 
 			<div className="multicombobox">
-				<div className="multicombobox-selected">
+				<div
+					className={clsx('multicombobox-selected small-scrollbar', selectedNoWrap && 'selected-nowrap')}
+					style={{ maxHeight: selectedHeight }}
+				>
 					{internalRef.current.map((value, index) => (
 						<div key={optionKey(value)}>
 							<span>{optionKey(value)}</span>
@@ -237,6 +248,7 @@ export default function MyMultiComboBoxInput<T = any>({
 						ref={inputRef}
 						required={required}
 						disabled={disabled}
+						placeholder={placeholder}
 					/>
 
 					<div className="input-button-container">

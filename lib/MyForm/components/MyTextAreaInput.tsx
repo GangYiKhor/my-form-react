@@ -8,6 +8,7 @@ type PropType = FieldBasicType &
 	InputDelayType & {
 		/** Default value for the field */
 		defaultValue?: string;
+		placeholder?: string;
 		/** Rows of textarea */
 		rows?: number;
 		/** onChange event with parsed input value as second parameter */
@@ -37,6 +38,7 @@ export default function MyTextAreaInput({
 	id,
 	name,
 	defaultValue = '',
+	placeholder,
 	rows,
 	onChange: _onChange,
 	validator,
@@ -87,6 +89,7 @@ export default function MyTextAreaInput({
 				rows={rows}
 				required={required}
 				disabled={disabled}
+				placeholder={placeholder}
 			></textarea>
 		</MyGeneralInputContainer>
 	);

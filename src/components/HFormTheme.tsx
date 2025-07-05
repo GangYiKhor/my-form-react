@@ -177,14 +177,18 @@ export default function HFormTheme() {
 						optionKey={(value) => value.value_a}
 						columns={['value_a', (value) => value.value_b]}
 					/>
+				</div>
 
+				<div className="small-div">
 					<MyLabel for="dark-multicombobox-input">Multiselect Combo Box:</MyLabel>
 					<MyMultiComboBoxInput
 						id="dark-multicombobox-input"
 						name="multi_combobox"
 						options={SELECT_OPTIONS}
-						optionKey={(value) => value.value_a}
+						optionKey={(value) => value.value_a + ' ' + value.value_b}
 						optionElement={(value) => <i>{value.value_a}</i>}
+						selectedHeight={40}
+						selectedNoWrap
 					/>
 				</div>
 

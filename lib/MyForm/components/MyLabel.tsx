@@ -3,7 +3,7 @@ import { clsx } from '../utils';
 
 type PropType = {
 	/** htmlFor */
-	for: string;
+	for?: string;
 	/** Show required icon */
 	required?: boolean;
 	children: string | React.ReactNode;

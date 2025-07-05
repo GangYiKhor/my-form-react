@@ -10,6 +10,7 @@ type PropType = FieldBasicType &
 	InputDelayType & {
 		/** Default value for the field */
 		defaultValue?: number;
+		placeholder?: string;
 		/** onChange event with parsed input value as second parameter */
 		onChange?(event: React.ChangeEvent<HTMLInputElement>, input: number | null): void;
 		/** Validator for the field for form validations */
@@ -30,6 +31,7 @@ export default function MyNumberInput({
 	prefix,
 	suffix,
 	defaultValue,
+	placeholder,
 	onChange: _onChange,
 	validator,
 	validateImmediately = false,
@@ -79,6 +81,7 @@ export default function MyNumberInput({
 				ref={inputRef}
 				required={required}
 				disabled={disabled}
+				placeholder={placeholder}
 			/>
 			<Suffix id={id} suffix={suffix} />
 		</MyGeneralInputContainer>

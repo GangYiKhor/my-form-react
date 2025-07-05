@@ -10,7 +10,6 @@ import { EMPTY_VALUE, type FieldBasicType, type FieldPrefixType } from './utils'
 
 type PropType<T = any> = FieldBasicType &
 	FieldPrefixType & {
-		/** Placeholder when nothing is selected */
 		placeholder?: string;
 		/** Options for the select input */
 		options: { label: string; value: T }[];

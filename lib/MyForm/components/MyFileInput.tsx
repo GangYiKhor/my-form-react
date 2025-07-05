@@ -9,6 +9,7 @@ import type { FieldBasicType, FieldPrefixType, ValidateImmediatelyType } from '.
 type PropType = FieldBasicType &
 	FieldPrefixType &
 	ValidateImmediatelyType & {
+		placeholder?: string;
 		/** onChange event with parsed input value as second parameter */
 		onChange?(event: React.ChangeEvent<HTMLInputElement>, input: File[] | null): void;
 		/** Default value for the field */
@@ -36,6 +37,7 @@ export default function MyFileInput({
 	name: _name,
 	prefix,
 	suffix,
+	placeholder,
 	onChange: _onChange,
 	validator,
 	validateImmediately = false,
@@ -104,6 +106,7 @@ export default function MyFileInput({
 				multiple={multiple}
 				required={required}
 				disabled={disabled}
+				placeholder={placeholder}
 			/>
 			<Suffix id={id} suffix={suffix} />
 		</MyGeneralInputContainer>

@@ -97,10 +97,10 @@ export default function ABasicInputs() {
 					<MyRangeInput id="range-input" name="range" />
 
 					<MyLabel for="number-input">Number:</MyLabel>
-					<MyNumberInput id="number-input" name="number" />
+					<MyNumberInput id="number-input" name="number" suffix="cm" />
 
 					<MyLabel for="positive-input">Positive:</MyLabel>
-					<MyPositiveNumberInput id="positive-input" name="positive" />
+					<MyPositiveNumberInput id="positive-input" name="positive" prefix="RM" />
 
 					<MyLabel for="password-input">Password:</MyLabel>
 					<MyPasswordInput id="password-input" name="password" />

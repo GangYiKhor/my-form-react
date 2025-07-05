@@ -49,6 +49,11 @@ h1 {
 	margin-bottom: 8px;
 }
 
+.small-div {
+	display: grid;
+	grid-template-columns: 116px 200px;
+}
+
 .buttons {
 	margin-top: 8px;
 	display: flex;

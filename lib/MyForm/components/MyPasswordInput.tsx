@@ -10,6 +10,7 @@ type PropType = FieldBasicType &
 	InputDelayType & {
 		/** Default value for the field */
 		defaultValue?: string;
+		placeholder?: string;
 		/** onChange event with parsed input value as second parameter */
 		onChange?(event: React.ChangeEvent<HTMLInputElement>, input: string): void;
 		/** Validator for the field for form validations */
@@ -30,6 +31,7 @@ export default function MyPasswordInput({
 	id,
 	name,
 	defaultValue = '',
+	placeholder,
 	onChange: _onChange,
 	validator,
 	validateImmediately = false,
@@ -77,6 +79,7 @@ export default function MyPasswordInput({
 				ref={inputRef}
 				required={required}
 				disabled={disabled}
+				placeholder={placeholder}
 			/>
 			<button
 				type="button"

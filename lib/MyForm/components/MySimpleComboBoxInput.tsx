@@ -16,6 +16,7 @@ const OPTION_HEIGHT = 23;
 type PropType<T = any> = FieldBasicType &
 	FieldPrefixType &
 	CommonComboBoxType & {
+		placeholder?: string;
 		/** Option values for the combobox */
 		options: { label: string; value: T }[];
 		/** Default value for the field */
@@ -51,6 +52,7 @@ export default function MySimpleComboBoxInput<T = any>({
 	name: _name,
 	prefix,
 	suffix,
+	placeholder,
 	options,
 	optionRows = 5,
 	optionWidth,
@@ -233,6 +235,7 @@ export default function MySimpleComboBoxInput<T = any>({
 					ref={inputRef}
 					required={required}
 					disabled={disabled}
+					placeholder={placeholder}
 				/>
 
 				<div className="input-button-container">
