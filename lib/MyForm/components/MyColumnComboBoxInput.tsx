@@ -9,63 +9,37 @@ import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
 import useGeneralComboBox from './hooks/useGeneralComboBox';
-import { EMPTY_VALUE } from './utils';
+import { EMPTY_VALUE, type CommonComboBoxType, type FieldBasicType, type FieldPrefixType } from './utils';
 
 const OPTION_HEIGHT = 23;
 
-type PropType<T = any> = {
-	/** ID of input */
-	id: string;
-	/** Name of the field */
-	name: string;
-	/** Prefix label for the input */
-	prefix?: string | React.ReactNode;
-	/** Suffix label for the input */
-	suffix?: string | React.ReactNode;
-	/** Unique key of the option to identify if an option is selected */
-	optionKey: (value: T) => string;
-	/**
-	 * String value to be displayed on each column
-	 *
-	 * Can either be a function to return custom string, or specify the path of the object to get the string value
-	 *
-	 * @example
-	 * [
-	 * 	(data) => data.column_a,
-	 * 	'column_b',
-	 * 	'my_array.property.0', // Will get `data.my_array.property[0]`
-	 * ]
-	 */
-	columns: (((value: T) => string) | string)[];
-	/** Option values for the combobox */
-	options: T[];
-	/** Number of rows to show in the dropdown, default to 5 */
-	optionRows?: number;
-	/** Width of the dropdown, default to the same as the input size */
-	optionWidth?: number | string;
-	/** Default value for the field */
-	defaultValue?: T;
-	/** If `true`, filter the dropdown options while typing, instead of scroll to the option */
-	filterOnType?: boolean;
-	onType?(event: React.ChangeEvent<HTMLInputElement>): void;
-	onFocus?(event: React.FocusEvent<HTMLInputElement>): void;
-	onBlur?(): void;
-	onClear?(event: React.MouseEvent<HTMLButtonElement | HTMLButtonElement>): void;
-	/** Set the field as required */
-	required?: boolean;
-	/** If `true` the field will not be deleted from `formData` when unmount */
-	persistOnUnmount?: boolean;
-	/** If `true` the options dropdown will be set to `'nowrap'` */
-	noWrapRow?: boolean;
-	/** Remove the border for the input */
-	noBorder?: boolean;
-	/** Remove the background for the input */
-	noBackground?: boolean;
-	/** If `true`, when manually updated value is not found in options, it will be set to undefined */
-	setUndefinedIfManualUpdateIsInvalid?: boolean;
-	/** Disable the input */
-	disabled?: boolean;
-};
+type PropType<T = any> = FieldBasicType &
+	FieldPrefixType &
+	CommonComboBoxType & {
+		/** Unique key of the option to identify if an option is selected */
+		optionKey: (value: T) => string;
+		/**
+		 * String value to be displayed on each column
+		 *
+		 * Can either be a function to return custom string, or specify the path of the object to get the string value
+		 *
+		 * @example
+		 * [
+		 * 	(data) => data.column_a,
+		 * 	'column_b',
+		 * 	'my_array.property.0', // Will get `data.my_array.property[0]`
+		 * ]
+		 */
+		columns: (((value: T) => string) | string)[];
+		/** Option values for the combobox */
+		options: T[];
+		/** Default value for the field */
+		defaultValue?: T;
+		/** If `true` the options dropdown will be set to `'nowrap'` */
+		noWrapRow?: boolean;
+		/** If `true`, when manually updated value is not found in options, it will be set to undefined */
+		setUndefinedIfManualUpdateIsInvalid?: boolean;
+	};
 
 type HtmlProps = {
 	inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof PropType | 'type' | 'ref' | 'onChange'>;
@@ -73,6 +47,18 @@ type HtmlProps = {
 	optionContainerProps?: Omit<React.HTMLAttributes<HTMLDivElement>, 'ref'>;
 };
 
+/**
+ * A combo box input with the options arrange as a table structure
+ *
+ * The options of this combo box is arranged in table so that
+ * every column of each options share the same width
+ *
+ * The column definitions can be path to the value (string) or a function to the value
+ *
+ * When `setUndefinedIfManualUpdateIsInvalid` is `true`,
+ * the field data will be set to undefined if the field data that is
+ * updated manually or updated by another component will be overwritten as `undefined`
+ */
 export default function MyColumnComboBoxInput<T = any>({
 	id,
 	name: _name,

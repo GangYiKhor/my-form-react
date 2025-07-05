@@ -14,6 +14,21 @@ type PropType = {
 	children: React.ReactNode;
 };
 
+/**
+ * Wrap the children in a subform, all predefined `<MyInputs />` component will be using `'subformid__XXX'` name
+ *
+ * When `form.getFormData()` or `form.getFormValid()` is called, subform fields will be grouped into one object
+ *
+ * ```
+ * {
+ * 	'field_1': ...,
+ * 	'subform_1': {
+ * 		'field_1': ...,
+ * 		'field_2': ...,
+ * 	},
+ * }
+ * ```
+ */
 export default function MySubForm({ subFormId, children }: PropType) {
 	const existingId = useSubForm();
 	const formId = useFormComponent('').formId;

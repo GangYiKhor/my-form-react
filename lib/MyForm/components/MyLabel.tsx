@@ -11,6 +11,12 @@ type PropType = {
 
 type LabelProps = Omit<React.HTMLAttributes<HTMLLabelElement>, keyof PropType>;
 
+/**
+ * A very simple label wrapper to provide a red asterisk (*)
+ * as an indication for required field
+ *
+ * Does not use any of the form handlers except form theme
+ */
 export default function MyLabel({
 	for: htmlFor,
 	required,

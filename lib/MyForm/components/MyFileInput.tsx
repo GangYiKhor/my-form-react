@@ -4,41 +4,33 @@ import { useSubForm } from '../MySubFormContext';
 import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
+import type { FieldBasicType, FieldPrefixType, ValidateImmediatelyType } from './utils';
 
-type PropType = {
-	/** ID of input */
-	id: string;
-	/** Name of the field */
-	name: string;
-	/** Prefix label for the input */
-	prefix?: string | React.ReactNode;
-	/** Suffix label for the input */
-	suffix?: string | React.ReactNode;
-	/** onChange event with parsed input value as second parameter */
-	onChange?(event: React.ChangeEvent<HTMLInputElement>, input: File[] | null): void;
-	/** Default value for the field */
-	validator?(input: File[] | null): boolean | string;
-	/** Validator for the field for form validations */
-	validateImmediately?: boolean;
-	/** Validate the field immediately on type/change */
-	multiple?: boolean;
-	/** Set the field as required */
-	required?: boolean;
-	/** If `true` the field will not be deleted from `formData` when unmount */
-	persistOnUnmount?: boolean;
-	/** Remove the border for the input */
-	noBorder?: boolean;
-	/** Remove the background for the input */
-	noBackground?: boolean;
-	/** Disable the input */
-	disabled?: boolean;
-};
+type PropType = FieldBasicType &
+	FieldPrefixType &
+	ValidateImmediatelyType & {
+		/** onChange event with parsed input value as second parameter */
+		onChange?(event: React.ChangeEvent<HTMLInputElement>, input: File[] | null): void;
+		/** Default value for the field */
+		validator?(input: File[] | null): boolean | string;
+		/** Validate the field immediately on type/change */
+		multiple?: boolean;
+	};
 
 type HtmlProps = {
 	inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof PropType | 'type'>;
 	containerProps?: React.HTMLAttributes<HTMLDivElement>;
 };
 
+/**
+ * A simple file input with form handlers
+ *
+ * The data is always `undefined` or an array `File[]`
+ * regardless of the number of file uploaded
+ *
+ * A manual update of the field won't trigger this input to
+ * capture the filenames due to browser security implementations
+ */
 export default function MyFileInput({
 	id,
 	name: _name,

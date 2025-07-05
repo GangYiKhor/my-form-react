@@ -3,6 +3,49 @@ export type MyTimeType = { hour: number; minute: number };
 export type MyWeekType = { year: number; week: number };
 export type MyDateRangeType = { start?: Date; end?: Date };
 export type MyColourType = `#${string}`;
+export type FieldBasicType = {
+	/** ID of input */
+	id: string;
+	/** Name of the field */
+	name: string;
+	/** Set the field as required */
+	required?: boolean;
+	/** If `true` the field will not be deleted from `formData` when unmount */
+	persistOnUnmount?: boolean;
+	/** Remove the border for the input */
+	noBorder?: boolean;
+	/** Remove the background for the input */
+	noBackground?: boolean;
+	/** Disable the input */
+	disabled?: boolean;
+};
+export type FieldPrefixType = {
+	/** Prefix label for the input */
+	prefix?: string | React.ReactNode;
+	/** Suffix label for the input */
+	suffix?: string | React.ReactNode;
+};
+export type CommonComboBoxType = {
+	/** Number of rows to show in the dropdown, default to 5 */
+	optionRows?: number;
+	/** Width of the dropdown, default to the same as the input size */
+	optionWidth?: number | string;
+	/** If `true`, filter the dropdown options while typing, instead of scroll to the option */
+	filterOnType?: boolean;
+	onType?(event: React.ChangeEvent<HTMLInputElement>): void;
+	onFocus?(event: React.FocusEvent<HTMLInputElement>): void;
+	onBlur?(): void;
+	onClear?(event: React.MouseEvent<HTMLButtonElement>): void;
+};
+export type ValidateImmediatelyType = {
+	/** Validate the field immediately on type/change */
+	validateImmediately?: boolean;
+};
+
+export type InputDelayType = {
+	/** Delay the onChange trigger to help reducing UI lag */
+	inputDelay?: number;
+};
 
 function padDate(num: number) {
 	if (num < 10) return `0${num}`;

@@ -5,40 +5,32 @@ import { isEqual } from '../utils';
 import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
-import { EMPTY_VALUE } from './utils';
+import { EMPTY_VALUE, type FieldBasicType, type FieldPrefixType } from './utils';
 
-type PropType<T = any> = {
-	/** ID of input */
-	id: string;
-	/** Name of the field */
-	name: string;
-	/** Value of the radio button */
-	value: T;
-	/** Prefix label for the input */
-	prefix?: string | React.ReactNode;
-	/** Suffix label for the input */
-	suffix?: string | React.ReactNode;
-	/** Default value for the field */
-	defaultValue?: T;
-	/** onChange event with parsed input value as second parameter */
-	onChange?(event: React.MouseEvent<HTMLInputElement>, input?: T): void;
-	/** Set the field as required */
-	required?: boolean;
-	/** If `true` the field will not be deleted from `formData` when unmount */
-	persistOnUnmount?: boolean;
-	/** Remove the border for the input */
-	noBorder?: boolean;
-	/** Remove the background for the input */
-	noBackground?: boolean;
-	/** Disable the input */
-	disabled?: boolean;
-};
+type PropType<T = any> = FieldBasicType &
+	FieldPrefixType & {
+		/** Value of the radio button */
+		value: T;
+		/** Default value for the field */
+		defaultValue?: T;
+		/** onChange event with parsed input value as second parameter */
+		onChange?(event: React.MouseEvent<HTMLInputElement>, input?: T): void;
+	};
 
 type HtmlProps = {
 	inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof PropType | 'text'>;
 	containerProps?: React.HTMLAttributes<HTMLDivElement>;
 };
 
+/**
+ * A simple radio input with form handlers
+ *
+ * When the input is checked, `value` will be assigned to the field data
+ *
+ * If the form is manually updated or updated by another field to the same checked value, the input will be checked automatically
+ *
+ * The data will be checked using deep equality checks
+ */
 export default function MyRadioInput<T = any>({
 	id,
 	name: _name,

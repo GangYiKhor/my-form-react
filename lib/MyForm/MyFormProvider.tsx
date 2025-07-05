@@ -24,6 +24,14 @@ type PropType = {
 	children: React.ReactNode;
 };
 
+/**
+ * Global context provider for `MyForm` implementations, wrap your application with this provider to enable all form handlers
+ *
+ * A `darkMode` settings is provided to define the how form inputs capture the dark mode
+ * - `'browser'`: The form will capture dark mode using browser prefer theme
+ * - `'class'`: If the form is wrapped with any element with class name `'dark'` dark theme will be applied
+ * - `(default) 'disabled'`: The form will always use light theme
+ */
 export default function MyFormProvider({ darkMode = 'disabled', children }: PropType) {
 	const [formData, setFormData] = useState<FormFieldType>({});
 	const formProperties = useRef<FormPropertiesType>({});

@@ -65,7 +65,7 @@ export function useFormComponent<T = any>(name: string) {
 	}, [_deleteField, name]);
 
 	const validateField = useCallback(
-		(valid: boolean) => {
+		(valid?: boolean) => {
 			_validateField(name, valid);
 		},
 		[_validateField, name]

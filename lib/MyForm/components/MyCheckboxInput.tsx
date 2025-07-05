@@ -5,42 +5,37 @@ import { isEqual } from '../utils';
 import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
-import { EMPTY_VALUE } from './utils';
+import { EMPTY_VALUE, type FieldBasicType, type FieldPrefixType } from './utils';
 
-type PropType<T1 = any, T2 = any> = {
-	/** ID of input */
-	id: string;
-	/** Name of the field */
-	name: string;
-	/** Value when checkbox is unchecked */
-	uncheckValue?: T1 | T2 | null;
-	/** Value when checkbox is checked */
-	checkedValue: T1;
-	/** Prefix label for the checkbox */
-	prefix?: string | React.ReactNode;
-	/** Suffix label for the checkbox */
-	suffix?: string | React.ReactNode;
-	/** Default value for the field */
-	defaultValue?: T1;
-	/** onChange event with parsed input (checked/unchecked) value as second parameter */
-	onChange?(event: React.ChangeEvent<HTMLInputElement>, input?: T1 | T2 | null): void;
-	/** Set the field as required */
-	required?: boolean;
-	/** If `true` the field will not be deleted from `formData` when unmount */
-	persistOnUnmount?: boolean;
-	/** Remove the border for the input */
-	noBorder?: boolean;
-	/** Remove the background for the input */
-	noBackground?: boolean;
-	/** Disable the input */
-	disabled?: boolean;
-};
+type PropType<T1 = any, T2 = any> = FieldBasicType &
+	FieldPrefixType & {
+		/** Value when checkbox is unchecked */
+		uncheckValue?: T1 | T2 | null;
+		/** Value when checkbox is checked */
+		checkedValue: T1;
+		/** Default value for the field */
+		defaultValue?: T1;
+		/** onChange event with parsed input (checked/unchecked) value as second parameter */
+		onChange?(event: React.ChangeEvent<HTMLInputElement>, input?: T1 | T2 | null): void;
+	};
 
 type HtmlProps = {
 	inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof PropType | 'text'>;
 	containerProps?: React.HTMLAttributes<HTMLDivElement>;
 };
 
+/**
+ * A simple checkbox input with form handlers
+ *
+ * When the input is checked, `checkedValue` will be assigned to the field data
+ *
+ * When the input is unchecked, `uncheckValue` or `undefined` will be assigned to the field data
+ *
+ * If the form is manually updated or updated by another field to the same checked value,
+ * the input will be checked automatically
+ *
+ * The data will be checked using deep equality checks
+ */
 export default function MyCheckboxInput<CheckedValue = any, UncheckedValue = any>({
 	id,
 	name: _name,

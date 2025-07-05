@@ -15,6 +15,8 @@ import {
 	isSameDay,
 	isSameDayOrAfter,
 	isSameDayOrBefore,
+	type FieldBasicType,
+	type FieldPrefixType,
 	type MyDateRangeType,
 } from './utils';
 
@@ -47,40 +49,35 @@ const generateCalendar = (startYear: number, startMonth: number) => {
 	return dates;
 };
 
-type PropType = {
-	/** ID of input */
-	id: string;
-	/** Name of the field */
-	name: string;
-	/** Prefix label for the input */
-	prefix?: string | React.ReactNode;
-	/** Suffix label for the input */
-	suffix?: string | React.ReactNode;
-	/** Default value for the field */
-	defaultValue?: MyDateRangeType;
-	/** Minimum for the date range selection, won't affect manual updates */
-	min?: Date;
-	/** Maximum for the date range selection, won't affect manual updates */
-	max?: Date;
-	onFocus?(): void;
-	onBlur?(): void;
-	onClear?(event: React.MouseEvent<HTMLButtonElement | HTMLButtonElement>): void;
-	/** Set the field as required */
-	required?: boolean;
-	/** If `true` the field will not be deleted from `formData` when unmount */
-	persistOnUnmount?: boolean;
-	/** Remove the border for the input */
-	noBorder?: boolean;
-	/** Remove the background for the input */
-	noBackground?: boolean;
-	/** Disable the input */
-	disabled?: boolean;
-};
+type PropType = FieldBasicType &
+	FieldPrefixType & {
+		/** Default value for the field */
+		defaultValue?: MyDateRangeType;
+		/** Minimum for the date range selection, won't affect manual updates */
+		min?: Date;
+		/** Maximum for the date range selection, won't affect manual updates */
+		max?: Date;
+		onFocus?(): void;
+		onBlur?(): void;
+		onClear?(event: React.MouseEvent<HTMLButtonElement | HTMLButtonElement>): void;
+		/** Validator for the field for form validations */
+		validator?(input: MyDateRangeType): boolean | string;
+	};
 
 type HtmlProps = {
 	containerProps?: React.HTMLAttributes<HTMLDivElement>;
 };
 
+/**
+ * A date range input with form handlers
+ *
+ * A custom calendar will be shown on focus for date range selections
+ *
+ * Min/Max property will hide the out of range dates from the calendars and prevent user inputs,
+ * but it **does not** block manual updates and **does not** affect validators
+ *
+ * Required will be checked by identifying if any of the `start`/`end` value is `undefined`
+ */
 export default function MyDateRangeInput({
 	id,
 	name: _name,
@@ -92,6 +89,7 @@ export default function MyDateRangeInput({
 	onFocus: _onFocus,
 	onBlur: _onBlur,
 	onClear,
+	validator,
 	required,
 	persistOnUnmount,
 	noBorder,
@@ -421,9 +419,9 @@ export default function MyDateRangeInput({
 	}, [_fieldData]);
 
 	useEffect(() => {
-		const validator = (value: { start?: Date; end?: Date }) => !!value?.start && !!value?.end;
-		setFieldProperties({ defaultValue, required: required ? validator : false });
-	}, [name, defaultValue, required, setFieldProperties]);
+		const requiredValidator = (value: { start?: Date; end?: Date }) => !!value?.start && !!value?.end;
+		setFieldProperties({ defaultValue, required: required ? requiredValidator : false, validator });
+	}, [name, defaultValue, required, validator, setFieldProperties]);
 
 	useEffect(() => {
 		if (initialisedRef.current) return;

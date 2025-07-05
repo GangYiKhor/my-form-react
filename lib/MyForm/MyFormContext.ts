@@ -92,6 +92,11 @@ export type ContextType<T extends FormDataType = FormDataType> = {
 
 export const Form = createContext<ContextType | undefined>(undefined);
 
+/**
+ * Return all form data and handling functions in the global context
+ *
+ * If you want to work with one form only, use `useMyForm()` instead, or call `fullForm.form()` to access specific form handlers
+ */
 export function useMyFullForm<T extends { [key: string]: { [key: string]: any } } = FormDataType>() {
 	const form = useContext(Form) as ContextType<T> | undefined;
 	if (!form) console.error('Form is not initialised! Have you wrap the component with MyFormProvider?');
@@ -235,6 +240,11 @@ export function useMyFullForm<T extends { [key: string]: { [key: string]: any } 
 	};
 }
 
+/**
+ * Return all data and form handling functions of a specific form, `formId` will be auto-populated for every function
+ *
+ * ONLY works for one form, if you need to work with multiple forms, use `useMyFullForm()` and/or the `form()` function in `useMyFullForm()` instead
+ */
 export function useMyForm<T extends { [key: string]: any } = DataType>(formId: string) {
 	const form = useContext(Form) as ContextType<{ [formId]: T }> | undefined;
 	if (!form) console.error('Form is not initialised! Have you wrap the component with MyFormProvider?');

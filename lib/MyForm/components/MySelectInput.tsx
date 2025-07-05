@@ -6,40 +6,23 @@ import { clsx, isEqual } from '../utils';
 import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
-import { EMPTY_VALUE } from './utils';
+import { EMPTY_VALUE, type FieldBasicType, type FieldPrefixType } from './utils';
 
-type PropType<T = any> = {
-	/** ID of input */
-	id: string;
-	/** Name of the field */
-	name: string;
-	/** Prefix label for the input */
-	prefix?: string | React.ReactNode;
-	/** Suffix label for the input */
-	suffix?: string | React.ReactNode;
-	/** Placeholder when nothing is selected */
-	placeholder?: string;
-	/** Options for the select input */
-	options: { label: string; value: T }[];
-	/** Default value for the field */
-	defaultValue?: T;
-	/** onChange event with parsed input value as second parameter */
-	onChange?(event: React.ChangeEvent<HTMLSelectElement>, input: T | null): void;
-	onClick?(event: React.MouseEvent<HTMLSelectElement>): void;
-	onClear?(event: React.MouseEvent<HTMLButtonElement>): void;
-	/** Set the field as required */
-	required?: boolean;
-	/** If `true` the field will not be deleted from `formData` when unmount */
-	persistOnUnmount?: boolean;
-	/** Remove the border for the input */
-	noBorder?: boolean;
-	/** Remove the background for the input */
-	noBackground?: boolean;
-	/** If `true`, when manually updated value is not found in options, it will be set to undefined */
-	setUndefinedIfManualUpdateIsInvalid?: boolean;
-	/** Disable the input */
-	disabled?: boolean;
-};
+type PropType<T = any> = FieldBasicType &
+	FieldPrefixType & {
+		/** Placeholder when nothing is selected */
+		placeholder?: string;
+		/** Options for the select input */
+		options: { label: string; value: T }[];
+		/** Default value for the field */
+		defaultValue?: T;
+		/** onChange event with parsed input value as second parameter */
+		onChange?(event: React.ChangeEvent<HTMLSelectElement>, input: T | null): void;
+		onClick?(event: React.MouseEvent<HTMLSelectElement>): void;
+		onClear?(event: React.MouseEvent<HTMLButtonElement>): void;
+		/** If `true`, when manually updated value is not found in options, it will be set to undefined */
+		setUndefinedIfManualUpdateIsInvalid?: boolean;
+	};
 
 type HtmlProps = {
 	selectProps?: Omit<React.HTMLAttributes<HTMLSelectElement>, keyof PropType | 'ref'>;
@@ -48,6 +31,16 @@ type HtmlProps = {
 	containerProps?: React.HTMLAttributes<HTMLDivElement>;
 };
 
+/**
+ * A simple select input with form handlers
+ *
+ * Options is expected to be in the format of
+ * ```
+ * [{ label: 'Label Text', value: ... }]
+ * ```
+ * where the label will be shown on the select input,
+ * and the value is the internal data assigned to the field
+ */
 export default function MySelectInput<T = any>({
 	id,
 	name: _name,

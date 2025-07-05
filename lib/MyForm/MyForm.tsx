@@ -6,13 +6,13 @@ import { clsx } from './utils';
 type PropType<T = { [key: string]: any }> = {
 	/** ID of the form, can be a plain string or get from `useMyForm('formId').formId` */
 	formId: string;
-	/** Function when on submit */
+	/** onSubmit handler, the formData will be passed as second argument, only trigger when the form is valid */
 	onSubmit?(event: React.FormEvent<HTMLFormElement>, formData: T): void;
 	/** Action for form element */
 	action?: string;
 	/** Method for form element */
 	method?: string;
-	/** Always call `e.preventDefault()` */
+	/** Always call `e.preventDefault()` and disable native validation (`noValidate` in `<form>`) */
 	disableNativeForm?: boolean;
 	/** Call onSubmit() only if the clicked button's ID is in `submitButtonId` */
 	submitButtonId?: string | string[] | Set<string>;
@@ -20,6 +20,16 @@ type PropType<T = { [key: string]: any }> = {
 };
 type FormProps = Omit<React.HTMLAttributes<HTMLFormElement>, keyof PropType>;
 
+/**
+ * Wrap the components in a `<form>` element and group all input field data into same form object
+ *
+ * Providing both default form submission handler and a custom `onSubmit` function handler
+ *
+ * @example
+ * <MyForm formId="formA" onSubmit={(data) => save(data)} disableNativeForm>
+ * 	<MyTextInput {...props} />
+ * </MyForm>
+ */
 export default function MyForm<T extends { [key: string]: any } = { [key: string]: any }>({
 	formId,
 	onSubmit: _onSubmit,
@@ -44,12 +54,10 @@ export default function MyForm<T extends { [key: string]: any } = { [key: string
 		else if (submitButtonId !== undefined) console.warn('Invalid submitButtonId! All button will be rejected!');
 
 		if (!action) e.preventDefault();
+		if (disableNativeForm) e.preventDefault();
 
 		if (submitButtonId && !isSubmitter) {
 			e.preventDefault();
-		} else if (disableNativeForm) {
-			e.preventDefault();
-			if (_onSubmit && form.validateForm()) _onSubmit(e, form.getFormData() as T);
 		} else if (form.validateForm()) {
 			_onSubmit?.(e, form.getFormData() as T);
 		} else {
@@ -66,6 +74,7 @@ export default function MyForm<T extends { [key: string]: any } = { [key: string
 				action={action}
 				method={method}
 				className={clsx('my-form', formClassName)}
+				noValidate={disableNativeForm}
 			>
 				{children}
 			</form>

@@ -9,50 +9,24 @@ import MyGeneralInputContainer from './components/MyGeneralInputContainer';
 import MyPrefix from './components/MyPrefix';
 import Suffix from './components/MySuffix';
 import useGeneralComboBox from './hooks/useGeneralComboBox';
-import { EMPTY_VALUE } from './utils';
+import { EMPTY_VALUE, type CommonComboBoxType, type FieldBasicType, type FieldPrefixType } from './utils';
 
 const OPTION_HEIGHT = 23;
 
-type PropType<T = any> = {
-	/** ID of input */
-	id: string;
-	/** Name of the field */
-	name: string;
-	/** Prefix label for the input */
-	prefix?: string | React.ReactNode;
-	/** Suffix label for the input */
-	suffix?: string | React.ReactNode;
-	/** Unique key of the option to identify if an option is selected */
-	optionKey: (value: T) => string;
-	/** Custom function to generate the element for dropdown option row */
-	optionElement: (value: T) => string | React.ReactNode;
-	/** Option values for the combobox */
-	options: T[];
-	/** Number of rows to show in the dropdown, default to 5 */
-	optionRows?: number;
-	/** Width of the dropdown, default to the same as the input size */
-	optionWidth?: number | string;
-	/** Default value for the field */
-	defaultValue?: T;
-	/** If `true`, filter the dropdown options while typing, instead of scroll to the option */
-	filterOnType?: boolean;
-	onType?(event: React.ChangeEvent<HTMLInputElement>): void;
-	onFocus?(event: React.FocusEvent<HTMLInputElement>): void;
-	onBlur?(): void;
-	onClear?(event: React.MouseEvent<HTMLButtonElement | HTMLButtonElement>): void;
-	/** Set the field as required */
-	required?: boolean;
-	/** If `true` the field will not be deleted from `formData` when unmount */
-	persistOnUnmount?: boolean;
-	/** Remove the border for the input */
-	noBorder?: boolean;
-	/** Remove the background for the input */
-	noBackground?: boolean;
-	/** If `true`, when manually updated value is not found in options, it will be set to undefined */
-	setUndefinedIfManualUpdateIsInvalid?: boolean;
-	/** Disable the input */
-	disabled?: boolean;
-};
+type PropType<T = any> = FieldBasicType &
+	FieldPrefixType &
+	CommonComboBoxType & {
+		/** Unique key of the option to identify if an option is selected */
+		optionKey: (value: T) => string;
+		/** Custom function to generate the element for dropdown option row */
+		optionElement: (value: T) => string | React.ReactNode;
+		/** Option values for the combobox */
+		options: T[];
+		/** Default value for the field */
+		defaultValue?: T;
+		/** If `true`, when manually updated value is not found in options, it will be set to undefined */
+		setUndefinedIfManualUpdateIsInvalid?: boolean;
+	};
 
 type HtmlProps<T = any> = {
 	inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof PropType | 'type' | 'ref' | 'onChange'>;
@@ -63,6 +37,16 @@ type HtmlProps<T = any> = {
 	): Omit<React.HTMLAttributes<HTMLButtonElement>, 'type' | 'role' | 'onClick' | 'onBlur' | 'onScroll'>;
 };
 
+/**
+ * A custom combo box input with the options element generated using `optionElement()` property
+ *
+ * Unlike `<MySimpleComboBoxInput />` and `<MyColumnComboBoxInput />`,
+ * this component provide the customisability for the option rows
+ *
+ * When `setUndefinedIfManualUpdateIsInvalid` is `true`,
+ * the field data will be set to undefined if the field data that is
+ * updated manually or updated by another component will be overwritten as `undefined`
+ */
 export default function MyComboBoxInput<T = any>({
 	id,
 	name: _name,
