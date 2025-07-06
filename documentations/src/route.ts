@@ -23,6 +23,7 @@ import SelectInputPage from './pages/inputs/selections/SelectInputPage';
 import SimpleComboBoxPage from './pages/inputs/selections/SimpleComboBoxPage';
 import LabelPage from './pages/LabelPage';
 import LayoutPage from './pages/LayoutPage';
+import SubFormPage from './pages/SubFormPage';
 
 export const routes = [
 	{ title: 'Get Started', path: '/', element: HomePage },
@@ -75,7 +76,7 @@ export const routes = [
 	{
 		title: 'More usage',
 		pages: [
-			{ title: 'Sub Form', path: '/sub-form', element: HomePage },
+			{ title: 'Sub Form', path: '/sub-form', element: SubFormPage },
 			{ title: 'Form as Display', path: '/form-as-display', element: HomePage },
 		],
 	},
