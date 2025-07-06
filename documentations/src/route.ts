@@ -9,6 +9,7 @@ import PasswordPage from './pages/inputs/basics/PasswordPage';
 import RadioInputPage from './pages/inputs/basics/RadioInputPage';
 import TextAreaPage from './pages/inputs/basics/TextAreaPage';
 import TextInputPage from './pages/inputs/basics/TextInputPage';
+import CustomInputPage from './pages/inputs/CustomInputPage';
 import DateInputPage from './pages/inputs/datetime/DateInputPage';
 import DateRangePage from './pages/inputs/datetime/DateRangePage';
 import DateTimeInputPage from './pages/inputs/datetime/DateTimePage';
@@ -70,7 +71,7 @@ export const routes = [
 					{ title: 'Multi Combo Box', path: '/inputs/multi-combobox', element: MultiComboBoxPage },
 				],
 			},
-			{ title: 'Custom Input', path: '/custom-input', element: HomePage },
+			{ title: 'Custom Input', path: '/custom-input', element: CustomInputPage },
 		],
 	},
 	{
