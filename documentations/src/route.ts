@@ -16,6 +16,11 @@ import MonthInputPage from './pages/inputs/datetime/MonthInputPage';
 import TimeInputPage from './pages/inputs/datetime/TimeInputPage';
 import WeekInputPage from './pages/inputs/datetime/WeekInputPage';
 import InputOverviewPage from './pages/inputs/InputOverviewPage';
+import ColumnComboBoxPage from './pages/inputs/selections/ColumnComboBoxPage';
+import ComboBoxPage from './pages/inputs/selections/ComboBoxPage';
+import MultiComboBoxPage from './pages/inputs/selections/MultiComboBoxPage';
+import SelectInputPage from './pages/inputs/selections/SelectInputPage';
+import SimpleComboBoxPage from './pages/inputs/selections/SimpleComboBoxPage';
 import LabelPage from './pages/LabelPage';
 import LayoutPage from './pages/LayoutPage';
 
@@ -57,11 +62,11 @@ export const routes = [
 			{
 				title: 'Selection Inputs',
 				pages: [
-					{ title: 'Select Input', path: '/inputs/select', element: HomePage },
-					{ title: 'Simple Combo Box', path: '/inputs/simple-combobox', element: HomePage },
-					{ title: 'Combo Box', path: '/inputs/combobox', element: HomePage },
-					{ title: 'Column Combo Box', path: '/inputs/column-combobox', element: HomePage },
-					{ title: 'Multi Combo Box', path: '/inputs/multi-combobox', element: HomePage },
+					{ title: 'Select Input', path: '/inputs/select', element: SelectInputPage },
+					{ title: 'Simple Combo Box', path: '/inputs/simple-combobox', element: SimpleComboBoxPage },
+					{ title: 'Combo Box', path: '/inputs/combobox', element: ComboBoxPage },
+					{ title: 'Column Combo Box', path: '/inputs/column-combobox', element: ColumnComboBoxPage },
+					{ title: 'Multi Combo Box', path: '/inputs/multi-combobox', element: MultiComboBoxPage },
 				],
 			},
 			{ title: 'Custom Input', path: '/custom-input', element: HomePage },

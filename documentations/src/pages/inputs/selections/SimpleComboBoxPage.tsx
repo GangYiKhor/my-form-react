@@ -2,12 +2,12 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 import { useEffect, useRef, useState } from 'react';
 import {
-	MyDateTimeInput,
 	MyForm,
 	MyLabel,
 	MyLabelInputPair,
-	MyNumberInput,
+	MyPositiveNumberInput,
 	MySelectInput,
+	MySimpleComboBoxInput,
 	MyTextInput,
 	useMyForm,
 } from '../../../../../lib/main';
@@ -15,42 +15,60 @@ import {
 const PLAIN_SAMPLE =
 	'' +
 	`<MyLabelInputPair>
-  <MyLabel for="text-id">Date Time:</MyLabel>
-  <MyDateTimeInput />
+  <MyLabel for="text-id">Combo Box:</MyLabel>
+  <MySimpleComboBoxInput />
 </MyLabelInputPair>`;
 
-const validatorFn = {
-	after2025Reject: function after2025RejectFn(data: Date) {
-		if (data > new Date('2025-01-01')) return true;
-		return false;
-	},
-	after2025Reason: function after2025ReasonFn(data: Date) {
-		if (data > new Date('2025-01-01')) return true;
-		return 'Please enter a date after 2025!';
-	},
+const OPTION_SET = {
+	set_a: [
+		{ label: 'One', value: { str: 'ONE', value: 1 } },
+		{ label: 'Two', value: { str: 'TWO', value: 2 } },
+		{ label: 'Three', value: { str: 'THREE', value: 3 } },
+		{ label: 'Four', value: { str: 'FOUR', value: 4 } },
+		{ label: 'Five', value: { str: 'FIVE', value: 5 } },
+		{ label: 'Six', value: { str: 'SIX', value: 6 } },
+		{ label: 'Seven', value: { str: 'SEVEN', value: 7 } },
+		{ label: 'Eight', value: { str: 'EIGHT', value: 8 } },
+		{ label: 'Nine', value: { str: 'NINE', value: 9 } },
+		{ label: 'Ten', value: { str: 'TEN', value: 10 } },
+	],
+	set_b: [
+		{ label: 'Eleven', value: { str: 'ELEVEN', value: 11 } },
+		{ label: 'Twelve', value: { str: 'TWELVE', value: 12 } },
+		{ label: 'Thirteen', value: { str: 'THIRTEEN', value: 13 } },
+		{ label: 'Fourteen', value: { str: 'FOURTEEN', value: 14 } },
+		{ label: 'Fifteen', value: { str: 'FIFTEEN', value: 15 } },
+		{ label: 'Sixteen', value: { str: 'SIXTEEN', value: 16 } },
+		{ label: 'Seventeen', value: { str: 'SEVENTEEN', value: 17 } },
+		{ label: 'Eighteen', value: { str: 'EIGHTEEN', value: 18 } },
+		{ label: 'Nineteen', value: { str: 'NINETEEN', value: 19 } },
+		{ label: 'Twenty', value: { str: 'TWENTY', value: 20 } },
+	],
 };
 
 type FormType = {
 	id: string;
 	name: string;
+	placeholder: string;
 	prefix: string;
 	suffix: string;
-	defaultValue: Date;
-	onChange: 'alert';
-	validator: 'after2025Reject' | 'after2025Reason';
-	validateImmediately: boolean;
+	options: 'set_a' | 'set_b';
+	defaultValue: { str: string; value: number };
+	optionRows: number;
+	optionWidth: '150%' | '50%' | 300;
+	filterOnType: boolean;
 	required: boolean;
 	persistOnUnmount: boolean;
-	inputDelay: number;
 	noBorder: boolean;
 	noBackground: boolean;
 	disabled: boolean;
+	setUndefinedIfManualUpdateIsInvalid: boolean;
 };
 
 type ExampleFormType = { [key: string]: Date };
 
-export default function DateTimeInputPage() {
-	const form = useMyForm<FormType>('datetime_properties');
+export default function SimpleComboBoxPage() {
+	const form = useMyForm<FormType>('simplecombobox_properties');
 	const dataRef = useRef<HTMLElement>(null);
 	const examplePlainRef = useRef<HTMLElement>(null);
 	const propData = form.getFormData();
@@ -69,27 +87,37 @@ export default function DateTimeInputPage() {
 		if (propData.name) props.push(`name="${propData.name}"`);
 		if (propData.prefix) props.push(`prefix="${propData.prefix}"`);
 		if (propData.suffix) props.push(`suffix="${propData.suffix}"`);
+		props.push(
+			`options={${JSON.stringify(OPTION_SET[propData.options] ?? [])
+				.replaceAll('[{', '[\n      {')
+				.replaceAll('},{', '},\n      {')
+				.replaceAll('}]', '}\n    ]')
+				.replaceAll('","', '", "')
+				.replaceAll('{"', '{ "')
+				.replaceAll(':', ': ')
+				.replaceAll('}},', ' } },')
+				.replaceAll('}\n', ' }\n')}}`
+		);
 		if (propData.defaultValue) props.push(`defaultValue={${propData.defaultValue}}`);
-		if (propData.onChange) props.push(`onChange={(_, data) => alert(data)}`);
-		if (propData.validator)
-			props.push(
-				`validator={${validatorFn[propData.validator]
-					.toString()
-					.replaceAll('  ', '    ')
-					.replaceAll('      ', '    ')
-					.replaceAll('/* @__PURE__ */ ', '')}}`
-			);
-		if (propData.inputDelay) props.push(`inputDelay={${propData.inputDelay}}`);
-		if (propData.validateImmediately) props.push('validateImmediately');
+		if (propData.optionRows) props.push(`optionRows={${propData.optionRows}}`);
+		if (propData.optionWidth)
+			if (typeof propData.optionWidth === 'string') props.push(`optionWidth="${propData.optionWidth}"`);
+			else props.push(`optionWidth={${propData.optionWidth}}`);
+		if (propData.filterOnType) props.push('filterOnType');
 		if (propData.required) props.push('required');
 		if (propData.persistOnUnmount) props.push('persistOnUnmount');
 		if (propData.noBorder) props.push('noBorder');
 		if (propData.noBackground) props.push('noBackground');
 		if (propData.disabled) props.push('disabled');
+		if (propData.setUndefinedIfManualUpdateIsInvalid) props.push('setUndefinedIfManualUpdateIsInvalid');
 		const combinedProps = props.join(' ');
-		if (!propData.validator && combinedProps.length < 60)
-			sample = sample.replace('<MyDateTimeInput />', '<MyDateTimeInput ' + combinedProps + ' />');
-		else sample = sample.replace('<MyDateTimeInput />', '<MyDateTimeInput\n    ' + props.join('\n    ') + '\n  />');
+		if (combinedProps.length < 60)
+			sample = sample.replace('<MySimpleComboBoxInput />', '<MySimpleComboBoxInput ' + combinedProps + ' />');
+		else
+			sample = sample.replace(
+				'<MySimpleComboBoxInput />',
+				'<MySimpleComboBoxInput\n    ' + props.join('\n    ') + '\n  />'
+			);
 
 		setSampleCode(sample);
 
@@ -103,29 +131,31 @@ export default function DateTimeInputPage() {
 		<div className="wrapper">
 			<div className="documentations">
 				<section>
-					<h1>My Date Time Input</h1>
-					<p>A simple date time input, does not handle timezone</p>
+					<h1>My Simple Combo Box Input</h1>
+					<p>A simple combo box input similar to select input, but with a searchbox to filter/search options</p>
 				</section>
 
 				<section className="example">
 					<MyForm<ExampleFormType> formId="example" onSubmit={(_, data) => setData(data)}>
 						<MyLabelInputPair>
-							<MyLabel for="text-id">Date Time:</MyLabel>
-							<MyDateTimeInput
+							<MyLabel for="text-id">Combo Box:</MyLabel>
+							<MySimpleComboBoxInput
 								id={propData.id}
 								name={propData.name}
 								prefix={propData.prefix}
 								suffix={propData.suffix}
+								placeholder={propData.placeholder}
 								defaultValue={propData.defaultValue}
-								onChange={propData.onChange ? (_, data) => alert(data) : undefined}
-								validator={validatorFn[propData.validator]}
-								validateImmediately={propData.validateImmediately}
+								options={OPTION_SET[propData.options] ?? []}
+								optionRows={propData.optionRows}
+								optionWidth={propData.optionWidth}
+								filterOnType={propData.filterOnType}
 								required={propData.required}
 								persistOnUnmount={propData.persistOnUnmount}
-								inputDelay={propData.inputDelay}
 								noBorder={propData.noBorder}
 								noBackground={propData.noBackground}
 								disabled={propData.disabled}
+								setUndefinedIfManualUpdateIsInvalid={propData.setUndefinedIfManualUpdateIsInvalid}
 							/>
 						</MyLabelInputPair>
 
@@ -178,6 +208,15 @@ export default function DateTimeInputPage() {
 							</ul>
 
 							<li>
+								<code className="property-name">placeholder</code>: Placeholder of input
+							</li>
+							<ul>
+								<li>
+									<MyTextInput id="placeholder" name="placeholder" />
+								</li>
+							</ul>
+
+							<li>
 								<code className="property-name">prefix</code>: A simple label at the left of the input
 							</li>
 							<ul>
@@ -196,57 +235,74 @@ export default function DateTimeInputPage() {
 							</ul>
 
 							<li>
-								<code className="property-name">defaultValue</code>: Default value of the input, change the field name
-								to see the effect
-							</li>
-							<ul>
-								<li>
-									<MyDateTimeInput id="defaultValue" name="defaultValue" />
-								</li>
-							</ul>
-
-							<li>
-								<code className="property-name">onChange</code>: Function to trigger on change, data is passed as second
-								argument
+								<code className="property-name">options</code>: A set of options for the combo box selection
 							</li>
 							<ul>
 								<li>
 									<MySelectInput
-										id="onChange"
-										name="onChange"
-										placeholder="None (Default)"
-										options={[{ label: 'Alert', value: 'alert' }]}
-									/>
-								</li>
-							</ul>
-
-							<li>
-								<code className="property-name">validator</code>: Validator for the input, only valid if return true, if
-								string is returned, the string will be shown when the field is hovered over
-							</li>
-							<ul>
-								<li>
-									<MySelectInput
-										id="validator"
-										name="validator"
-										placeholder="None (Default)"
+										id="options"
+										name="options"
+										placeholder="EMPTY"
 										options={[
-											{ label: 'After 2025 (Reject only)', value: 'after2025Reject' },
-											{ label: 'After 2025 (Reject only)', value: 'after2025Reason' },
+											{ label: 'Set A', value: 'set_a' },
+											{ label: 'Set B', value: 'set_b' },
 										]}
 									/>
 								</li>
 							</ul>
 
 							<li>
-								<code className="property-name">validateImmediately</code>: Validate immediately on type or on
-								submission only
+								<code className="property-name">defaultValue</code>: Default value of the input, change the field name
+								to see the effect
+							</li>
+							<ul>
+								<li>
+									<MySimpleComboBoxInput
+										id="defaultValue"
+										name="defaultValue"
+										options={Object.values(OPTION_SET).flat()}
+									/>
+								</li>
+							</ul>
+
+							<li>
+								<code className="property-name">optionRows</code>: Filter options on type instead of scrolling to the
+								closest option
+							</li>
+							<ul>
+								<li>
+									<MyPositiveNumberInput id="optionRows" name="optionRows" placeholder="5 (Default)" />
+								</li>
+							</ul>
+
+							<li>
+								<code className="property-name">optionWidth</code>: Filter options on type instead of scrolling to the
+								closest option
+							</li>
+							<ul>
+								<li>
+									<MySelectInput<string | number>
+										id="optionWidth"
+										name="optionWidth"
+										placeholder="100% (Default)"
+										options={[
+											{ label: '150%', value: '150%' },
+											{ label: '50%', value: '50%' },
+											{ label: '300', value: 300 },
+										]}
+									/>
+								</li>
+							</ul>
+
+							<li>
+								<code className="property-name">filterOnType</code>: Filter options on type instead of scrolling to the
+								closest option
 							</li>
 							<ul>
 								<li>
 									<MySelectInput
-										id="validateImmediately"
-										name="validateImmediately"
+										id="filterOnType"
+										name="filterOnType"
 										placeholder="Disabled (Default)"
 										options={[{ label: 'Enabled', value: true }]}
 									/>
@@ -278,16 +334,6 @@ export default function DateTimeInputPage() {
 										placeholder="Disabled (Default)"
 										options={[{ label: 'Enabled', value: true }]}
 									/>
-								</li>
-							</ul>
-
-							<li>
-								<code className="property-name">inputDelay</code>: Delay the input update, if negative value is given,
-								0ms will be used (Check console)
-							</li>
-							<ul>
-								<li>
-									<MyNumberInput id="inputDelay" name="inputDelay" inputDelay={propData.inputDelay} />
 								</li>
 							</ul>
 
@@ -328,6 +374,21 @@ export default function DateTimeInputPage() {
 									<MySelectInput
 										id="disabled"
 										name="disabled"
+										placeholder="Enabled (Default)"
+										options={[{ label: 'Disabled', value: true }]}
+									/>
+								</li>
+							</ul>
+
+							<li>
+								<code className="property-name">setUndefinedIfManualUpdateIsInvalid</code>: Set value to undefined when
+								manually updated value is not found in the options
+							</li>
+							<ul>
+								<li>
+									<MySelectInput
+										id="setUndefinedIfManualUpdateIsInvalid"
+										name="setUndefinedIfManualUpdateIsInvalid"
 										placeholder="Enabled (Default)"
 										options={[{ label: 'Disabled', value: true }]}
 									/>

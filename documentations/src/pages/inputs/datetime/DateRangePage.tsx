@@ -35,7 +35,6 @@ const validatorFn = {
 type FormType = {
 	id: string;
 	name: string;
-	placeholder: string;
 	prefix: string;
 	suffix: string;
 	defaultValue: MyDateRangeType;
