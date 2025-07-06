@@ -988,6 +988,10 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 				color: $dark-text-black;
 			}
 
+			input {
+				color-scheme: dark;
+			}
+
 			&.disabled {
 				background-color: $dark-background-nearblack;
 				input,
@@ -1086,6 +1090,51 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 
 				&:active {
 					background-color: $dark-background-darkgray;
+				}
+			}
+		}
+
+		.last-year,
+		.next-year {
+			font-size: x-small;
+			color: $dark-text-gray;
+		}
+
+		.last-2-year,
+		.next-2-year {
+			font-size: x-small;
+			color: $dark-text-gray;
+		}
+
+		.date-calendar-year {
+			&.scroll-prev-year {
+				.year {
+					animation: grayout-current-year-dark 0.5s ease-in-out 0s reverse;
+				}
+
+				.next-year {
+					animation: grayout-current-year-dark 0.5s ease-in-out 0s;
+				}
+			}
+
+			&.scroll-next-year {
+				.year {
+					animation: grayout-current-year-dark 0.5s ease-in-out 0s reverse;
+				}
+
+				.last-year {
+					animation: grayout-current-year-dark 0.5s ease-in-out 0s;
+				}
+			}
+
+			@keyframes grayout-current-year-dark {
+				0% {
+					font-size: small;
+					color: $dark-text-black;
+				}
+				100% {
+					font-size: x-small;
+					color: $dark-text-gray;
 				}
 			}
 		}
@@ -1195,6 +1244,10 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 			color: $dark-text-black;
 		}
 
+		input {
+			color-scheme: dark;
+		}
+
 		&.disabled {
 			background-color: $dark-background-nearblack;
 			input,
@@ -1293,6 +1346,51 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 
 			&:active {
 				background-color: $dark-background-darkgray;
+			}
+		}
+	}
+
+	.last-year,
+	.next-year {
+		font-size: x-small;
+		color: $dark-text-gray;
+	}
+
+	.last-2-year,
+	.next-2-year {
+		font-size: x-small;
+		color: $dark-text-gray;
+	}
+
+	.date-calendar-year {
+		&.scroll-prev-year {
+			.year {
+				animation: grayout-current-year-dark 0.5s ease-in-out 0s reverse;
+			}
+
+			.next-year {
+				animation: grayout-current-year-dark 0.5s ease-in-out 0s;
+			}
+		}
+
+		&.scroll-next-year {
+			.year {
+				animation: grayout-current-year-dark 0.5s ease-in-out 0s reverse;
+			}
+
+			.last-year {
+				animation: grayout-current-year-dark 0.5s ease-in-out 0s;
+			}
+		}
+
+		@keyframes grayout-current-year-dark {
+			0% {
+				font-size: small;
+				color: $dark-text-black;
+			}
+			100% {
+				font-size: x-small;
+				color: $dark-text-gray;
 			}
 		}
 	}

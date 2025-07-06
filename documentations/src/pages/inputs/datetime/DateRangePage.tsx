@@ -2,38 +2,33 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 import { useEffect, useRef, useState } from 'react';
 import {
+	MyDateInput,
+	MyDateRangeInput,
+	MyDateRangeType,
 	MyForm,
 	MyLabel,
 	MyLabelInputPair,
-	MyNumberInput,
 	MySelectInput,
 	MyTextInput,
 	useMyForm,
 } from '../../../../../lib/main';
+import { dateFormatter } from '../../../../../lib/MyForm/components/utils';
 
 const PLAIN_SAMPLE =
 	'' +
 	`<MyLabelInputPair>
-  <MyLabel for="text-id">Number:</MyLabel>
-  <MyNumberInput />
+  <MyLabel for="text-id">Date Range:</MyLabel>
+  <MyDateRangeInput />
 </MyLabelInputPair>`;
 
 const validatorFn = {
-	noNegativeReject: function noNegativeRejectFn(data: number) {
-		if (data > 0) return true;
+	after2025Reject: function after2025RejectFn(data: MyDateRangeType) {
+		if (data.start && data.start > new Date('2025-01-01')) return true;
 		return false;
 	},
-	lessThan50Reject: function lessThan50RejectFn(data: number) {
-		if (data < 50) return true;
-		return false;
-	},
-	noNegativeReason: function noNegativeReasonFn(data: number) {
-		if (data > 0) return true;
-		return 'Please enter a positive number!';
-	},
-	lessThan50Reason: function lessThan50ReasonFn(data: number) {
-		if (data < 50) return true;
-		return 'Please enter a number less than 50';
+	after2025Reason: function after2025ReasonFn(data: MyDateRangeType) {
+		if (data.start && data.start > new Date('2025-01-01')) return true;
+		return 'Please enter a date after 2025!';
 	},
 };
 
@@ -43,22 +38,24 @@ type FormType = {
 	placeholder: string;
 	prefix: string;
 	suffix: string;
-	defaultValue: number;
-	onChange: 'alert';
-	validator: 'noNegativeReject' | 'lessThan50Reject' | 'noNegativeReason' | 'lessThan50Reason';
-	validateImmediately: boolean;
+	defaultValue: MyDateRangeType;
+	onFocus: boolean;
+	onBlur: boolean;
+	onClear: boolean;
+	validator: 'after2025Reject' | 'after2025Reason';
 	required: boolean;
 	persistOnUnmount: boolean;
-	inputDelay: number;
 	noBorder: boolean;
 	noBackground: boolean;
 	disabled: boolean;
+	min: Date;
+	max: Date;
 };
 
-type ExampleFormType = { [key: string]: number };
+type ExampleFormType = { [key: string]: Date };
 
-export default function NumberInputPage() {
-	const form = useMyForm<FormType>('number_properties');
+export default function DateRangePage() {
+	const form = useMyForm<FormType>('daterange_properties');
 	const dataRef = useRef<HTMLElement>(null);
 	const examplePlainRef = useRef<HTMLElement>(null);
 	const propData = form.getFormData();
@@ -75,20 +72,22 @@ export default function NumberInputPage() {
 		const props: string[] = [];
 		if (propData.id) props.push(`id="${propData.id}"`);
 		if (propData.name) props.push(`name="${propData.name}"`);
-		if (propData.placeholder) props.push(`placeholder="${propData.placeholder}"`);
 		if (propData.prefix) props.push(`prefix="${propData.prefix}"`);
 		if (propData.suffix) props.push(`suffix="${propData.suffix}"`);
-		if (propData.defaultValue) props.push(`defaultValue={${propData.defaultValue}}`);
-		if (propData.onChange) props.push(`onChange={(_, data) => alert(data)}`);
+		if (propData.defaultValue) props.push(`defaultValue={${JSON.stringify(propData.defaultValue)}}`);
+		if (propData.min) props.push(`min={new Date('${dateFormatter(propData.min, 'yyyy-MM-dd')}')}`);
+		if (propData.max) props.push(`max={new Date('${dateFormatter(propData.max, 'yyyy-MM-dd')}')}`);
+		if (propData.onFocus) props.push(`onFocus={(_, data) => alert('Focused')}`);
+		if (propData.onBlur) props.push(`onBlur={(_, data) => alert('Blurred')}`);
+		if (propData.onClear) props.push(`onClear={(_, data) => alert('Cleared')}`);
 		if (propData.validator)
 			props.push(
 				`validator={${validatorFn[propData.validator]
 					.toString()
 					.replaceAll('  ', '    ')
-					.replaceAll('      ', '    ')}}`
+					.replaceAll('      ', '    ')
+					.replaceAll('/* @__PURE__ */ ', '')}}`
 			);
-		if (propData.inputDelay) props.push(`inputDelay={${propData.inputDelay}}`);
-		if (propData.validateImmediately) props.push('validateImmediately');
 		if (propData.required) props.push('required');
 		if (propData.persistOnUnmount) props.push('persistOnUnmount');
 		if (propData.noBorder) props.push('noBorder');
@@ -96,8 +95,8 @@ export default function NumberInputPage() {
 		if (propData.disabled) props.push('disabled');
 		const combinedProps = props.join(' ');
 		if (!propData.validator && combinedProps.length < 60)
-			sample = sample.replace('<MyNumberInput />', '<MyNumberInput ' + combinedProps + ' />');
-		else sample = sample.replace('<MyNumberInput />', '<MyNumberInput\n    ' + props.join('\n    ') + '\n  />');
+			sample = sample.replace('<MyDateRangeInput />', '<MyDateRangeInput ' + combinedProps + ' />');
+		else sample = sample.replace('<MyDateRangeInput />', '<MyDateRangeInput\n    ' + props.join('\n    ') + '\n  />');
 
 		setSampleCode(sample);
 
@@ -111,29 +110,31 @@ export default function NumberInputPage() {
 		<div className="wrapper">
 			<div className="documentations">
 				<section>
-					<h1>My Number Input</h1>
+					<h1>My Date Range Input</h1>
+					<p>A date range input with custom calendar picker</p>
 				</section>
 
 				<section className="example">
 					<MyForm<ExampleFormType> formId="example" onSubmit={(_, data) => setData(data)}>
 						<MyLabelInputPair>
-							<MyLabel for="text-id">Number:</MyLabel>
-							<MyNumberInput
+							<MyLabel for="text-id">Date Range:</MyLabel>
+							<MyDateRangeInput
 								id={propData.id}
 								name={propData.name}
-								placeholder={propData.placeholder}
 								prefix={propData.prefix}
 								suffix={propData.suffix}
 								defaultValue={propData.defaultValue}
-								onChange={propData.onChange ? (_, data) => alert(data) : undefined}
+								onFocus={propData.onFocus ? () => alert('Focused') : undefined}
+								onBlur={propData.onBlur ? () => alert('Blurred') : undefined}
+								onClear={propData.onClear ? () => alert('Cleared') : undefined}
 								validator={validatorFn[propData.validator]}
-								validateImmediately={propData.validateImmediately}
 								required={propData.required}
 								persistOnUnmount={propData.persistOnUnmount}
-								inputDelay={propData.inputDelay}
 								noBorder={propData.noBorder}
 								noBackground={propData.noBackground}
 								disabled={propData.disabled}
+								min={propData.min}
+								max={propData.max}
 							/>
 						</MyLabelInputPair>
 
@@ -186,15 +187,6 @@ export default function NumberInputPage() {
 							</ul>
 
 							<li>
-								<code className="property-name">placeholder</code>: Placeholder of input
-							</li>
-							<ul>
-								<li>
-									<MyTextInput id="placeholder" name="placeholder" />
-								</li>
-							</ul>
-
-							<li>
 								<code className="property-name">prefix</code>: A simple label at the left of the input
 							</li>
 							<ul>
@@ -213,26 +205,73 @@ export default function NumberInputPage() {
 							</ul>
 
 							<li>
+								<code className="property-name">min</code>: Minimum date shown on the calendar, not used as validator,
+								if invalid range, min and max wont be applied
+							</li>
+							<ul>
+								<li>
+									<MyDateInput id="min" name="min" />
+								</li>
+							</ul>
+
+							<li>
+								<code className="property-name">max</code>: Maximum date shown on the calendar, not used as validator,
+								if invalid range, min and max wont be applied
+							</li>
+							<ul>
+								<li>
+									<MyDateInput id="max" name="max" />
+								</li>
+							</ul>
+
+							<li>
 								<code className="property-name">defaultValue</code>: Default value of the input, change the field name
 								to see the effect
 							</li>
 							<ul>
 								<li>
-									<MyNumberInput id="defaultValue" name="defaultValue" />
+									<MyDateRangeInput id="defaultValue" name="defaultValue" />
 								</li>
 							</ul>
 
 							<li>
-								<code className="property-name">onChange</code>: Function to trigger on change, data is passed as second
-								argument
+								<code className="property-name">onFocus</code>: Function to trigger on focus
 							</li>
 							<ul>
 								<li>
 									<MySelectInput
-										id="onChange"
-										name="onChange"
+										id="onFocus"
+										name="onFocus"
 										placeholder="None (Default)"
-										options={[{ label: 'Alert', value: 'alert' }]}
+										options={[{ label: 'Alert', value: true }]}
+									/>
+								</li>
+							</ul>
+
+							<li>
+								<code className="property-name">onBlur</code>: Function to trigger on blur
+							</li>
+							<ul>
+								<li>
+									<MySelectInput
+										id="onBlur"
+										name="onBlur"
+										placeholder="None (Default)"
+										options={[{ label: 'Alert', value: true }]}
+									/>
+								</li>
+							</ul>
+
+							<li>
+								<code className="property-name">onClear</code>: Function to trigger on clear
+							</li>
+							<ul>
+								<li>
+									<MySelectInput
+										id="onClear"
+										name="onClear"
+										placeholder="None (Default)"
+										options={[{ label: 'Alert', value: true }]}
 									/>
 								</li>
 							</ul>
@@ -248,26 +287,9 @@ export default function NumberInputPage() {
 										name="validator"
 										placeholder="None (Default)"
 										options={[
-											{ label: 'No negative number (Reject only)', value: 'noNegativeReject' },
-											{ label: 'Less than 50 (Reject only)', value: 'lessThan50Reject' },
-											{ label: 'No negative number (With reason)', value: 'noNegativeReason' },
-											{ label: 'Less than 50 (With reason)', value: 'lessThan50Reason' },
+											{ label: 'After 2025 (Reject only)', value: 'after2025Reject' },
+											{ label: 'After 2025 (Reject only)', value: 'after2025Reason' },
 										]}
-									/>
-								</li>
-							</ul>
-
-							<li>
-								<code className="property-name">validateImmediately</code>: Validate immediately on type or on
-								submission only
-							</li>
-							<ul>
-								<li>
-									<MySelectInput
-										id="validateImmediately"
-										name="validateImmediately"
-										placeholder="Disabled (Default)"
-										options={[{ label: 'Enabled', value: true }]}
 									/>
 								</li>
 							</ul>
@@ -297,16 +319,6 @@ export default function NumberInputPage() {
 										placeholder="Disabled (Default)"
 										options={[{ label: 'Enabled', value: true }]}
 									/>
-								</li>
-							</ul>
-
-							<li>
-								<code className="property-name">inputDelay</code>: Delay the input update, if negative value is given,
-								0ms will be used (Check console)
-							</li>
-							<ul>
-								<li>
-									<MyNumberInput id="inputDelay" name="inputDelay" inputDelay={propData.inputDelay} />
 								</li>
 							</ul>
 

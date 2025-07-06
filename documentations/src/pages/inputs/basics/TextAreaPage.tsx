@@ -232,7 +232,7 @@ export default function TextAreaPage() {
 							</li>
 							<ul>
 								<li>
-									<MySelectInput<string | number>
+									<MySelectInput
 										id="validator"
 										name="validator"
 										placeholder="None (Default)"

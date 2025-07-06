@@ -425,6 +425,7 @@ export default function MyDateRangeInput({
 
 	useEffect(() => {
 		if (initialisedRef.current) return;
+		if (internalRef.current.start || internalRef.current.end) return;
 		if (defaultValue) {
 			let year: number;
 			let month: number;
@@ -443,14 +444,15 @@ export default function MyDateRangeInput({
 			updateField({ value: defaultValue, valid: true });
 			setStartYear(year!);
 			setStartMonth(month!);
+			initialisedRef.current = true;
 		}
-		initialisedRef.current = true;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [name, defaultValue]);
 
 	useEffect(() => {
 		return () => {
 			if (!persistOnUnmount) deleteField();
+			initialisedRef.current = false;
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [name, deleteField]);

@@ -287,7 +287,7 @@ export default function TextInputPage() {
 							</li>
 							<ul>
 								<li>
-									<MySelectInput<string | number>
+									<MySelectInput
 										id="validator"
 										name="validator"
 										placeholder="None (Default)"

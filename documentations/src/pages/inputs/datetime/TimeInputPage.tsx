@@ -8,32 +8,26 @@ import {
 	MyNumberInput,
 	MySelectInput,
 	MyTextInput,
+	MyTimeInput,
+	MyTimeType,
 	useMyForm,
 } from '../../../../../lib/main';
 
 const PLAIN_SAMPLE =
 	'' +
 	`<MyLabelInputPair>
-  <MyLabel for="text-id">Number:</MyLabel>
-  <MyNumberInput />
+  <MyLabel for="text-id">Time:</MyLabel>
+  <MyTimeInput />
 </MyLabelInputPair>`;
 
 const validatorFn = {
-	noNegativeReject: function noNegativeRejectFn(data: number) {
-		if (data > 0) return true;
+	afterNoonReject: function afterNoonRejectFn(data: MyTimeType) {
+		if (data && data.hour >= 12) return true;
 		return false;
 	},
-	lessThan50Reject: function lessThan50RejectFn(data: number) {
-		if (data < 50) return true;
-		return false;
-	},
-	noNegativeReason: function noNegativeReasonFn(data: number) {
-		if (data > 0) return true;
-		return 'Please enter a positive number!';
-	},
-	lessThan50Reason: function lessThan50ReasonFn(data: number) {
-		if (data < 50) return true;
-		return 'Please enter a number less than 50';
+	afterNoonReason: function afterNoonReasonFn(data: MyTimeType) {
+		if (data && data.hour >= 12) return true;
+		return 'Please enter a date after 2025!';
 	},
 };
 
@@ -43,9 +37,9 @@ type FormType = {
 	placeholder: string;
 	prefix: string;
 	suffix: string;
-	defaultValue: number;
+	defaultValue: MyTimeType;
 	onChange: 'alert';
-	validator: 'noNegativeReject' | 'lessThan50Reject' | 'noNegativeReason' | 'lessThan50Reason';
+	validator: 'afterNoonReject' | 'afterNoonReason';
 	validateImmediately: boolean;
 	required: boolean;
 	persistOnUnmount: boolean;
@@ -55,10 +49,10 @@ type FormType = {
 	disabled: boolean;
 };
 
-type ExampleFormType = { [key: string]: number };
+type ExampleFormType = { [key: string]: MyTimeType };
 
-export default function NumberInputPage() {
-	const form = useMyForm<FormType>('number_properties');
+export default function TimeInputPage() {
+	const form = useMyForm<FormType>('time_properties');
 	const dataRef = useRef<HTMLElement>(null);
 	const examplePlainRef = useRef<HTMLElement>(null);
 	const propData = form.getFormData();
@@ -75,7 +69,6 @@ export default function NumberInputPage() {
 		const props: string[] = [];
 		if (propData.id) props.push(`id="${propData.id}"`);
 		if (propData.name) props.push(`name="${propData.name}"`);
-		if (propData.placeholder) props.push(`placeholder="${propData.placeholder}"`);
 		if (propData.prefix) props.push(`prefix="${propData.prefix}"`);
 		if (propData.suffix) props.push(`suffix="${propData.suffix}"`);
 		if (propData.defaultValue) props.push(`defaultValue={${propData.defaultValue}}`);
@@ -96,8 +89,8 @@ export default function NumberInputPage() {
 		if (propData.disabled) props.push('disabled');
 		const combinedProps = props.join(' ');
 		if (!propData.validator && combinedProps.length < 60)
-			sample = sample.replace('<MyNumberInput />', '<MyNumberInput ' + combinedProps + ' />');
-		else sample = sample.replace('<MyNumberInput />', '<MyNumberInput\n    ' + props.join('\n    ') + '\n  />');
+			sample = sample.replace('<MyTimeInput />', '<MyTimeInput ' + combinedProps + ' />');
+		else sample = sample.replace('<MyTimeInput />', '<MyTimeInput\n    ' + props.join('\n    ') + '\n  />');
 
 		setSampleCode(sample);
 
@@ -111,17 +104,19 @@ export default function NumberInputPage() {
 		<div className="wrapper">
 			<div className="documentations">
 				<section>
-					<h1>My Number Input</h1>
+					<h1>My Time Input</h1>
+					<p>
+						Store time in <code>{'{ start: number, end: number }'}</code>
+					</p>
 				</section>
 
 				<section className="example">
 					<MyForm<ExampleFormType> formId="example" onSubmit={(_, data) => setData(data)}>
 						<MyLabelInputPair>
-							<MyLabel for="text-id">Number:</MyLabel>
-							<MyNumberInput
+							<MyLabel for="text-id">Time:</MyLabel>
+							<MyTimeInput
 								id={propData.id}
 								name={propData.name}
-								placeholder={propData.placeholder}
 								prefix={propData.prefix}
 								suffix={propData.suffix}
 								defaultValue={propData.defaultValue}
@@ -186,15 +181,6 @@ export default function NumberInputPage() {
 							</ul>
 
 							<li>
-								<code className="property-name">placeholder</code>: Placeholder of input
-							</li>
-							<ul>
-								<li>
-									<MyTextInput id="placeholder" name="placeholder" />
-								</li>
-							</ul>
-
-							<li>
 								<code className="property-name">prefix</code>: A simple label at the left of the input
 							</li>
 							<ul>
@@ -218,7 +204,7 @@ export default function NumberInputPage() {
 							</li>
 							<ul>
 								<li>
-									<MyNumberInput id="defaultValue" name="defaultValue" />
+									<MyTimeInput id="defaultValue" name="defaultValue" />
 								</li>
 							</ul>
 
@@ -248,10 +234,8 @@ export default function NumberInputPage() {
 										name="validator"
 										placeholder="None (Default)"
 										options={[
-											{ label: 'No negative number (Reject only)', value: 'noNegativeReject' },
-											{ label: 'Less than 50 (Reject only)', value: 'lessThan50Reject' },
-											{ label: 'No negative number (With reason)', value: 'noNegativeReason' },
-											{ label: 'Less than 50 (With reason)', value: 'lessThan50Reason' },
+											{ label: 'After noon (Reject only)', value: 'afterNoonReject' },
+											{ label: 'After noon (Reject only)', value: 'afterNoonReason' },
 										]}
 									/>
 								</li>

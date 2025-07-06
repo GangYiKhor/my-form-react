@@ -38,7 +38,7 @@ type FormType = {
 	suffix: string;
 	defaultValue: MyColourType;
 	onChange: 'alert';
-	validator: 'hasCapitalReject' | 'hasCapitalReason' | 'allLowerReject' | 'allLowerReason';
+	validator: 'notWhiteReject' | 'notWhiteReason';
 	validateImmediately: boolean;
 	required: boolean;
 	persistOnUnmount: boolean;

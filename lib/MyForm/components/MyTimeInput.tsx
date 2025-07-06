@@ -64,7 +64,7 @@ export default function MyTimeInput({
 		comparisor: (data, value) => data?.hour === value?.hour && data?.minute === value?.minute,
 		onChange: _onChange,
 		validator,
-		isPartial: (v) => !v?.hour || !v?.minute,
+		isPartial: (v) => v?.hour == undefined || v?.minute == undefined,
 		validateImmediately,
 		inputDelay,
 		disabled,

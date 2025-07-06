@@ -9,6 +9,12 @@ import PasswordPage from './pages/inputs/basics/PasswordPage';
 import RadioInputPage from './pages/inputs/basics/RadioInputPage';
 import TextAreaPage from './pages/inputs/basics/TextAreaPage';
 import TextInputPage from './pages/inputs/basics/TextInputPage';
+import DateInputPage from './pages/inputs/datetime/DateInputPage';
+import DateRangePage from './pages/inputs/datetime/DateRangePage';
+import DateTimeInputPage from './pages/inputs/datetime/DateTimePage';
+import MonthInputPage from './pages/inputs/datetime/MonthInputPage';
+import TimeInputPage from './pages/inputs/datetime/TimeInputPage';
+import WeekInputPage from './pages/inputs/datetime/WeekInputPage';
 import InputOverviewPage from './pages/inputs/InputOverviewPage';
 import LabelPage from './pages/LabelPage';
 import LayoutPage from './pages/LayoutPage';
@@ -40,12 +46,12 @@ export const routes = [
 			{
 				title: 'Date Time Inputs',
 				pages: [
-					{ title: 'Date Input', path: '/inputs/date', element: HomePage },
-					{ title: 'Date Time Input', path: '/inputs/datetime', element: HomePage },
-					{ title: 'Time Input', path: '/inputs/time', element: HomePage },
-					{ title: 'Month Input', path: '/inputs/month', element: HomePage },
-					{ title: 'Week Input', path: '/inputs/week', element: HomePage },
-					{ title: 'Date Range Input', path: '/inputs/date-range', element: HomePage },
+					{ title: 'Date Input', path: '/inputs/date', element: DateInputPage },
+					{ title: 'Date Time Input', path: '/inputs/datetime', element: DateTimeInputPage },
+					{ title: 'Time Input', path: '/inputs/time', element: TimeInputPage },
+					{ title: 'Month Input', path: '/inputs/month', element: MonthInputPage },
+					{ title: 'Week Input', path: '/inputs/week', element: WeekInputPage },
+					{ title: 'Date Range Input', path: '/inputs/date-range', element: DateRangePage },
 				],
 			},
 			{

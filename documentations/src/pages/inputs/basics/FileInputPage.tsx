@@ -35,7 +35,7 @@ type FormType = {
 	prefix: string;
 	suffix: string;
 	onChange: 'alert';
-	validator: 'hasCapitalReject' | 'hasCapitalReason' | 'allLowerReject' | 'allLowerReason';
+	validator: 'largerThan1KBReject' | 'largerThan1KBReason';
 	validateImmediately: boolean;
 	required: boolean;
 	persistOnUnmount: boolean;
