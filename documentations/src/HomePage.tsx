@@ -106,6 +106,7 @@ export default function HomePage() {
 						<li>Subforms Support</li>
 						<li>Form Handling Utilities</li>
 						<li>Zero dependencies except React</li>
+						<li>As small as 192 kB</li>
 					</ul>
 				</section>
 
