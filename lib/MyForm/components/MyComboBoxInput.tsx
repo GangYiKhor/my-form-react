@@ -109,7 +109,11 @@ export default function MyComboBoxInput<T = any>({
 	});
 
 	useEffect(() => {
-		if (JSON.stringify(internalOptions) === JSON.stringify(options)) return;
+		try {
+			if (JSON.stringify(options) === JSON.stringify(internalOptions)) return;
+		} catch {
+			//
+		}
 		const existings = new Set<string>();
 		for (const option of options) {
 			const key = optionKey(option);

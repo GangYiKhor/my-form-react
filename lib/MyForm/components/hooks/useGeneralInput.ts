@@ -118,7 +118,7 @@ export default function useGeneralInput<
 			}
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [name]);
+	}, [name, deleteField]);
 
 	return { inputRef, onChange };
 }

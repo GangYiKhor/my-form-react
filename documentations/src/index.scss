@@ -1,0 +1,315 @@
+$dark-background: #000000;
+$light-background: #f9f9f9;
+
+.scrollbar {
+	scrollbar-width: thin;
+	scrollbar-color: gray;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: gray;
+		border-radius: 10px;
+		border: none;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background-color: #888;
+	}
+}
+
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+	margin: 0;
+	background-color: $light-background;
+	color: #333;
+	max-width: 1500px;
+	margin: auto;
+
+	pre {
+		border-radius: 8px;
+		overflow-x: auto;
+		line-height: 1.625;
+	}
+
+	section {
+		margin-bottom: 2rem;
+		h1 {
+			font-size: xx-large;
+		}
+	}
+
+	ul {
+		padding-left: 1.5rem;
+	}
+
+	h1,
+	h2,
+	h3 {
+		margin: 0;
+		color: #1d3557;
+	}
+}
+
+body:has(.app.dark) {
+	background-color: $dark-background;
+	color: #f0f0f0;
+
+	h1,
+	h2,
+	h3 {
+		color: white;
+	}
+
+	header {
+		background-color: $dark-background;
+
+		.theme-toggler {
+			background-color: white;
+
+			&:hover {
+				background-color: rgb(220, 220, 220);
+			}
+
+			&:active {
+				background-color: rgb(200, 200, 200);
+			}
+		}
+	}
+
+	.nav-item {
+		a {
+			color: rgba(255, 255, 255, 0.5);
+		}
+
+		&:hover:is(:has(a), .cur-path) {
+			background-color: rgb(100, 100, 100);
+		}
+
+		&:is(&.cur-path, &:hover) a {
+			color: rgba(255, 255, 255, 1);
+		}
+	}
+
+	form {
+		button {
+			background-color: $dark-background;
+			color: white;
+
+			&:hover {
+				background-color: rgb(100, 100, 100);
+			}
+
+			&:active {
+				background-color: rgb(150, 150, 150);
+			}
+		}
+	}
+
+	code.property-name {
+		color: gold;
+	}
+
+	section ul li a {
+		color: rgb(255, 215, 0);
+
+		&:hover {
+			color: rgb(230, 198, 17);
+		}
+		&:active {
+			color: rgb(187, 162, 23);
+		}
+	}
+}
+
+.app {
+	display: flex;
+	flex-direction: column;
+}
+
+header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background-color: $light-background;
+	min-height: 50px;
+	max-height: 50px;
+	padding: 10px;
+	border-bottom: solid 2px gray;
+
+	div {
+		display: flex;
+		justify-content: space-between;
+
+		.title {
+			margin: 0;
+			font-size: xx-large;
+			font-weight: bold;
+		}
+
+		.theme-toggler {
+			width: 45px;
+			height: 45px;
+			border: none;
+			border-radius: 50%;
+			cursor: pointer;
+			transition: background-color 150ms;
+			background-color: black;
+			padding: 10px;
+
+			&:hover {
+				background-color: rgb(100, 100, 100);
+			}
+
+			&:active {
+				background-color: rgb(150, 150, 150);
+			}
+
+			img {
+				height: 100%;
+				width: 100%;
+			}
+		}
+	}
+}
+
+.body {
+	display: flex;
+}
+
+nav {
+	position: sticky;
+	top: 72px;
+	height: calc(100vh - 72px);
+	max-height: calc(100vh - 72px);
+	overflow-y: auto;
+	border-right: solid 2px gray;
+	min-width: 200px;
+	max-width: 200px;
+
+	.nav-item {
+		cursor: default;
+		display: grid;
+		border-radius: 8px;
+
+		&:not(:has(a)) {
+			padding: 8px 0;
+		}
+
+		&.cur-path {
+			font-weight: bold;
+		}
+
+		&:has(a) {
+			cursor: pointer;
+		}
+
+		&:hover:is(:has(a), .cur-path) {
+			background-color: lightgray;
+		}
+
+		a {
+			padding: 8px 8px 8px 0;
+			text-decoration: none;
+			color: rgba(0, 0, 0, 0.5);
+		}
+
+		&:is(&.cur-path, &:hover) a {
+			color: rgba(0, 0, 0, 1);
+		}
+	}
+}
+
+main {
+	min-width: 0;
+	flex-grow: 1;
+
+	.wrapper {
+		position: relative;
+		display: flex;
+		gap: 16px;
+
+		.documentations {
+			flex-grow: 1;
+			padding: 16px;
+		}
+
+		.properties {
+			position: sticky;
+			padding: 16px 0 0 0;
+			bottom: 0px;
+			height: calc(100vh - 104px);
+			overflow: auto;
+			width: 500px;
+			max-width: 500px;
+		}
+	}
+
+	code.property-name {
+		font-size: 20px;
+		font-weight: bold;
+		color: goldenrod;
+	}
+
+	section.example {
+		border: solid 2px gray;
+		border-radius: 16px;
+		padding: 16px;
+
+		&.white {
+			background-color: $light-background;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+
+			button {
+				padding: 12px 16px;
+				background-color: white;
+				color: black;
+				border: solid 2px gray;
+				border-radius: 8px;
+				cursor: pointer;
+
+				&:hover {
+					background-color: rgb(220, 220, 220);
+				}
+
+				&:active {
+					background-color: rgb(200, 200, 200);
+				}
+			}
+		}
+	}
+
+	.property-section {
+		ul {
+			li a {
+				font-weight: bold;
+				color: rgb(201, 150, 23);
+
+				&:hover {
+					color: rgb(170, 126, 14);
+				}
+				&:active {
+					color: rgb(143, 105, 9);
+				}
+			}
+		}
+	}
+
+	.component-list {
+		ul {
+			margin-bottom: 8px;
+			ul {
+				columns: 3;
+			}
+		}
+	}
+}

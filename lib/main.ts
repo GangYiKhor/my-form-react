@@ -8,7 +8,7 @@ export { default as MyDateRangeInput } from './MyForm/components/MyDateRangeInpu
 export { default as MyDateTimeInput } from './MyForm/components/MyDateTimeInput';
 export { default as MyFileInput } from './MyForm/components/MyFileInput';
 export { default as MyLabel } from './MyForm/components/MyLabel';
-export { default as MylabelInputPair } from './MyForm/components/MyLabelInputPair';
+export { default as MyLabelInputPair } from './MyForm/components/MyLabelInputPair';
 export { default as MyMonthInput } from './MyForm/components/MyMonthInput';
 export { default as MyMultiComboBoxInput } from './MyForm/components/MyMultiComboBoxInput';
 export { default as MyNumberInput } from './MyForm/components/MyNumberInput';

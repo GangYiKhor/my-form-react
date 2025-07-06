@@ -84,7 +84,7 @@ export default function useGeneralComboBox<T = any>({
 			if (!persistOnUnmount) deleteField();
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [name]);
+	}, [name, deleteField]);
 
 	return {
 		inputRef,

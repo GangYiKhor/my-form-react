@@ -89,7 +89,7 @@ export default function MyCheckboxInput<CheckedValue = any, UncheckedValue = any
 			if (!persistOnUnmount) deleteField();
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [name]);
+	}, [name, deleteField]);
 
 	return (
 		<MyGeneralInputContainer

@@ -35,6 +35,7 @@ export default function MyColourInput({
 	suffix,
 	defaultValue = '#000000',
 	onChange: _onChange,
+	validator,
 	required = false,
 	persistOnUnmount = false,
 	inputDelay = 250,
@@ -55,6 +56,7 @@ export default function MyColourInput({
 		toInternal: (v) => v ?? '#000000',
 		comparisor: (data, value) => data === value,
 		onChange: _onChange,
+		validator,
 		inputDelay,
 		disabled,
 	});

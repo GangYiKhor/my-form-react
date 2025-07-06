@@ -17,6 +17,7 @@ $light-text-red: rgb(239, 68, 68);
 $light-grid-black: rgba(0, 0, 0, 0.2);
 $light-shadow-black: rgba(0, 0, 0, 0.2);
 
+$dark-background-nearblack: rgb(53, 50, 50);
 $dark-background-darkgray: rgb(107, 114, 128);
 $dark-background-gray: rgb(79, 86, 102);
 $dark-background-lightgray: rgb(73, 81, 99);
@@ -97,6 +98,11 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 		outline: none;
 		cursor: pointer;
 		user-select: none;
+
+		&:hover,
+		&:active {
+			background: transparent !important;
+		}
 	}
 
 	.my-form-small-button {
@@ -111,6 +117,11 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 		outline: none;
 		cursor: pointer;
 		user-select: none;
+
+		&:hover,
+		&:active {
+			background: transparent !important;
+		}
 	}
 
 	svg {
@@ -358,12 +369,12 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 		position: relative;
 		flex-grow: 1;
 		display: block;
-		margin: 0;
+		margin: 0 8px 0 0;
 		padding: 0;
 	}
 
 	.date-range-input {
-		flex-grow: 1;
+		width: 100%;
 		display: inline-flex;
 		align-items: baseline;
 		margin: 0;
@@ -381,7 +392,7 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 			border: none;
 			pointer-events: none;
 			text-align: center;
-			padding: 8px 4px 0 40px;
+			padding: 8px 4px;
 		}
 
 		> span {
@@ -926,19 +937,21 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 
 // Layout
 .my-label-input-pair {
-	display: inline-flex;
 	&.arrange-horizontal {
+		display: flex;
 		flex-direction: row;
 		align-items: center;
+
+		&.fill :last-child {
+			flex-grow: 1;
+		}
 	}
 
 	&.arrange-vertical {
+		display: grid;
 		flex-direction: column;
 		align-items: start;
 		gap: 2px;
-		label {
-			width: 100%;
-		}
 	}
 
 	&.outer-border {
@@ -976,13 +989,14 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 			}
 
 			&.disabled {
-				background-color: $dark-background-lightgray;
+				background-color: $dark-background-nearblack;
 				input,
 				label,
 				select,
 				button,
 				textarea {
 					color: $dark-text-darkgray;
+					border-bottom-color: $dark-border-gray;
 				}
 			}
 		}
@@ -1182,13 +1196,14 @@ $dark-shadow-black: rgba(255, 255, 255, 0.3);
 		}
 
 		&.disabled {
-			background-color: $dark-background-lightgray;
+			background-color: $dark-background-nearblack;
 			input,
 			label,
 			select,
 			button,
 			textarea {
 				color: $dark-text-darkgray;
+				border-bottom-color: $dark-border-gray;
 			}
 		}
 	}

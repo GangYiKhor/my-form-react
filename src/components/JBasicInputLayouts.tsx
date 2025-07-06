@@ -1,4 +1,4 @@
-import { MyForm, MyLabel, MylabelInputPair, MyTextInput, useMyForm } from '../../lib/main';
+import { MyForm, MyLabel, MyLabelInputPair, MyTextInput, useMyForm } from '../../lib/main';
 
 type FormType = {
 	layout: string;
@@ -12,67 +12,67 @@ export default function JBasicInputLayouts() {
 			<h2>Basic Input Layouts</h2>
 			<MyForm<FormType> formId={form.formId}>
 				<div className="margin-div">
-					<MylabelInputPair margin={5}>
+					<MyLabelInputPair margin={5}>
 						<MyLabel for="layout-text-1" required>
 							Text:
 						</MyLabel>
 						<MyTextInput id="layout-text-1" name="layout" />
-					</MylabelInputPair>
+					</MyLabelInputPair>
 
-					<MylabelInputPair>
+					<MyLabelInputPair>
 						<MyLabel for="layout-text-2" required>
 							Text:
 						</MyLabel>
 						<MyTextInput id="layout-text-2" name="layout" />
-					</MylabelInputPair>
+					</MyLabelInputPair>
 				</div>
 
 				<div className="dark margin-div">
-					<MylabelInputPair arrangement="horizontal">
+					<MyLabelInputPair arrangement="horizontal">
 						<MyLabel for="layout-text-2-1" required>
 							Text:
 						</MyLabel>
 						<MyTextInput id="layout-text-2-1" name="layout" />
-					</MylabelInputPair>
+					</MyLabelInputPair>
 
-					<MylabelInputPair arrangement="horizontal">
+					<MyLabelInputPair arrangement="horizontal">
 						<MyLabel for="layout-text-2-2" required>
 							Text:
 						</MyLabel>
 						<MyTextInput id="layout-text-2-2" name="layout" />
-					</MylabelInputPair>
+					</MyLabelInputPair>
 				</div>
 
 				<div className="margin-div">
-					<MylabelInputPair outerBorder>
+					<MyLabelInputPair outerBorder>
 						<MyLabel for="layout-text-3-1" required>
 							Text:
 						</MyLabel>
 						<MyTextInput id="layout-text-3-1" name="layout" />
-					</MylabelInputPair>
+					</MyLabelInputPair>
 
-					<MylabelInputPair outerBorder>
+					<MyLabelInputPair outerBorder>
 						<MyLabel for="layout-text-3-2" required>
 							Text:
 						</MyLabel>
 						<MyTextInput id="layout-text-3-2" name="layout" />
-					</MylabelInputPair>
+					</MyLabelInputPair>
 				</div>
 
 				<div className="margin-div">
-					<MylabelInputPair outerBorder>
+					<MyLabelInputPair outerBorder>
 						<MyLabel for="layout-text-4-1" required>
 							Text:
 						</MyLabel>
 						<MyTextInput id="layout-text-4-1" name="layout" placeholder="Empty" noBorder />
-					</MylabelInputPair>
+					</MyLabelInputPair>
 
-					<MylabelInputPair outerBorder>
+					<MyLabelInputPair outerBorder>
 						<MyLabel for="layout-text-4-2" required>
 							Text:
 						</MyLabel>
 						<MyTextInput id="layout-text-4-2" name="layout" placeholder="Empty" noBorder />
-					</MylabelInputPair>
+					</MyLabelInputPair>
 				</div>
 			</MyForm>
 		</div>

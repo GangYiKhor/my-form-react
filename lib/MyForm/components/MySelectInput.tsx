@@ -77,7 +77,11 @@ export default function MySelectInput<T = any>({
 	}, []);
 
 	useEffect(() => {
-		if (JSON.stringify(options) === JSON.stringify(internalOptions)) return;
+		try {
+			if (JSON.stringify(options) === JSON.stringify(internalOptions)) return;
+		} catch {
+			//
+		}
 		const existings = new Set<string>();
 		for (const option of options) {
 			if (existings.has(option.label)) {
@@ -158,7 +162,7 @@ export default function MySelectInput<T = any>({
 			if (!persistOnUnmount) deleteField();
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [name]);
+	}, [name, deleteField]);
 
 	const isPlaceholder = (inputRef.current?.value ?? '-') === '';
 	const { className: selectClassName, ..._selectProps } = selectProps ?? {};

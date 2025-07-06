@@ -7,8 +7,14 @@
 		{
 			"type": "node-terminal",
 			"request": "launch",
-			"name": "Dev Server",
-			"command": "npm run dev",
+			"name": "Demo Dev Server",
+			"command": "npm run dev"
+		},
+		{
+			"type": "node-terminal",
+			"request": "launch",
+			"name": "Documentations Dev Server",
+			"command": "npm run devdoc"
 		}
 	]
 }

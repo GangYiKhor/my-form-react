@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormComponent } from './MyFormComponentContext';
 import { useMyForm } from './MyFormContext';
 import { clsx } from './utils';
@@ -16,6 +16,10 @@ type PropType<T = { [key: string]: any }> = {
 	disableNativeForm?: boolean;
 	/** Call onSubmit() only if the clicked button's ID is in `submitButtonId` */
 	submitButtonId?: string | string[] | Set<string>;
+	/** If `true` the form will not be deleted from `formData` when unmount */
+	persistOnUnmount?: boolean;
+	/** Ref Element for Form to trigger native form actions such as `submit` */
+	formRef?: React.RefObject<HTMLFormElement>;
 	children: React.ReactNode;
 };
 type FormProps = Omit<React.HTMLAttributes<HTMLFormElement>, keyof PropType>;
@@ -38,6 +42,8 @@ export default function MyForm<T extends { [key: string]: any } = { [key: string
 	disableNativeForm = false,
 	submitButtonId,
 	formProps,
+	persistOnUnmount = false,
+	formRef,
 	children,
 }: PropType<T> & { formProps?: FormProps }) {
 	const form = useMyForm(formId);
@@ -65,11 +71,19 @@ export default function MyForm<T extends { [key: string]: any } = { [key: string
 		}
 	};
 
+	useEffect(() => {
+		return () => {
+			if (!persistOnUnmount) form.deleteForm();
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form.deleteForm]);
+
 	const { className: formClassName, ..._formProps } = formProps ?? {};
 	return (
 		<FormComponent.Provider value={value}>
 			<form
 				{..._formProps}
+				ref={formRef}
 				onSubmit={onSubmit}
 				action={action}
 				method={method}

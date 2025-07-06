@@ -453,7 +453,7 @@ export default function MyDateRangeInput({
 			if (!persistOnUnmount) deleteField();
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [name]);
+	}, [name, deleteField]);
 
 	const dates = generateCalendar(startYear, startMonth);
 	return (

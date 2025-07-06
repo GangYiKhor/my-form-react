@@ -25,5 +25,5 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true
 	},
-	"include": ["src", "lib/MyForm"]
+	"include": ["src", "lib"]
 }

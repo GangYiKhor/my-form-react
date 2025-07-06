@@ -13,7 +13,7 @@ import './index.css';
 function App() {
 	return (
 		<div className="wrapper">
-			<h1>My Form React Testing Page</h1>
+			<h1>My Form React - Demo Page</h1>
 			<ABasicInputs />
 			<BSelectInputs />
 			<CTextAreaInput />

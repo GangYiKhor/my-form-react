@@ -11,6 +11,8 @@ type PropType = {
 	 */
 	arrangement?: 'horizontal' | 'vertical';
 	outerBorder?: boolean;
+	/** If `true`, fill the whole container, only affect horizontal arrangement */
+	fill?: boolean;
 	margin?: string | number;
 	children: ReactNode;
 };
@@ -22,9 +24,10 @@ type HtmlProps = {
 /**
  * A simple wrapper div for Label-Input pair with predefined stylings
  */
-export default function MylabelInputPair({
+export default function MyLabelInputPair({
 	arrangement = 'vertical',
 	outerBorder = false,
+	fill = false,
 	margin,
 	containerProps,
 	children,
@@ -37,6 +40,7 @@ export default function MylabelInputPair({
 			{...props}
 			className={clsx(
 				'my-label-input-pair',
+				fill && 'fill',
 				`arrange-${arrangement}`,
 				outerBorder && 'outer-border',
 				containerClassName

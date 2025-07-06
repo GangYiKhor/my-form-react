@@ -207,7 +207,7 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 			}
 		},
 		[formData]
-	);
+	) as (() => DataType) & ((formId: string) => { [key: string]: DataType });
 
 	const getFormValid = useCallback(
 		(formId?: string) => {
@@ -248,7 +248,7 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 			}
 		},
 		[formData]
-	) as (() => { [k: string]: { [key: string]: boolean } }) | ((formId?: string) => { [key: string]: boolean });
+	) as (() => { [k: string]: { [key: string]: boolean } }) & ((formId?: string) => { [key: string]: boolean });
 
 	const setInvalidReason = useCallback((formId: string, name: string, reason: string) => {
 		if (!formId) {

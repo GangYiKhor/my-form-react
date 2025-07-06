@@ -81,8 +81,8 @@ export type ContextType<T extends FormDataType = FormDataType> = {
 	clearForm(formId: string): void;
 	emptyForm(formId: string, emptyForm?: { [key: string]: any }): void;
 	deleteForm(formId: string): void;
-	getFormData: (() => T) | GetFormDataType<T>;
-	getFormValid: (() => { [key: string]: ValidType<T> }) | GetFormValidType<T>;
+	getFormData: (() => T) & GetFormDataType<T>;
+	getFormValid: (() => { [key: string]: ValidType<T> }) & GetFormValidType<T>;
 	validateForm(formId: string): boolean;
 	setFieldProperties({ formId, name, required, validator }: ConvertToUnionProperties<T>): void;
 	setSubForm(formId: string, prefix: string): void;
