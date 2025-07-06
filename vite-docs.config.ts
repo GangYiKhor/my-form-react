@@ -8,6 +8,8 @@ export default defineConfig({
 	plugins: [react()],
 	build: {
 		outDir: '../build',
+		emptyOutDir: true,
+		chunkSizeWarningLimit: 10000,
 		rollupOptions: {
 			output: {
 				entryFileNames: `[name].js`,

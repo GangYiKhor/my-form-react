@@ -1,8 +1,8 @@
 {
 	"name": "my-form-react",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"type": "module",
-	"homepage": "https://gangyikhor.github.io/my-react-form",
+	"homepage": "https://gangyikhor.github.io/my-form-react",
 	"main": "dist/my-form-react.js",
 	"types": "dist/main.d.ts",
 	"license": "MIT",

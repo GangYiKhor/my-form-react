@@ -105,6 +105,7 @@ export default function HomePage() {
 						<li>Combobox Inputs</li>
 						<li>Subforms Support</li>
 						<li>Form Handling Utilities</li>
+						<li>Zero dependencies except React</li>
 					</ul>
 				</section>
 
