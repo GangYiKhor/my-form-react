@@ -1,4 +1,5 @@
 import HomePage from './HomePage';
+import FormAsDisplayPage from './pages/FormAsDisplayPage';
 import FormPage from './pages/FormPage';
 import FormProviderPage from './pages/FormProviderPage';
 import CheckboxInputPage from './pages/inputs/basics/CheckboxInputPage';
@@ -78,7 +79,7 @@ export const routes = [
 		title: 'More usage',
 		pages: [
 			{ title: 'Sub Form', path: '/sub-form', element: SubFormPage },
-			{ title: 'Form as Display', path: '/form-as-display', element: HomePage },
+			{ title: 'Form as Display', path: '/form-as-display', element: FormAsDisplayPage },
 		],
 	},
 ];
