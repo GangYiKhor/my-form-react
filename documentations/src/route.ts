@@ -1,4 +1,5 @@
 import HomePage from './HomePage';
+import ComingSoonPage from './pages/ComingSoonPage';
 import FormAsDisplayPage from './pages/FormAsDisplayPage';
 import FormPage from './pages/FormPage';
 import FormProviderPage from './pages/FormProviderPage';
@@ -73,6 +74,42 @@ export const routes = [
 				],
 			},
 			{ title: 'Custom Input', path: '/custom-input', element: CustomInputPage },
+		],
+	},
+	{
+		title: 'Hooks',
+		pages: [
+			{ title: 'useMyForm', path: '/use-my-form', element: ComingSoonPage },
+			{ title: 'useMyFullForm', path: '/use-my-full-form', element: ComingSoonPage },
+			{
+				title: 'Form Operations',
+				pages: [
+					{ title: 'Initialise Form', path: '/initialise-form', element: ComingSoonPage },
+					{ title: 'Reset Form', path: '/reset-form', element: ComingSoonPage },
+					{ title: 'Clear Form', path: '/clear-form', element: ComingSoonPage },
+					{ title: 'Empty Form', path: '/empty-form', element: ComingSoonPage },
+					{ title: 'Delete Form', path: '/delete-form', element: ComingSoonPage },
+					{ title: 'Validate Form', path: '/validate-form', element: ComingSoonPage },
+					{ title: 'Get Form Data', path: '/get-form-data', element: ComingSoonPage },
+					{ title: 'Get Form Valid', path: '/get-form-valid', element: ComingSoonPage },
+				],
+			},
+			{
+				title: 'Field Operations',
+				pages: [
+					{ title: 'Update Field', path: '/update-field', element: ComingSoonPage },
+					{ title: 'Validate Field', path: '/validate-field', element: ComingSoonPage },
+					{ title: 'Delete Field', path: '/delete-field', element: ComingSoonPage },
+				],
+			},
+			{
+				title: 'Others',
+				pages: [
+					{ title: 'formData', path: '/form-data', element: ComingSoonPage },
+					{ title: 'formProperties', path: '/form-properties', element: ComingSoonPage },
+					{ title: 'setFieldProperties', path: '/set-field-properties', element: ComingSoonPage },
+				],
+			},
 		],
 	},
 	{
