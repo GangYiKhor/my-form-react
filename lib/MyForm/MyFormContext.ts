@@ -49,6 +49,7 @@ type SpecificForm<T extends { [key: string]: { [key: string]: any } }> = {
 	[K in keyof T]: (formId: K) => {
 		formData: FieldType<T[K]>;
 		formProperties: PropertiesType<T[K]>;
+		subForms: string[];
 		initialiseForm: (data: Partial<T[K]>) => void;
 		updateField: (data: ConvertToUnionSingleUpdate<T[K]>) => void;
 		deleteField: ({ name }: ConvertToUnionSingleDelete<T[K]>) => void;
@@ -73,6 +74,7 @@ export type GetFormValidType<T extends { [key: string]: { [key: string]: any } }
 export type ContextType<T extends FormDataType = FormDataType> = {
 	formData: FormFieldType<T>;
 	formProperties: React.RefObject<FormPropertiesType<T>>;
+	subForms: React.RefObject<{ [K in keyof T]: string[] }>;
 	initialiseForm({ formId, data }: ConvertToUnionInitialise<T>): void;
 	updateField({ formId, name, value, valid, skipRender }: ConvertToUnionUpdate<T>): void;
 	deleteField({ formId, name }: ConvertToUnionDelete<T>): void;
@@ -103,6 +105,7 @@ export function useMyFullForm<T extends { [key: string]: { [key: string]: any } 
 	const {
 		formData,
 		formProperties,
+		subForms,
 		initialiseForm,
 		updateField,
 		deleteField,
@@ -132,11 +135,17 @@ export function useMyFullForm<T extends { [key: string]: { [key: string]: any } 
 		/**
 		 * Internal field properties, consists of `{ defaultValue, required, validator }`
 		 * @example
-		 * formData.myform.myfield.defaultValue;
-		 * formData.myform.myfield.required;
-		 * formData.myform.myfield.validator;
+		 * formProperties.current.myform.myfield.defaultValue;
+		 * formProperties.current.myform.myfield.required;
+		 * formProperties.current.myform.myfield.validator;
 		 */
 		formProperties,
+		/**
+		 * Subforms in `string[]`
+		 * @example
+		 * subForms.current.myform;
+		 */
+		subForms,
 		/**
 		 * Initialise form data, will replace all existing data
 		 * @example
@@ -252,6 +261,7 @@ export function useMyForm<T extends { [key: string]: any } = DataType>(formId: s
 	const {
 		formData: _formData,
 		formProperties: _formProperties,
+		subForms: _subForms,
 		initialiseForm: _initialiseForm,
 		updateField: _updateField,
 		deleteField: _deleteField,
@@ -268,6 +278,7 @@ export function useMyForm<T extends { [key: string]: any } = DataType>(formId: s
 
 	const formData = _formData[formId];
 	const formProperties = _formProperties.current[formId];
+	const subForms = _subForms.current[formId];
 
 	const initialiseForm = useCallback(
 		(data: Partial<T>) => {
@@ -348,11 +359,17 @@ export function useMyForm<T extends { [key: string]: any } = DataType>(formId: s
 			/**
 			 * Internal field properties, consists of `{ defaultValue, required, validator }`
 			 * @example
-			 * formData.myfield.defaultValue;
-			 * formData.myfield.required;
-			 * formData.myfield.validator;
+			 * formProperties.myfield.defaultValue;
+			 * formProperties.myfield.required;
+			 * formProperties.myfield.validator;
 			 */
 			formProperties,
+			/**
+			 * Subforms in `string[]`
+			 * @example
+			 * subForms;
+			 */
+			subForms,
 			/**
 			 * Initialise form data, will replace all existing data
 			 * @example
@@ -439,6 +456,7 @@ export function useMyForm<T extends { [key: string]: any } = DataType>(formId: s
 		[
 			formData,
 			formProperties,
+			subForms,
 			initialiseForm,
 			updateField,
 			deleteField,

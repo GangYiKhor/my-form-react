@@ -280,11 +280,10 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 				if (!fieldProperties || Object.keys(fieldProperties).length === 0) return true;
 
 				let valid = true;
-				for (const field in fieldData) {
+				for (const field in fieldProperties) {
 					const properties = fieldProperties[field];
-					if (!properties) continue;
+					const data = fieldData[field]?.value;
 
-					const data = fieldData[field].value;
 					if (properties.required) {
 						if (typeof properties.required === 'boolean' && data == undefined) {
 							validateField(formId, field, false);
@@ -296,7 +295,7 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 							continue;
 						}
 					}
-					if (properties.validator) {
+					if (data !== undefined && properties.validator) {
 						const result = properties.validator(data);
 						if (result === false) {
 							validateField(formId, field, false);
@@ -371,6 +370,7 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 		(formId: string) => {
 			const _formData = formData[formId];
 			const _formProperties = formProperties.current[formId];
+			const _subForms = subForms.current[formId];
 
 			function _initialiseForm(data: Partial<DataType>) {
 				initialiseForm({ formId, data });
@@ -443,6 +443,7 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 			return {
 				formData: _formData,
 				formProperties: _formProperties,
+				subForms: _subForms,
 				initialiseForm: _initialiseForm,
 				updateField: _updateField,
 				deleteField: _deleteField,
@@ -478,6 +479,7 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 		() => ({
 			formData,
 			formProperties,
+			subForms,
 			initialiseForm,
 			updateField,
 			deleteField,
@@ -496,7 +498,6 @@ export default function MyFormProvider({ darkMode = 'disabled', children }: Prop
 		}),
 		[
 			formData,
-			formProperties,
 			initialiseForm,
 			updateField,
 			deleteField,
